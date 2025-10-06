@@ -1259,7 +1259,7 @@
         }
 
         /**
-         * Implementa el efecto de escritura progresiva
+         * Implementa el efecto de escritura progresiva con soporte para pestañas inactivas
          * @param {HTMLElement} element - Elemento donde se escribirá el texto
          * @param {string} text - Texto a escribir
          * @param {number} index - Índice actual
@@ -1267,30 +1267,150 @@
          * @param {Function} callback - Función a ejecutar al finalizar
          */
         function typeWriter(element, text, index, speed, callback) {
-            if (index < text.length) {
-                // Obtener el contenido actual sin el cursor
-                const currentContent = element.innerHTML.replace('<span class="typing-cursor"></span>', '');
+            let startTime = Date.now();
+            let lastActiveTime = Date.now();
+            let isTabActive = !document.hidden;
+            let timeoutId = null;
+            let animationFrameId = null;
+            
+            // Manejar cambios de visibilidad de la pestaña
+            const handleVisibilityChange = () => {
+                const wasActive = isTabActive;
+                isTabActive = !document.hidden;
                 
-                // Añadir el siguiente carácter
-                element.innerHTML = currentContent + text.charAt(index) + '<span class="typing-cursor"></span>';
+                // Si la pestaña acaba de volver a estar activa, calcula cuánto tiempo estuvo inactiva
+                if (!wasActive && isTabActive) {
+                    const inactiveTime = Date.now() - lastActiveTime;
+                    // Calcula cuántos caracteres deberían haberse mostrado durante ese tiempo
+                    const charsToShow = Math.floor(inactiveTime / speed);
+                    
+                    // Si hay caracteres que mostrar, procesa varios a la vez
+                    if (charsToShow > 0 && index < text.length) {
+                        // Cancelar el timeout pendiente
+                        if (timeoutId) {
+                            clearTimeout(timeoutId);
+                            timeoutId = null;
+                        }
+                        
+                        // Cancelar el animation frame pendiente
+                        if (animationFrameId) {
+                            cancelAnimationFrame(animationFrameId);
+                            animationFrameId = null;
+                        }
+                        
+                        // Procesar los caracteres acumulados
+                        processMultipleChars(Math.min(charsToShow, text.length - index));
+                        return;
+                    }
+                }
                 
-                // Scroll suave hacia abajo mientras se escribe
+                // Actualiza el último tiempo activo
+                if (isTabActive) {
+                    lastActiveTime = Date.now();
+                }
+            };
+            
+            // Función para procesar múltiples caracteres a la vez
+            function processMultipleChars(count) {
+                if (index >= text.length) {
+                    finishTypewriter();
+                    return;
+                }
+                
+                // Procesar hasta 'count' caracteres
+                for (let i = 0; i < count && index < text.length; i++) {
+                    const currentContent = element.innerHTML.replace('<span class="typing-cursor"></span>', '');
+                    element.innerHTML = currentContent + text.charAt(index) + '<span class="typing-cursor"></span>';
+                    index++;
+                }
+                
+                // Scroll al final
                 chatContainer.scrollTop = chatContainer.scrollHeight;
                 
-                // Continuar con el siguiente carácter
-                setTimeout(() => {
-                    typeWriter(element, text, index + 1, speed, callback);
-                }, speed);
-            } else {
-                // Eliminar el cursor al finalizar
+                // Si quedan caracteres, continuar con el siguiente paso
+                if (index < text.length) {
+                    startTime = Date.now();
+                    scheduleNextChar();
+                } else {
+                    finishTypewriter();
+                }
+            }
+            
+            // Función para programar el siguiente carácter
+            function scheduleNextChar() {
+                if (isTabActive) {
+                    // Usar requestAnimationFrame para mejor rendimiento cuando la pestaña está activa
+                    animationFrameId = requestAnimationFrame(() => {
+                        const elapsed = Date.now() - startTime;
+                        const remainingTime = Math.max(0, speed - elapsed);
+                        
+                        if (remainingTime <= 0) {
+                            // Si ya pasó el tiempo, mostrar el carácter inmediatamente
+                            showNextChar();
+                        } else {
+                            // Programar un timeout para el tiempo restante
+                            timeoutId = setTimeout(showNextChar, remainingTime);
+                        }
+                    });
+                } else {
+                    // Cuando la pestaña está inactiva, usar setTimeout directamente
+                    timeoutId = setTimeout(showNextChar, speed);
+                }
+            }
+            
+            // Función para mostrar el siguiente carácter
+            function showNextChar() {
+                if (index < text.length) {
+                    // Obtener el contenido actual sin el cursor
+                    const currentContent = element.innerHTML.replace('<span class="typing-cursor"></span>', '');
+                    
+                    // Añadir el siguiente carácter
+                    element.innerHTML = currentContent + text.charAt(index) + '<span class="typing-cursor"></span>';
+                    
+                    // Incrementar el índice
+                    index++;
+                    
+                    // Scroll al final
+                    chatContainer.scrollTop = chatContainer.scrollHeight;
+                    
+                    // Reiniciar el tiempo de inicio para el siguiente carácter
+                    startTime = Date.now();
+                    
+                    // Programar el siguiente carácter
+                    scheduleNextChar();
+                } else {
+                    finishTypewriter();
+                }
+            }
+            
+            // Función para finalizar el efecto de escritura
+            function finishTypewriter() {
+                // Eliminar el cursor
                 const cursor = element.querySelector('.span.typing-cursor');
                 if (cursor) {
                     cursor.remove();
                 }
                 
+                // Eliminar el event listener
+                document.removeEventListener('visibilitychange', handleVisibilityChange);
+                
+                // Cancelar cualquier timeout o animation frame pendiente
+                if (timeoutId) {
+                    clearTimeout(timeoutId);
+                }
+                if (animationFrameId) {
+                    cancelAnimationFrame(animationFrameId);
+                }
+                
                 // Ejecutar callback si existe
                 if (callback) callback();
             }
+            
+            // Añadir el event listener de visibilidad
+            document.addEventListener('visibilitychange', handleVisibilityChange);
+            
+            // Iniciar el proceso de escritura
+            scheduleNextChar();
         }
 
         /**
@@ -1350,39 +1470,6 @@
          * @param {string} pregunta - Pregunta del usuario
          * @returns {Promise<Object>} Respuesta del bot
          */
-        /*
-        Preguntas para verificar
-        1.  ¿Qué productos específicos están cubiertos por el Reglamento (UE) 2023/1115 y cuál es la fecha límite para evitar deforestación asociada a ellos?
-        // Respuesta esperada:
-        const respuesta1 = `Productos cubiertos: 
-        - Ganado (bovino), cacao, café, aceite de palma, soja, madera, caucho y sus derivados (ej: carne, cuero, chocolate, muebles, papel, neumáticos).
-        Fecha límite de deforestación: 31/12/2020 (prohibición de deforestación posterior en las parcelas de origen).`;   
-        2. Describe los 3 pasos obligatorios del sistema de diligencia debida que deben implementar los operadores antes de comercializar productos en la UE.
-        const respuesta2 = `Pasos de diligencia debida:
-            1. Recopilación de información: 
-            - Geolocalización GPS precisa de parcelas.
-            - Descripción de productos/cantidades.
-            - Prueba de cumplimiento legal en país de origen.
-            2. Evaluación de riesgo:
-            - Análisis de país/región de origen.
-            - Verificación de sistemas de gobernanza forestal.
-            - Consideración de complejidad de la cadena de suministro.
-            3. Mitigación de riesgos:
-            - Implementación de medidas proporcionales al riesgo.
-            - Auditorías independientes para riesgos altos.
-            - Documentación de medidas correctivas.`;
-        3. ¿Cuáles son los plazos de implementación diferenciados por tamaño de empresa y las sanciones máximas por incumplimiento del reglamento?
-        const respuesta3 = `Plazos de implementación:
-        - Grandes operadores: 30/12/2024.
-        - Microempresas y PYMES: 30/06/2025.
-        - Productos de caucho: hasta 30/12/2026.
-
-        Sanciones máximas:
-        - Multas: hasta 4% de la facturación anual en la UE.
-        - Decomiso de productos.
-        - Exclusión temporal de mercados públicos.
-        - Controles obligatorios: hasta 9% de operadores verificados anualmente por autoridades nacionales.`;
-        */
         async function obtenerRespuesta(pregunta) {
             // Sanitizar la entrada del usuario
             const preguntaSanitizada = sanitizeInput(pregunta);
