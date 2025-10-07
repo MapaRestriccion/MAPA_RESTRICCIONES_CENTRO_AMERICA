@@ -1247,6 +1247,8 @@
         </div>
         <div class="footer">
             <i class="fas fa-shield-alt"></i> Asistente de Consultas - Información geoespacial para el cumplimiento del EUDR© 2025
+            <br>
+            Este ChatBot puede cometer errores. Comprueba la información importante.
         </div>
     </div>
 
@@ -1873,6 +1875,7 @@
         function formatMessage(message) {
             if (!message) return '';
             const sanitized = sanitizeInput(message);
+            console.log(sanitized)
             return marked.parse(sanitized, { breaks: true, gfm: true });
         }
 
