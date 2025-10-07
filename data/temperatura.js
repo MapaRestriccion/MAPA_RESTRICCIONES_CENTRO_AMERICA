@@ -1,0 +1,1 @@
+const temperatura = [{"pais": "R. Dom",temperatura:"10"}]

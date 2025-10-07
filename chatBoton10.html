@@ -890,6 +890,34 @@
                 transition-duration: 0.01ms !important;
             }
         }
+
+        .bot-message .message-content h1,
+        .bot-message .message-content h2,
+        .bot-message .message-content h3 {
+            margin: 8px 0;
+            color: var(--primary-dark);
+            font-weight: 600;
+        }
+
+        .bot-message .message-content ul,
+        .bot-message .message-content ol {
+            margin: 8px 0 8px 20px;
+        }
+
+        .bot-message .message-content code {
+            background: rgba(0,0,0,0.05);
+            padding: 2px 5px;
+            border-radius: 4px;
+            font-family: monospace;
+        }
+
+        .bot-message .message-content pre {
+            background: rgba(0,0,0,0.05);
+            padding: 10px;
+            border-radius: 8px;
+            overflow-x: auto;
+        }
+
     </style>
 </head>
 <body>
@@ -908,7 +936,7 @@
                         <div class="message-content">
                             ¡Hola! 🌿 Soy tu asistente especializado en áreas protegidas. Puedes preguntarme sobre restricciones, geoprocesos o cualquier aspecto relacionado con los datos disponibles. ¿En qué puedo ayudarte hoy?
                         </div>
-                        <div class="timestamp">Hoy, 10:30 AM</div>
+                        <div class="timestamp" id="initial-timestamp"></div>
                         <div class="suggested-questions" id="initial-questions">
                             <button class="suggested-question">¿Qué áreas protegidas existen en Belice?</button>
                             <button class="suggested-question">¿Cuáles son las restricciones principales?</button>
@@ -942,7 +970,7 @@
             </button>
         </div>
         <div class="footer">
-            <i class="fas fa-shield-alt"></i> Asistente de Consultas - Áreas Protegidas de Belice © 2024
+            <i class="fas fa-shield-alt"></i> Asistente de Consultas - Áreas Protegidas de Belice © 2025
         </div>
     </div>
     <script src="db.js"></script>
@@ -954,7 +982,7 @@
     <script src="data/regulacion.js"></script>
     <script src="data/restriccion.js"></script>
 
-    <script src="data/temperatura.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
 
     <script>
         /**
@@ -1157,8 +1185,7 @@
          */
         function addMessageToChat(sender, message, preguntas = [], typewriterEffect = false) {
             const messageDiv = document.createElement('div');
-            messageDiv.classList.add('message');
-            messageDiv.classList.add(sender === 'user' ? 'user-message' : 'bot-message');
+            messageDiv.classList.add('message', sender === 'user' ? 'user-message' : 'bot-message');
 
             const messageWrapper = document.createElement('div');
             messageWrapper.classList.add('message-wrapper');
@@ -1167,39 +1194,38 @@
             const avatar = document.createElement('div');
             avatar.classList.add(sender === 'user' ? 'user-avatar' : 'bot-avatar');
             avatar.innerHTML = sender === 'user' ? '<i class="fas fa-user"></i>' : '<i class="fas fa-leaf"></i>';
-            
-            // Si es un mensaje del bot con efecto de escritura, añadir clase de animación
-            if (sender === 'bot' && typewriterEffect) {
-                avatar.classList.add('typing');
-            }
 
             // Crear contenido del mensaje
             const messageContent = document.createElement('div');
             messageContent.classList.add('message-content');
-            
-            // Si es un mensaje del bot con efecto de escritura, añadir cursor inicialmente
-            if (sender === 'bot' && typewriterEffect) {
-                messageContent.innerHTML = '<span class="typing-cursor"></span>';
-            } else {
-                messageContent.innerHTML = formatMessage(message);
-            }
-            
-            // Añadir botón de copiar para mensajes del bot
+
+            // Renderizar mensaje según el remitente
             if (sender === 'bot') {
+                // Mostrar Markdown correctamente formateado
+                messageContent.innerHTML = formatMessage(message);
+
+                // Botón de copiar
                 const copyButton = document.createElement('button');
                 copyButton.classList.add('copy-button');
                 copyButton.innerHTML = '<i class="fas fa-copy"></i>';
                 copyButton.addEventListener('click', () => copyToClipboard(message, copyButton));
                 messageContent.appendChild(copyButton);
+            } else {
+                // Mostrar mensaje de usuario con efecto de escritura simple (sin HTML)
+                messageContent.textContent = message;
             }
 
             // Crear timestamp
             const timestamp = document.createElement('div');
             timestamp.classList.add('timestamp');
             const now = new Date();
-            timestamp.textContent = `Hoy, ${now.getHours()}:${now.getMinutes().toString().padStart(2, '0')}`;
+            const hours = now.getHours();
+            const minutes = now.getMinutes().toString().padStart(2, '0');
+            const period = hours >= 12 ? 'PM' : 'AM';
+            const displayHours = hours % 12 || 12;
+            timestamp.textContent = `Hoy, ${displayHours}:${minutes} ${period}`;
 
-            // Estructurar el mensaje
+            // Armar estructura del mensaje
             const messageInfo = document.createElement('div');
             messageInfo.appendChild(messageContent);
             messageInfo.appendChild(timestamp);
@@ -1210,13 +1236,12 @@
             } else {
                 messageWrapper.appendChild(avatar);
                 messageWrapper.appendChild(messageInfo);
-                
-                // Agregar preguntas sugeridas para respuestas del bot
+
+                // Agregar preguntas sugeridas si existen
                 if (preguntas.length > 0) {
                     const suggestedQuestions = document.createElement('div');
                     suggestedQuestions.classList.add('suggested-questions');
-                    suggestedQuestions.style.display = 'none'; // Ocultar inicialmente
-                    
+
                     preguntas.forEach(question => {
                         const button = document.createElement('button');
                         button.classList.add('suggested-question');
@@ -1228,7 +1253,7 @@
                         });
                         suggestedQuestions.appendChild(button);
                     });
-                    
+
                     messageInfo.appendChild(suggestedQuestions);
                 }
             }
@@ -1236,28 +1261,13 @@
             messageDiv.appendChild(messageWrapper);
             chatContainer.appendChild(messageDiv);
 
-            // Scroll al final del chat con animación suave
+            // Desplazar suavemente al final
             setTimeout(() => {
                 chatContainer.scrollTo({
                     top: chatContainer.scrollHeight,
                     behavior: 'smooth'
                 });
             }, 100);
-            
-            // Si es un mensaje del bot con efecto de escritura, iniciar la animación
-            if (sender === 'bot' && typewriterEffect) {
-                typeWriter(messageContent, message, 0, TYPING_SPEED, () => {
-                    // Mostrar las preguntas sugeridas después de completar la escritura
-                    if (preguntas.length > 0) {
-                        const suggestedQuestions = messageInfo.querySelector('.suggested-questions');
-                        if (suggestedQuestions) {
-                            suggestedQuestions.style.display = 'flex';
-                        }
-                    }
-                    // Quitar la clase de animación del avatar
-                    avatar.classList.remove('typing');
-                });
-            }
         }
 
         /**
@@ -1421,12 +1431,10 @@
          * @returns {string} Mensaje formateado
          */
         function formatMessage(message) {
-            return message
-                .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
-                .replace(/\*(.*?)\*/g, '<em>$1</em>')
-                .replace(/\n/g, '<br>');
+            if (!message) return '';
+            const sanitized = sanitizeInput(message);
+            return marked.parse(sanitized, { breaks: true, gfm: true });
         }
-
         /**
          * Escapa caracteres especiales en HTML
          * @param {string} text - Texto a escapar
@@ -1483,9 +1491,9 @@
             });
 
             // Crear el prompt con la base de datos y la pregunta
-            const promptBase = `Eres un asistente experto en el Reglamento Europeo sobre Productos Libres de Deforestación (EUDR) y temperaturas.
+            const promptBase = `Eres un asistente experto en el Reglamento Europeo sobre Productos Libres de Deforestación (EUDR).
 
-            Tu función es responder preguntas basándote exclusivamente en la siguiente información y bases de datos:
+            Tu función es responder preguntas basándote exclusivamente en la siguiente información de contexto y base de datos:
 
             Contexto:
             ${promptComplianceEUDR}                                                                                 
@@ -1494,11 +1502,9 @@
             ${promptDeforestacion}
             ${promptRegulacionEUDR}
 
-            Base de datos 1:
+            Base de datos:
             ${JSON.stringify(datos)}
 
-            Base de datos 2:
-            ${JSON.stringify(temperatura)}
             
 
             Instrucciones:
@@ -1955,6 +1961,24 @@
             }
         `;
         document.head.appendChild(style);
+        /**
+         * Establece la hora actual en el mensaje inicial del bot
+         */
+        function setInitialTimestamp() {
+            const timestampEl = document.getElementById('initial-timestamp');
+            if (timestampEl) {
+                const now = new Date();
+                const hours = now.getHours();
+                const minutes = now.getMinutes().toString().padStart(2, '0');
+                const period = hours >= 12 ? 'PM' : 'AM';
+                const displayHours = hours % 12 || 12;
+                timestampEl.textContent = `Hoy, ${displayHours}:${minutes} ${period}`;
+            }
+        }
+
+        // Llamar a la función al cargar la página
+        document.addEventListener('DOMContentLoaded', setInitialTimestamp);
+
     </script>
 </body>
 </html>

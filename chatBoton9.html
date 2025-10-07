@@ -198,7 +198,7 @@
             box-shadow: 0 3px 10px rgba(0,0,0,0.1);
             transition: all 0.3s ease;
             font-size: var(--font-size-base);
-            line-height: 1.4;
+            line-height: 1.6;
             letter-spacing: 0.2px;
         }
 
@@ -405,6 +405,36 @@
         }
 
         /* ===== BOTONES ===== */
+        #mic-button {
+            background: linear-gradient(135deg, #9c27b0, #673ab7);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 45px;
+            height: 45px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 12px rgba(156, 39, 176, 0.3);
+            margin-left: 5px;
+        }
+
+        #mic-button:hover {
+            transform: scale(1.1) translateY(-2px);
+            box-shadow: 0 6px 16px rgba(156, 39, 176, 0.4);
+        }
+
+        #mic-button:active {
+            transform: scale(0.95);
+        }
+
+        #mic-button.listening {
+            background: linear-gradient(135deg, #f44336, #d32f2f);
+            animation: pulse 1.5s infinite;
+        }
+
         #send-button {
             background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
             color: white;
@@ -662,6 +692,41 @@
             color: white;
         }
 
+        /* ===== BOTÓN LEER RESPUESTA ===== */
+        .speak-button {
+            position: absolute;
+            top: 5px;
+            right: 35px;
+            background: rgba(255, 255, 255, 0.7);
+            border: none;
+            border-radius: 50%;
+            width: 24px;
+            height: 24px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            color: var(--text-secondary);
+            opacity: 0;
+            transition: all 0.2s ease;
+        }
+
+        .message-content:hover .speak-button {
+            opacity: 1;
+        }
+
+        .speak-button:hover {
+            background: var(--secondary-color);
+            color: white;
+        }
+
+        .speak-button.speaking {
+            background: var(--accent-color);
+            color: white;
+            animation: pulse 1.5s infinite;
+        }
+
         /* ===== INDICADOR DE CARACTERES ===== */
         .char-counter {
             font-size: 12px;
@@ -723,7 +788,8 @@
             color: white;
         }
         
-        body.dark-mode .copy-button {
+        body.dark-mode .copy-button, 
+        body.dark-mode .speak-button {
             background: rgba(255, 255, 255, 0.2);
             color: #b0b0b0;
         }
@@ -731,6 +797,106 @@
         body.dark-mode .copy-button:hover {
             background: var(--primary-light);
             color: white;
+        }
+        
+        body.dark-mode .speak-button:hover {
+            background: var(--secondary-color);
+            color: white;
+        }
+
+        /* ===== ESTILOS PARA MARKDOWN ===== */
+        .message-content h1 {
+            font-size: 1.5em;
+            margin-top: 0.5em;
+            margin-bottom: 0.5em;
+            color: var(--primary-color);
+        }
+        
+        .message-content h2 {
+            font-size: 1.3em;
+            margin-top: 0.5em;
+            margin-bottom: 0.5em;
+            color: var(--primary-dark);
+        }
+        
+        .message-content h3 {
+            font-size: 1.1em;
+            margin-top: 0.5em;
+            margin-bottom: 0.5em;
+            color: var(--primary-light);
+        }
+        
+        .message-content p {
+            margin-bottom: 0.8em;
+        }
+        
+        .message-content ul, 
+        .message-content ol {
+            margin-left: 1.5em;
+            margin-bottom: 0.8em;
+        }
+        
+        .message-content li {
+            margin-bottom: 0.3em;
+        }
+        
+        .message-content blockquote {
+            border-left: 3px solid var(--primary-color);
+            padding-left: 1em;
+            margin: 0.8em 0;
+            font-style: italic;
+            color: var(--text-secondary);
+        }
+        
+        .message-content code {
+            background-color: rgba(0, 0, 0, 0.1);
+            padding: 0.2em 0.4em;
+            border-radius: 3px;
+            font-family: monospace;
+            font-size: 0.9em;
+        }
+        
+        .message-content pre {
+            background-color: rgba(0, 0, 0, 0.05);
+            padding: 0.8em;
+            border-radius: 5px;
+            overflow-x: auto;
+            margin: 0.8em 0;
+        }
+        
+        .message-content pre code {
+            background: none;
+            padding: 0;
+        }
+        
+        .message-content table {
+            border-collapse: collapse;
+            width: 100%;
+            margin: 0.8em 0;
+        }
+        
+        .message-content th, 
+        .message-content td {
+            border: 1px solid var(--divider);
+            padding: 0.5em;
+            text-align: left;
+        }
+        
+        .message-content th {
+            background-color: rgba(30, 136, 229, 0.1);
+            font-weight: bold;
+        }
+        
+        body.dark-mode .message-content code {
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+        
+        body.dark-mode .message-content pre {
+            background-color: rgba(255, 255, 255, 0.05);
+        }
+        
+        body.dark-mode .message-content th {
+            background-color: rgba(30, 136, 229, 0.2);
         }
 
         /* ===== RESPONSIVE DESIGN ===== */
@@ -790,7 +956,7 @@
                 font-size: 15px;
             }
             
-            #send-button, #clear-button, #export-button, #dark-mode-toggle {
+            #send-button, #clear-button, #export-button, #dark-mode-toggle, #mic-button {
                 width: 40px;
                 height: 40px;
             }
@@ -832,7 +998,7 @@
                 font-size: 14px;
             }
             
-            #send-button, #clear-button, #export-button, #dark-mode-toggle {
+            #send-button, #clear-button, #export-button, #dark-mode-toggle, #mic-button {
                 width: 38px;
                 height: 38px;
             }
@@ -928,6 +1094,9 @@
         <div class="input-container">
             <input type="text" id="user-input" placeholder="Escribe tu pregunta aquí..." aria-label="Escribe tu pregunta aquí" />
             <div class="char-counter" id="char-counter">0/500</div>
+            <button id="mic-button" aria-label="Activar micrófono">
+                <i class="fas fa-microphone"></i>
+            </button>
             <button id="send-button" aria-label="Enviar mensaje">
                 <i class="fas fa-paper-plane"></i>
             </button>
@@ -953,7 +1122,6 @@
     <script src="data/reglamento.js"></script>
     <script src="data/regulacion.js"></script>
     <script src="data/restriccion.js"></script>
-
     <script src="data/temperatura.js"></script>
 
     <script>
@@ -981,6 +1149,14 @@
         let historialConversacion = [];
         let debounceTimer = null;
         let darkMode = false;
+        
+        // Variables para reconocimiento de voz
+        let recognition = null;
+        let isListening = false;
+        
+        // Variables para síntesis de voz
+        let synthesis = window.speechSynthesis;
+        let currentUtterance = null;
 
         // Elementos del DOM
         const chatContainer = document.getElementById('chat-container');
@@ -989,6 +1165,7 @@
         const clearButton = document.getElementById('clear-button');
         const exportButton = document.getElementById('export-button');
         const darkModeToggle = document.getElementById('dark-mode-toggle');
+        const micButton = document.getElementById('mic-button');
         const typingIndicator = document.getElementById('typing-indicator');
         const loadingIndicator = document.getElementById('loading-indicator');
         const charCounter = document.getElementById('char-counter');
@@ -1000,6 +1177,7 @@
             clearButton.addEventListener('click', clearChat);
             exportButton.addEventListener('click', exportConversation);
             darkModeToggle.addEventListener('click', toggleDarkMode);
+            micButton.addEventListener('click', toggleListening);
             
             // Event listeners para el input
             userInput.addEventListener('keypress', handleKeyPress);
@@ -1020,7 +1198,169 @@
             
             // Manejar cambios de orientación
             window.addEventListener('orientationchange', handleOrientationChange);
+            
+            // Inicializar reconocimiento de voz
+            initializeSpeechRecognition();
         });
+
+        /**
+         * Inicializa el reconocimiento de voz
+         */
+        function initializeSpeechRecognition() {
+            if ('webkitSpeechRecognition' in window || 'SpeechRecognition' in window) {
+                const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+                recognition = new SpeechRecognition();
+                recognition.lang = 'es-ES'; // Idioma español
+                recognition.continuous = false;
+                recognition.interimResults = false;
+
+                recognition.onstart = () => {
+                    isListening = true;
+                    micButton.classList.add('listening');
+                    userInput.placeholder = 'Escuchando...';
+                };
+
+                recognition.onresult = (event) => {
+                    const transcript = event.results[0][0].transcript;
+                    userInput.value = transcript;
+                    updateCharCounter();
+                };
+
+                recognition.onerror = (event) => {
+                    console.error('Error en el reconocimiento de voz:', event.error);
+                    showNotification('Error en el reconocimiento de voz: ' + event.error, 'error');
+                    stopListening();
+                };
+
+                recognition.onend = () => {
+                    stopListening();
+                };
+            } else {
+                // El navegador no soporta reconocimiento de voz
+                micButton.style.display = 'none';
+                showNotification('Tu navegador no soporta reconocimiento de voz', 'warning');
+            }
+        }
+
+        /**
+         * Inicia o detiene el reconocimiento de voz
+         */
+        function toggleListening() {
+            if (isListening) {
+                stopListening();
+            } else {
+                startListening();
+            }
+        }
+
+        /**
+         * Inicia el reconocimiento de voz
+         */
+        function startListening() {
+            if (recognition && !isListening) {
+                recognition.start();
+            }
+        }
+
+        /**
+         * Detiene el reconocimiento de voz
+         */
+        function stopListening() {
+            if (recognition && isListening) {
+                recognition.stop();
+                isListening = false;
+                micButton.classList.remove('listening');
+                userInput.placeholder = 'Escribe tu pregunta aquí...';
+            }
+        }
+
+        /**
+         * Lee el texto proporcionado
+         * @param {string} text - Texto a leer
+         * @param {HTMLElement} button - Botón que activó la acción
+         */
+        function speakText(text, button) {
+            // Si ya hay una lectura en curso, la cancelamos
+            if (synthesis.speaking) {
+                synthesis.cancel();
+                if (currentUtterance) {
+                    currentUtterance = null;
+                }
+                // Restaurar el botón
+                if (button) {
+                    button.innerHTML = '<i class="fas fa-volume-up"></i>';
+                    button.classList.remove('speaking');
+                }
+                return;
+            }
+
+            // Verificar soporte de síntesis de voz
+            if (!('speechSynthesis' in window)) {
+                showNotification('Tu navegador no soporta síntesis de voz', 'error');
+                return;
+            }
+
+            // Limpiar el texto: quitar etiquetas HTML y espacios extra
+            const cleanText = text.replace(/<[^>]*>/g, '').replace(/\s+/g, ' ').trim();
+            if (!cleanText) {
+                showNotification('No hay texto para leer', 'warning');
+                return;
+            }
+
+            // Crear una nueva instancia de SpeechSynthesisUtterance
+            const utterance = new SpeechSynthesisUtterance(cleanText);
+            utterance.lang = 'es-ES';
+            utterance.rate = 1.0;
+            utterance.pitch = 1.0;
+            utterance.volume = 1.0;
+
+            // Eventos
+            utterance.onstart = () => {
+                if (button) {
+                    button.innerHTML = '<i class="fas fa-stop"></i>';
+                    button.classList.add('speaking');
+                }
+            };
+
+            utterance.onend = () => {
+                if (button) {
+                    button.innerHTML = '<i class="fas fa-volume-up"></i>';
+                    button.classList.remove('speaking');
+                }
+                currentUtterance = null;
+            };
+
+            utterance.onerror = (event) => {
+                console.error('Error en la síntesis de voz:', event.error);
+                if (button) {
+                    button.innerHTML = '<i class="fas fa-volume-up"></i>';
+                    button.classList.remove('speaking');
+                }
+                currentUtterance = null;
+                showNotification('Error al leer el texto: ' + event.error, 'error');
+            };
+
+            currentUtterance = utterance;
+            
+            // Iniciar la síntesis de voz
+            try {
+                synthesis.speak(utterance);
+            } catch (error) {
+                console.error('Error al iniciar síntesis de voz:', error);
+                showNotification('Error al iniciar síntesis de voz', 'error');
+            }
+        }
+
+        /**
+         * Extrae texto sin etiquetas HTML
+         * @param {string} html - Cadena con HTML
+         * @returns {string} Texto sin etiquetas HTML
+         */
+        function stripHtml(html) {
+            const tmp = document.createElement('div');
+            tmp.innerHTML = html;
+            return tmp.textContent || tmp.innerText || '';
+        }
 
         /**
          * Configura las preguntas iniciales sugeridas
@@ -1096,6 +1436,11 @@
             if (message.length > MAX_INPUT_LENGTH) {
                 showNotification(`Tu mensaje es demasiado largo. Máximo ${MAX_INPUT_LENGTH} caracteres.`, 'error');
                 return;
+            }
+            
+            // Detener reconocimiento de voz si está activo
+            if (isListening) {
+                stopListening();
             }
             
             // Deshabilitar elementos durante el envío
@@ -1191,6 +1536,16 @@
                 copyButton.innerHTML = '<i class="fas fa-copy"></i>';
                 copyButton.addEventListener('click', () => copyToClipboard(message, copyButton));
                 messageContent.appendChild(copyButton);
+                
+                // Añadir botón de speak para mensajes del bot
+                const speakButton = document.createElement('button');
+                speakButton.classList.add('speak-button');
+                speakButton.innerHTML = '<i class="fas fa-volume-up"></i>';
+                speakButton.addEventListener('click', () => {
+                    const plainText = stripHtml(message);
+                    speakText(plainText, speakButton);
+                });
+                messageContent.appendChild(speakButton);
             }
 
             // Crear timestamp
@@ -1280,39 +1635,31 @@
                 const wasActive = isTabActive;
                 isTabActive = !document.hidden;
                 
-                // Si la pestaña acaba de volver a estar activa, calcula cuánto tiempo estuvo inactiva
                 if (!wasActive && isTabActive) {
                     const inactiveTime = Date.now() - lastActiveTime;
-                    // Calcula cuántos caracteres deberían haberse mostrado durante ese tiempo
                     const charsToShow = Math.floor(inactiveTime / speed);
                     
-                    // Si hay caracteres que mostrar, procesa varios a la vez
                     if (charsToShow > 0 && index < text.length) {
-                        // Cancelar el timeout pendiente
                         if (timeoutId) {
                             clearTimeout(timeoutId);
                             timeoutId = null;
                         }
                         
-                        // Cancelar el animation frame pendiente
                         if (animationFrameId) {
                             cancelAnimationFrame(animationFrameId);
                             animationFrameId = null;
                         }
                         
-                        // Procesar los caracteres acumulados
                         processMultipleChars(Math.min(charsToShow, text.length - index));
                         return;
                     }
                 }
                 
-                // Actualiza el último tiempo activo
                 if (isTabActive) {
                     lastActiveTime = Date.now();
                 }
             };
             
-            // Función para procesar múltiples caracteres a la vez
             function processMultipleChars(count) {
                 if (index >= text.length) {
                     finishTypewriter();
@@ -1326,10 +1673,8 @@
                     index++;
                 }
                 
-                // Scroll al final
                 chatContainer.scrollTop = chatContainer.scrollHeight;
                 
-                // Si quedan caracteres, continuar con el siguiente paso
                 if (index < text.length) {
                     startTime = Date.now();
                     scheduleNextChar();
@@ -1338,65 +1683,45 @@
                 }
             }
             
-            // Función para programar el siguiente carácter
             function scheduleNextChar() {
                 if (isTabActive) {
-                    // Usar requestAnimationFrame para mejor rendimiento cuando la pestaña está activa
                     animationFrameId = requestAnimationFrame(() => {
                         const elapsed = Date.now() - startTime;
                         const remainingTime = Math.max(0, speed - elapsed);
                         
                         if (remainingTime <= 0) {
-                            // Si ya pasó el tiempo, mostrar el carácter inmediatamente
                             showNextChar();
                         } else {
-                            // Programar un timeout para el tiempo restante
                             timeoutId = setTimeout(showNextChar, remainingTime);
                         }
                     });
                 } else {
-                    // Cuando la pestaña está inactiva, usar setTimeout directamente
                     timeoutId = setTimeout(showNextChar, speed);
                 }
             }
             
-            // Función para mostrar el siguiente carácter
             function showNextChar() {
                 if (index < text.length) {
-                    // Obtener el contenido actual sin el cursor
                     const currentContent = element.innerHTML.replace('<span class="typing-cursor"></span>', '');
-                    
-                    // Añadir el siguiente carácter
                     element.innerHTML = currentContent + text.charAt(index) + '<span class="typing-cursor"></span>';
-                    
-                    // Incrementar el índice
                     index++;
                     
-                    // Scroll al final
                     chatContainer.scrollTop = chatContainer.scrollHeight;
-                    
-                    // Reiniciar el tiempo de inicio para el siguiente carácter
                     startTime = Date.now();
-                    
-                    // Programar el siguiente carácter
                     scheduleNextChar();
                 } else {
                     finishTypewriter();
                 }
             }
             
-            // Función para finalizar el efecto de escritura
             function finishTypewriter() {
-                // Eliminar el cursor
                 const cursor = element.querySelector('.span.typing-cursor');
                 if (cursor) {
                     cursor.remove();
                 }
                 
-                // Eliminar el event listener
                 document.removeEventListener('visibilitychange', handleVisibilityChange);
                 
-                // Cancelar cualquier timeout o animation frame pendiente
                 if (timeoutId) {
                     clearTimeout(timeoutId);
                 }
@@ -1404,14 +1729,10 @@
                     cancelAnimationFrame(animationFrameId);
                 }
                 
-                // Ejecutar callback si existe
                 if (callback) callback();
             }
             
-            // Añadir el event listener de visibilidad
             document.addEventListener('visibilitychange', handleVisibilityChange);
-            
-            // Iniciar el proceso de escritura
             scheduleNextChar();
         }
 
@@ -1421,10 +1742,41 @@
          * @returns {string} Mensaje formateado
          */
         function formatMessage(message) {
-            return message
-                .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
-                .replace(/\*(.*?)\*/g, '<em>$1</em>')
-                .replace(/\n/g, '<br>');
+            if (!message) return '';
+            
+            // Convertir encabezados
+            message = message.replace(/^### (.*$)/gim, '<h3>$1</h3>');
+            message = message.replace(/^## (.*$)/gim, '<h2>$1</h2>');
+            message = message.replace(/^# (.*$)/gim, '<h1>$1</h1>');
+            
+            // Convertir listas no ordenadas
+            message = message.replace(/^\* (.*$)/gim, '<li>$1</li>');
+            
+            // Convertir listas ordenadas
+            message = message.replace(/^\d+\. (.*$)/gim, '<li>$1</li>');
+            
+            // Agrupar elementos de lista consecutivos
+            message = message.replace(/(<li>.*<\/li>\s*)+/gs, function(match) {
+                return '<ul>' + match.trim() + '</ul>';
+            });
+            
+            // Convertir negrita y cursiva
+            message = message.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
+            message = message.replace(/\*(.*?)\*/g, '<em>$1</em>');
+            
+            // Convertir código en línea
+            message = message.replace(/`(.*?)`/g, '<code>$1</code>');
+            
+            // Convertir bloques de código
+            message = message.replace(/```([\s\S]*?)```/g, '<pre><code>$1</code></pre>');
+            
+            // Convertir bloques de cita
+            message = message.replace(/^> (.*$)/gim, '<blockquote>$1</blockquote>');
+            
+            // Convertir saltos de línea
+            message = message.replace(/\n/g, '<br>');
+            
+            return message;
         }
 
         /**
@@ -1673,6 +2025,16 @@
             // Confirmar antes de limpiar
             if (!confirm('¿Estás seguro de que quieres limpiar la conversación?')) {
                 return;
+            }
+            
+            // Detener cualquier síntesis de voz en curso
+            if (synthesis.speaking) {
+                synthesis.cancel();
+            }
+            
+            // Detener reconocimiento de voz si está activo
+            if (isListening) {
+                stopListening();
             }
             
             // Limpiar el contenedor de chat excepto el mensaje inicial
