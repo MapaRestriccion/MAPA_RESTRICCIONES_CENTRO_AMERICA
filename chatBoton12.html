@@ -1037,6 +1037,177 @@
         body.dark-mode button[title]:hover::before {
             border-top-color: rgba(255, 255, 255, 0.9);
         }
+
+        /* ===== BOTÓN DE VOZ MEJORADO ===== */
+        #voice-button {
+            background: linear-gradient(135deg, #9c27b0, #7b1fa2);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 50px; /* Aumentado de 45px */
+            height: 50px; /* Aumentado de 45px */
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 12px rgba(156, 39, 176, 0.4); /* Sombra más visible */
+            margin-left: 5px;
+            position: relative;
+        }
+
+        #voice-button:hover {
+            transform: scale(1.15) translateY(-2px); /* Efecto hover más pronunciado */
+            box-shadow: 0 6px 20px rgba(156, 39, 176, 0.6); /* Sombra más intensa al hover */
+        }
+
+        #voice-button:active {
+            transform: scale(0.95);
+        }
+
+        #voice-button.listening {
+            background: linear-gradient(135deg, #f44336, #d32f2f);
+            animation: voice-pulse 1.5s infinite;
+            box-shadow: 0 0 0 0 rgba(244, 67, 54, 0.7);
+        }
+
+        /* Nueva animación más visible para el modo listening */
+        @keyframes voice-pulse {
+            0% {
+                box-shadow: 0 0 0 0 rgba(244, 67, 54, 0.7);
+                transform: scale(1);
+            }
+            70% {
+                box-shadow: 0 0 0 15px rgba(244, 67, 54, 0);
+                transform: scale(1.05);
+            }
+            100% {
+                box-shadow: 0 0 0 0 rgba(244, 67, 54, 0);
+                transform: scale(1);
+            }
+        }
+
+        /* Icono más grande */
+        #voice-button i {
+            font-size: 20px; /* Aumentado de 16px */
+            transition: transform 0.3s ease;
+        }
+
+        #voice-button:hover i {
+            transform: scale(1.1);
+        }
+
+        /* Indicador visual adicional cuando está grabando */
+        #voice-button.listening::after {
+            content: '';
+            position: absolute;
+            top: -5px;
+            left: -5px;
+            right: -5px;
+            bottom: -5px;
+            border: 2px solid #f44336;
+            border-radius: 50%;
+            animation: voice-ring 2s infinite;
+        }
+
+        @keyframes voice-ring {
+            0% {
+                transform: scale(1);
+                opacity: 1;
+            }
+            100% {
+                transform: scale(1.3);
+                opacity: 0;
+            }
+        }
+
+        /* Botones de speak en los mensajes también más grandes */
+        .speak-button {
+            position: absolute;
+            top: 5px;
+            right: 35px;
+            background: rgba(255, 255, 255, 0.9); /* Fondo más sólido */
+            border: 1px solid var(--divider); /* Borde para mejor visibilidad */
+            border-radius: 50%;
+            width: 28px; /* Aumentado de 24px */
+            height: 28px; /* Aumentado de 24px */
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px; /* Aumentado de 12px */
+            color: var(--primary-color); /* Color más visible */
+            opacity: 0.8; /* Más visible por defecto */
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        .message-content:hover .speak-button {
+            opacity: 1;
+            transform: scale(1.1);
+        }
+
+        .speak-button:hover {
+            background: var(--secondary-color);
+            color: white;
+            transform: scale(1.2);
+            box-shadow: 0 3px 8px rgba(0,0,0,0.2);
+        }
+
+        .speak-button.speaking {
+            background: var(--secondary-color);
+            color: white;
+            animation: speak-pulse 1.5s infinite;
+            opacity: 1;
+        }
+
+        /* Animación para el botón de speak cuando está activo */
+        @keyframes speak-pulse {
+            0% {
+                box-shadow: 0 0 0 0 rgba(67, 160, 71, 0.7);
+            }
+            70% {
+                box-shadow: 0 0 0 8px rgba(67, 160, 71, 0);
+            }
+            100% {
+                box-shadow: 0 0 0 0 rgba(67, 160, 71, 0);
+            }
+        }
+
+        /* Ajustes responsive para el botón de voz más grande */
+        @media (max-width: 768px) {
+            #voice-button {
+                width: 44px; /* Aumentado de 40px */
+                height: 44px; /* Aumentado de 40px */
+            }
+            
+            #voice-button i {
+                font-size: 18px; /* Aumentado de 16px */
+            }
+            
+            .speak-button {
+                width: 26px; /* Aumentado de 24px */
+                height: 26px; /* Aumentado de 24px */
+                font-size: 13px; /* Aumentado de 12px */
+            }
+        }
+
+        @media (max-width: 480px) {
+            #voice-button {
+                width: 42px; /* Aumentado de 38px */
+                height: 42px; /* Aumentado de 38px */
+            }
+            
+            #voice-button i {
+                font-size: 17px; /* Aumentado de 16px */
+            }
+            
+            .speak-button {
+                width: 24px; /* Aumentado de 22px */
+                height: 24px; /* Aumentado de 22px */
+                font-size: 12px;
+            }
+        }
     </style>
 </head>
 <body>
@@ -1249,8 +1420,10 @@
             
             if (voiceButton.classList.contains('listening')) {
                 recognition.stop();
+                showNotification("Grabación detenida", 'info');
             } else {
                 recognition.start();
+                showNotification("Grabando... Habla ahora", 'info');
             }
         }
 
@@ -1310,22 +1483,25 @@
                     button.classList.add('speaking');
                     button.innerHTML = '<i class="fas fa-stop"></i>';
                 }
+                showNotification("Reproduciendo audio...", 'info');
             };
-            
+
             currentUtterance.onend = () => {
                 if (button) {
                     button.classList.remove('speaking');
                     button.innerHTML = '<i class="fas fa-volume-up"></i>';
                 }
+                showNotification("Reproducción finalizada", 'success');
             };
-            
+                        
             currentUtterance.onerror = (event) => {
                 console.error('Error en la síntesis de voz:', event.error);
                 if (button) {
                     button.classList.remove('speaking');
                     button.innerHTML = '<i class="fas fa-volume-up"></i>';
                 }
-                showNotification(`Error en la síntesis de voz: ${event.error}`, 'error');
+                //showNotification(`Error en la síntesis de voz: ${event.error}`, 'error');
+                showNotification(`Voz detenida`, 'error');
             };
             
             // Iniciar la síntesis

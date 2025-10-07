@@ -1505,11 +1505,7 @@
                 "Guyana": { center: [5.0, -58.0], zoom: 7 },
                 "Surinam": { center: [4.0, -56.0], zoom: 7 },
                 "Guayana Francesa": { center: [4.0, -53.0], zoom: 8 }
-            },
-            // Configuración para optimización
-            MAX_ACTIVE_LAYERS: 5, // Máximo de capas activas simultáneamente
-            CACHE_ENABLED: true,   // Habilitar caché con IndexedDB
-            SIMPLIFY_TOLERANCE: 0.0001 // Tolerancia para simplificar geometrías
+            }
         };
 
         // =============================================
@@ -1523,8 +1519,6 @@
         let geojsonLayers = {};
         let mapInitialized = false;
         let currentRestriction = null;
-        let cacheDB = null; // Base de datos para caché
-        let geojsonWorker = null; // Worker para procesamiento en segundo plano
 
         // =============================================
         // CLASE PRINCIPAL DE LA APLICACIÓN
@@ -1540,9 +1534,7 @@
                 this.populateFilters();
                 this.setupEventListeners();
                 this.updateStats();
-                // Inicializar caché y worker
-                this.initCacheDB();
-                this.initWorker();
+                // No inicializamos el mapa aquí, lo haremos cuando se active la pestaña
             }
 
             // =============================================
@@ -1560,8 +1552,9 @@
                 });
                 osmLayer.addTo(map);
 
-                // Agregar leyenda
+                // Agregar leyenda y cargar capas
                 this.addLegend();
+                this.loadGeoJsonLayers();
 
                 // Evento para cuando se hace clic en el mapa
                 map.on('click', () => {
@@ -1595,91 +1588,45 @@
             // =============================================
 
             loadGeoJsonLayers() {
-                // No cargar todas las capas automáticamente
-                // Solo mostrar lista de capas disponibles
-                this.updateLayersList();
-            }
+                document.getElementById('loading-indicator').style.display = 'block';
 
-            async toggleLayer(id) {
-                if (geojsonLayers[id]) {
-                    const layerInfo = geojsonLayers[id];
+                let totalLayers = restrictionsData.length;
+                let loadedLayers = 0;
+                let errorLayers = 0;
 
-                    if (layerInfo.visible) {
-                        map.removeLayer(layerInfo.layer);
-                        layerInfo.visible = false;
-                        
-                        // Liberar memoria eliminando la capa
-                        delete layerInfo.layer;
-                        layerInfo.loaded = false;
+                this.updateLoadingIndicator(loadedLayers, totalLayers, errorLayers);
+
+                restrictionsData.forEach(restriction => {
+                    if (restriction.id_layer && restriction.url_geojson) {
+                        this.addGeoJSONLayer(
+                            restriction.id_layer,
+                            //restriction.entregable || restriction.nombre_del_dataset,
+                            restriction.entregable,
+                            restriction.url_geojson
+                        ).then(() => {
+                            loadedLayers++;
+                            this.updateLoadingIndicator(loadedLayers, totalLayers, errorLayers);
+                            this.checkLoadingComplete(loadedLayers, totalLayers, errorLayers);
+                        }).catch(() => {
+                            errorLayers++;
+                            this.updateLoadingIndicator(loadedLayers, totalLayers, errorLayers);
+                            this.checkLoadingComplete(loadedLayers, totalLayers, errorLayers);
+                        });
                     } else {
-                        // Verificar límite de capas activas
-                        const activeLayers = Object.values(geojsonLayers).filter(layer => layer.visible);
-                        
-                        if (activeLayers.length >= CONFIG.MAX_ACTIVE_LAYERS) {
-                            // Desactivar la capa más antigua
-                            const oldestLayer = activeLayers[0];
-                            map.removeLayer(oldestLayer.layer);
-                            oldestLayer.visible = false;
-                            
-                            // Liberar memoria
-                            delete oldestLayer.layer;
-                            oldestLayer.loaded = false;
-                            
-                            this.showNotification(`Se desactivó la capa "${oldestLayer.name}" para mantener el rendimiento`);
-                        }
-                        
-                        // Si la capa no ha sido cargada, cargarla ahora
-                        if (!layerInfo.layer || !layerInfo.loaded) {
-                            await this.loadSingleGeoJsonLayer(id);
-                        } else {
-                            map.addLayer(layerInfo.layer);
-                            layerInfo.visible = true;
-
-                            try {
-                                map.fitBounds(layerInfo.layer.getBounds(), { padding: [20, 20] });
-                            } catch (e) {
-                                console.error("Error al ajustar los límites de la capa:", e);
-                            }
-                        }
+                        totalLayers--;
+                        this.updateLoadingIndicator(loadedLayers, totalLayers, errorLayers);
                     }
-
-                    this.updateLayersList();
-                }
+                });
             }
 
-            async loadSingleGeoJsonLayer(id) {
-                const restriction = restrictionsData.find(r => r.id_layer === id);
-                if (!restriction || !restriction.url_geojson) return;
-                
+            async addGeoJSONLayer(id, name, url) {
                 const color = CONFIG.COLORS.LAYERS[id] || this.getRandomColor();
                 
                 try {
-                    document.getElementById('loading-indicator').style.display = 'block';
-                    document.getElementById('loading-progress').textContent = `Cargando capa: ${restriction.entregable}`;
+                    const response = await fetch(url);
+                    if (!response.ok) throw new Error(`Error al cargar el GeoJSON: ${response.statusText}`);
                     
-                    // Intentar obtener de la caché primero
-                    let data;
-                    if (CONFIG.CACHE_ENABLED && cacheDB) {
-                        data = await this.getFromCache(id);
-                    }
-                    
-                    if (!data) {
-                        // Descargar y guardar en caché
-                        const response = await fetch(restriction.url_geojson);
-                        if (!response.ok) throw new Error(`Error al cargar el GeoJSON: ${response.statusText}`);
-                        
-                        data = await response.json();
-                        
-                        // Optimizar datos
-                        data = this.optimizeData(data);
-                        
-                        // Guardar en caché
-                        if (CONFIG.CACHE_ENABLED && cacheDB) {
-                            await this.saveToCache(id, data);
-                        }
-                    }
-                    
-                    // Crear la capa con los datos
+                    const data = await response.json();
                     const layer = L.geoJSON(data, {
                         style: {
                             color: color,
@@ -1691,203 +1638,81 @@
                         }
                     });
 
-                    // Guardar la capa cargada
                     geojsonLayers[id] = {
                         layer: layer,
-                        url: restriction.url_geojson,
+                        url: url,
                         color: color,
-                        visible: true,
-                        name: restriction.entregable || restriction.nombre_del_dataset,
-                        loaded: true
+                        visible: false,
+                        name: name
                     };
-                    
-                    document.getElementById('loading-indicator').style.display = 'none';
+
                     this.updateLayersList();
                 } catch (error) {
                     console.error('Error cargando capa:', error);
-                    document.getElementById('loading-indicator').style.display = 'none';
-                    this.showNotification(`Error al cargar la capa: ${error.message}`, true);
+                    throw error;
                 }
             }
 
-            // =============================================
-            // OPTIMIZACIÓN DE DATOS
-            // =============================================
-
-            optimizeData(geojson) {
-                // Simplificar geometrías
-                if (typeof turf !== 'undefined') {
-                    try {
-                        geojson = turf.simplify(geojson, { 
-                            tolerance: CONFIG.SIMPLIFY_TOLERANCE, 
-                            highQuality: true 
-                        });
-                    } catch (e) {
-                        console.error('Error simplificando geometría:', e);
+            setupLayerInteraction(feature, layer, id) {
+                // Añadir popup con propiedades
+                if (feature.properties) {
+                    let popupContent = '<div class="popup-content">';
+                    for (const key in feature.properties) {
+                        popupContent += `<div><strong>${key}:</strong> ${feature.properties[key]}</div>`;
                     }
+                    popupContent += '</div>';
+                    layer.bindPopup(popupContent);
                 }
-                
-                // Optimizar propiedades
-                if (geojsonWorker) {
-                    // Usar worker para no bloquear el hilo principal
-                    return new Promise((resolve, reject) => {
-                        geojsonWorker.onmessage = (e) => {
-                            if (e.data.success) {
-                                resolve(e.data.result);
-                            } else {
-                                reject(new Error(e.data.error));
-                            }
-                        };
-                        
-                        geojsonWorker.postMessage({ 
-                            geojson: geojson, 
-                            operation: 'optimizeProperties' 
-                        });
-                    });
+
+                // Evento de clic en la capa
+                layer.on('click', (e) => {
+                    const restriction = restrictionsData.find(r => r.id_layer === id);
+                    if (restriction) {
+                        this.showFeatureInfo(restriction);
+                    }
+
+                    // Resaltar la capa
+                    if (currentFeature) {
+                        this.resetFeatureStyle(currentFeature);
+                    }
+                    currentFeature = layer;
+                    this.highlightFeature(layer);
+                });
+            }
+
+            updateLoadingIndicator(loaded, total, errors) {
+                const loadingProgress = document.getElementById('loading-progress');
+                const loadingLayers = document.getElementById('loading-layers');
+                const loadingError = document.getElementById('loading-error');
+
+                if (loaded === 0) {
+                    loadingProgress.textContent = 'Iniciando carga de capas...';
+                } else if (loaded < total) {
+                    loadingProgress.textContent = `Cargando capas... (${loaded}/${total})`;
+                    loadingLayers.textContent = `${total - loaded} capas restantes por cargar`;
                 } else {
-                    // Fallback sin worker
-                    return this.optimizeProperties(geojson);
+                    loadingProgress.textContent = `Carga completada (${loaded}/${total})`;
+                    loadingLayers.textContent = '';
+                }
+
+                if (errors > 0) {
+                    loadingError.textContent = `${errors} error(es) de carga`;
+                } else {
+                    loadingError.textContent = '';
                 }
             }
 
-            optimizeProperties(geojson) {
-                if (geojson.features) {
-                    geojson.features.forEach(feature => {
-                        // Mantener solo propiedades necesarias
-                        const props = feature.properties;
-                        const optimizedProps = {};
-                        
-                        // Lista de propiedades a mantener
-                        const keepProps = ['id', 'name', 'type', 'descripcion', 'categoria'];
-                        
-                        keepProps.forEach(prop => {
-                            if (props[prop] !== undefined) {
-                                optimizedProps[prop] = props[prop];
-                            }
-                        });
-                        
-                        feature.properties = optimizedProps;
-                    });
-                }
-                return geojson;
-            }
-
-            // =============================================
-            // GESTIÓN DE CACHÉ CON INDEXEDDB
-            // =============================================
-
-            async initCacheDB() {
-                if (!CONFIG.CACHE_ENABLED || !window.indexedDB) return;
-                
-                try {
-                    cacheDB = await new Promise((resolve, reject) => {
-                        const request = indexedDB.open('GeoJsonCacheDB', 1);
-                        
-                        request.onerror = () => reject(request.error);
-                        request.onsuccess = () => resolve(request.result);
-                        
-                        request.onupgradeneeded = (event) => {
-                            const db = event.target.result;
-                            if (!db.objectStoreNames.contains('geojsonLayers')) {
-                                db.createObjectStore('geojsonLayers', { keyPath: 'id' });
-                            }
-                        };
-                    });
-                    
-                    console.log('Base de datos de caché inicializada correctamente');
-                } catch (error) {
-                    console.error('Error al inicializar la base de datos de caché:', error);
-                    CONFIG.CACHE_ENABLED = false;
-                }
-            }
-
-            async getFromCache(id) {
-                if (!cacheDB) return null;
-                
-                try {
-                    const transaction = cacheDB.transaction(['geojsonLayers'], 'readonly');
-                    const store = transaction.objectStore('geojsonLayers');
-                    const request = store.get(id);
-                    
-                    return new Promise((resolve, reject) => {
-                        request.onsuccess = () => {
-                            if (request.result) {
-                                console.log(`Capa ${id} cargada desde caché`);
-                                resolve(request.result.data);
-                            } else {
-                                resolve(null);
-                            }
-                        };
-                        
-                        request.onerror = () => reject(request.error);
-                    });
-                } catch (error) {
-                    console.error('Error al obtener datos de la caché:', error);
-                    return null;
-                }
-            }
-
-            async saveToCache(id, data) {
-                if (!cacheDB) return;
-                
-                try {
-                    const transaction = cacheDB.transaction(['geojsonLayers'], 'readwrite');
-                    const store = transaction.objectStore('geojsonLayers');
-                    store.add({ id, data });
-                    
-                    return new Promise((resolve, reject) => {
-                        transaction.oncomplete = () => resolve();
-                        transaction.onerror = () => reject(transaction.error);
-                    });
-                } catch (error) {
-                    console.error('Error al guardar datos en la caché:', error);
-                }
-            }
-
-            // =============================================
-            // GESTIÓN DE WEB WORKER
-            // =============================================
-
-            initWorker() {
-                // Crear el worker
-                const workerCode = `
-                    self.onmessage = function(e) {
-                        const { geojson, operation } = e.data;
-                        
-                        try {
-                            let result;
-                            
-                            if (operation === 'optimizeProperties') {
-                                result = JSON.parse(JSON.stringify(geojson)); // Clonación profunda
-                                
-                                if (result.features) {
-                                    const keepProps = ['id', 'name', 'type', 'descripcion', 'categoria'];
-                                    
-                                    result.features.forEach(feature => {
-                                        const props = feature.properties;
-                                        const optimizedProps = {};
-                                        
-                                        keepProps.forEach(prop => {
-                                            if (props[prop] !== undefined) {
-                                                optimizedProps[prop] = props[prop];
-                                            }
-                                        });
-                                        
-                                        feature.properties = optimizedProps;
-                                    });
-                                }
-                            }
-                            
-                            self.postMessage({ success: true, result });
-                        } catch (error) {
-                            self.postMessage({ success: false, error: error.message });
+            checkLoadingComplete(loaded, total, errors) {
+                if (loaded + errors === total) {
+                    setTimeout(() => {
+                        document.getElementById('loading-indicator').style.display = 'none';
+                        if (errors === 0) {
+                            this.showNotification('Todas las capas se han cargado correctamente');
+                        } else {
+                            this.showNotification(`Se cargaron ${loaded} de ${total} capas. ${errors} capa(s) no se pudieron cargar.`, true);
                         }
-                    };
-                `;
-                
-                const blob = new Blob([workerCode], { type: 'application/javascript' });
-                const workerUrl = URL.createObjectURL(blob);
-                geojsonWorker = new Worker(workerUrl);
+                    }, 1000);
+                }
             }
 
             // =============================================
@@ -1959,6 +1784,28 @@
                         item.style.display = layerName.includes(searchTerm) ? 'flex' : 'none';
                     });
                 });
+            }
+
+            toggleLayer(id) {
+                if (geojsonLayers[id]) {
+                    const layerInfo = geojsonLayers[id];
+
+                    if (layerInfo.visible) {
+                        map.removeLayer(layerInfo.layer);
+                        layerInfo.visible = false;
+                    } else {
+                        map.addLayer(layerInfo.layer);
+                        layerInfo.visible = true;
+
+                        try {
+                            map.fitBounds(layerInfo.layer.getBounds(), { padding: [20, 20] });
+                        } catch (e) {
+                            console.error("Error al ajustar los límites de la capa:", e);
+                        }
+                    }
+
+                    this.updateLayersList();
+                }
             }
 
             removeLayer(id) {
@@ -2681,34 +2528,167 @@
             }
 
             // =============================================
-            // INTERACCIÓN CON CAPAS
+            // FUNCIONES FALTANTES
             // =============================================
 
-            setupLayerInteraction(feature, layer, id) {
-                // Añadir popup con propiedades
-                if (feature.properties) {
-                    let popupContent = '<div class="popup-content">';
-                    for (const key in feature.properties) {
-                        popupContent += `<div><strong>${key}:</strong> ${feature.properties[key]}</div>`;
-                    }
-                    popupContent += '</div>';
-                    layer.bindPopup(popupContent);
+            // Función para mostrar detalles de una restricción por su ID
+            showDetailForId(id) {
+                const item = restrictionsData.find(row => row.ip_restriccion === id);
+                if (item) {
+                    this.showDetailModal(item.ip_restriccion);
+                }
+            }
+
+            // Función para centrar el mapa en un país específico
+            centerMapOnCountry(country) {
+                const countryConfig = CONFIG.COUNTRY_CENTERS[country] || { center: CONFIG.MAP.CENTER, zoom: CONFIG.MAP.ZOOM };
+                map.setView(countryConfig.center, countryConfig.zoom);
+            }
+
+            // Función para obtener la clase CSS para un badge según el tipo
+            getBadgeClass(type) {
+                if (!type) return 'badge-otros';
+                
+                const typeLower = type.toLowerCase();
+                
+                if (typeLower.includes('ambiental') || typeLower.includes('forestal') || typeLower.includes('conservación')) {
+                    return 'badge-eudr';
+                } else if (typeLower.includes('hidrica') || typeLower.includes('hídrica')) {
+                    return 'badge-buffer';
+                } else if (typeLower.includes('fauna')) {
+                    return 'badge-ap';
+                } else {
+                    return 'badge-otros';
+                }
+            }
+
+            // Función para exportar una fila específica
+            exportRow(id) {
+                const item = restrictionsData.find(row => row.ip_restriccion === id);
+                if (!item) {
+                    this.showNotification('No se pudo encontrar el registro para exportar', true);
+                    return;
                 }
 
-                // Evento de clic en la capa
-                layer.on('click', (e) => {
-                    const restriction = restrictionsData.find(r => r.id_layer === id);
-                    if (restriction) {
-                        this.showFeatureInfo(restriction);
-                    }
+                try {
+                    // Crear workbook y worksheet
+                    const wb = XLSX.utils.book_new();
+                    const ws = XLSX.utils.json_to_sheet([item]);
+                    
+                    // Añadir worksheet al workbook
+                    XLSX.utils.book_append_sheet(wb, ws, 'Restricción');
+                    
+                    // Exportar el archivo
+                    XLSX.writeFile(wb, `restriccion_${id}.xlsx`);
+                    
+                    this.showNotification(`Restricción ${id} exportada correctamente`);
+                } catch (error) {
+                    console.error('Error al exportar:', error);
+                    this.showNotification('Error al exportar el registro', true);
+                }
+            }
 
-                    // Resaltar la capa
-                    if (currentFeature) {
-                        this.resetFeatureStyle(currentFeature);
-                    }
-                    currentFeature = layer;
-                    this.highlightFeature(layer);
-                });
+            // Función para obtener un color aleatorio
+            getRandomColor() {
+                const letters = '0123456789ABCDEF';
+                let color = '#';
+                for (let i = 0; i < 6; i++) {
+                    color += letters[Math.floor(Math.random() * 16)];
+                }
+                return color;
+            }
+
+            // Función para mostrar notificaciones
+            showNotification(message, isError = false) {
+                const notification = document.getElementById('notification');
+                notification.textContent = message;
+                notification.className = `notification ${isError ? 'error' : ''}`;
+                notification.classList.add('show');
+                
+                setTimeout(() => {
+                    notification.classList.remove('show');
+                }, 5000);
+            }
+
+            // Función para generar información legal en el modal
+            generateLegalInfo(item) {
+                return `
+                    <p><strong><i class="fas fa-flag"></i> País:</strong> ${item.pais} (${item.iso})</p>
+                    <p><strong><i class="fas fa-id-card"></i> ID Restricción:</strong> <code>${item.ip_restriccion}</code></p>
+                    <p><strong><i class="fas fa-book"></i> Normativa:</strong> <a href="${item.enlace_norma}" target="_blank" class="text-decoration-none">${item.normativa_aplicable}</a> (${item.normativa_tipo})</p>
+                    <p><strong><i class="fas fa-file-alt"></i> Artículo:</strong> ${item.articulo_norma}</p>
+                    <p><strong><i class="fas fa-calendar-alt"></i> Fecha Norma:</strong> ${item.fecha_norma} (${item.decada_norma})</p>
+                    <p><strong><i class="fas fa-building"></i> Institución Responsable:</strong> ${item.institucion_responsable}</p>
+                    <p><strong><i class="fas fa-map-marker-alt"></i> Nivel/Escala:</strong> ${item.nivel_escala}</p>
+                    ${item.texto_norma ? `<p><strong><i class="fas fa-file-contract"></i> Texto Norma:</strong> ${item.texto_norma}</p>` : ''}
+                    ${item.observaciones_relevantes ? `<p><strong><i class="fas fa-sticky-note"></i> Observaciones Relevantes:</strong> ${item.observaciones_relevantes}</p>` : ''}
+                `;
+            }
+
+            // Función para generar detalles técnicos en el modal
+            generateTechnicalDetails(item) {
+                return `
+                    <p><strong><i class="fas fa-layer-group"></i> Tipo de Restricción:</strong> <span class="badge ${this.getBadgeClass(item.tipo_restriccion)}">${item.tipo_restriccion}</span></p>
+                    <p><strong><i class="fas fa-tag"></i> Tipo Descripción:</strong> ${item.tipo_descrip}</p>
+                    <p><strong><i class="fas fa-check-circle"></i> Cuantificable:</strong> ${item.cuantificable === 'Si' ? 'Sí' : 'No'}</p>
+                    <p><strong><i class="fas fa-ruler"></i> Parámetros Geográficos:</strong> ${item.parametros_geo}</p>
+                    <p><strong><i class="fas fa-draw-polygon"></i> Representación:</strong> ${item.representacion}</p>
+                    <p><strong><i class="fas fa-chart-line"></i> Tipo de Análisis:</strong> ${item.tipo_analisis || "No especificado"}</p>
+                    <p><strong><i class="fas fa-database"></i> ID Dato:</strong> ${item.id_dato || "No especificado"}</p>
+                    <p><strong><i class="fas fa-map"></i> Cartografía Base:</strong> ${item.cartografia_base || "No especificado"}</p>
+                `;
+            }
+
+            // Función para generar información del dataset en el modal
+            generateDatasetInfo(item) {
+                return `
+                    <p><strong><i class="fas fa-database"></i> Dataset:</strong> 
+                        ${item.nombre_del_dataset && item.enlace_dataset ? 
+                            `<a href="${item.enlace_dataset}" target="_blank" class="text-decoration-none">${item.nombre_del_dataset}</a>` : 
+                            (item.nombre_del_dataset || "<span class='text-muted'>No especificado</span>")
+                        }
+                    </p>
+                    <p><strong><i class="fas fa-calendar"></i> Fecha Dataset:</strong> ${item.fecha_dataset ? new Date(item.fecha_dataset).toLocaleDateString() : "No especificado"} (${item.decada_dataset})</p>
+                    <p><strong><i class="fas fa-cogs"></i> Tipo de Dataset:</strong> ${item.tipo_dataset || "<span class='text-muted'>No especificado</span>"}</p>
+                    <p><strong><i class="fas fa-project-diagram"></i> Tipo de Geoproceso:</strong> ${item.tipo_geoproceso || "<span class='text-muted'>No especificado</span>"}</p>
+                    <p><strong><i class="fas fa-code-branch"></i> ID Capa:</strong> ${item.id_layer || "<span class='text-muted'>No especificado</span>"}</p>
+                    <p><strong><i class="fas fa-file-alt"></i> Descripción Dataset:</strong> ${item.descripcion_dataset || "<span class='text-muted'>No especificado</span>"}</p>
+                    <p><strong><i class="fas fa-globe"></i> Cobertura Espacial:</strong> ${item.cobertura_espacial || "<span class='text-muted'>No especificado</span>"}</p>
+                    <p><strong><i class="fas fa-building"></i> Proveedor Dataset:</strong> ${item.proveedor_dataset || "<span class='text-muted'>No especificado</span>"}</p>
+                    <p><strong><i class="fas fa-link"></i> Fuente:</strong> ${item.fuente || "<span class='text-muted'>No especificado</span>"}</p>
+                    <p><strong><i class="fas fa-shield-alt"></i> Licencia:</strong> ${item.licencia_condiciones_de_uso || "<span class='text-muted'>No especificado</span>"}</p>
+                    <p><strong><i class="fas fa-envelope"></i> Contacto Oficial:</strong> ${item.contacto_oficial || "<span class='text-muted'>No especificado</span>"}</p>
+                    ${item.observaciones_dataset ? `<p><strong><i class="fas fa-sticky-note"></i> Observaciones Dataset:</strong> ${item.observaciones_dataset}</p>` : ''}
+                    ${item.entregable ? `<p><strong><i class="fas fa-file"></i> Entregable:</strong> ${item.entregable}</p>` : ''}
+                    ${item.link_entregable ? `<p><strong><i class="fas fa-link"></i> Link Entregable:</strong> <a href="${item.link_entregable}" target="_blank">${item.link_entregable}</a></p>` : ''}
+                `;
+            }
+
+            // Función para generar información adicional en el modal
+            generateAdditionalInfo(item) {
+                let info = '';
+                
+                if (item.analisis_geoespacial && item.analisis_geoespacial !== "") {
+                    info += `<p><strong><i class="fas fa-globe-americas"></i> Análisis Geoespacial:</strong> ${item.analisis_geoespacial}</p>`;
+                }
+                
+                if (item.observaciones && item.observaciones !== "") {
+                    info += `<p><strong><i class="fas fa-sticky-note"></i> Observaciones:</strong> ${item.observaciones}</p>`;
+                }
+                
+                if (item.fuente_informacion && item.fuente_informacion !== "") {
+                    info += `<p><strong><i class="fas fa-font"></i> Fuente Información:</strong> ${item.fuente_informacion}</p>`;
+                }
+                
+                if (item.fecha_actualizacion && item.fecha_actualizacion !== "") {
+                    info += `<p><strong><i class="fas fa-calendar-check"></i> Fecha Actualización:</strong> ${item.fecha_actualizacion}</p>`;
+                }
+                
+                if (item.estado && item.estado !== "") {
+                    info += `<p><strong><i class="fas fa-check-circle"></i> Estado:</strong> ${item.estado}</p>`;
+                }
+                
+                return info || '<p class="text-muted">No hay información adicional disponible.</p>';
             }
         }
 
@@ -2768,6 +2748,7 @@
             XLSX.writeFile(wb, "restricciones_todo.xlsx");
         });
 
+
         $('#exportPDF').click(function() {
             const { jsPDF } = window.jspdf;
             const doc = new jsPDF();
@@ -2799,6 +2780,8 @@
             
             doc.save('restricciones_eudr.pdf');
         });
+
+
     </script>
 </body>
 </html>

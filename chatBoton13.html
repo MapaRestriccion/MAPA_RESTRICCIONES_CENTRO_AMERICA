@@ -528,20 +528,21 @@
             color: white;
             border: none;
             border-radius: 50%;
-            width: 45px;
-            height: 45px;
+            width: 50px;
+            height: 50px;
             cursor: pointer;
             display: flex;
             align-items: center;
             justify-content: center;
             transition: all 0.3s ease;
-            box-shadow: 0 4px 12px rgba(156, 39, 176, 0.3);
+            box-shadow: 0 4px 12px rgba(156, 39, 176, 0.4);
             margin-left: 5px;
+            position: relative;
         }
 
         #voice-button:hover {
-            transform: scale(1.1) translateY(-2px);
-            box-shadow: 0 6px 16px rgba(156, 39, 176, 0.4);
+            transform: scale(1.15) translateY(-2px);
+            box-shadow: 0 6px 20px rgba(156, 39, 176, 0.6);
         }
 
         #voice-button:active {
@@ -550,41 +551,106 @@
 
         #voice-button.listening {
             background: linear-gradient(135deg, #f44336, #d32f2f);
-            animation: pulse 1.5s infinite;
+            animation: voice-pulse 1.5s infinite;
+            box-shadow: 0 0 0 0 rgba(244, 67, 54, 0.7);
+        }
+
+        @keyframes voice-pulse {
+            0% {
+                box-shadow: 0 0 0 0 rgba(244, 67, 54, 0.7);
+                transform: scale(1);
+            }
+            70% {
+                box-shadow: 0 0 0 15px rgba(244, 67, 54, 0);
+                transform: scale(1.05);
+            }
+            100% {
+                box-shadow: 0 0 0 0 rgba(244, 67, 54, 0);
+                transform: scale(1);
+            }
+        }
+
+        #voice-button.listening::after {
+            content: '';
+            position: absolute;
+            top: -5px;
+            left: -5px;
+            right: -5px;
+            bottom: -5px;
+            border: 2px solid #f44336;
+            border-radius: 50%;
+            animation: voice-ring 2s infinite;
+        }
+
+        @keyframes voice-ring {
+            0% {
+                transform: scale(1);
+                opacity: 1;
+            }
+            100% {
+                transform: scale(1.3);
+                opacity: 0;
+            }
+        }
+
+        #voice-button i {
+            font-size: 20px;
+            transition: transform 0.3s ease;
+        }
+
+        #voice-button:hover i {
+            transform: scale(1.1);
         }
 
         .speak-button {
             position: absolute;
             top: 5px;
             right: 35px;
-            background: rgba(255, 255, 255, 0.7);
-            border: none;
+            background: rgba(255, 255, 255, 0.9);
+            border: 1px solid var(--divider);
             border-radius: 50%;
-            width: 24px;
-            height: 24px;
+            width: 28px;
+            height: 28px;
             cursor: pointer;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 12px;
-            color: var(--text-secondary);
-            opacity: 0;
-            transition: all 0.2s ease;
+            font-size: 14px;
+            color: var(--primary-color);
+            opacity: 0.8;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
         }
 
         .message-content:hover .speak-button {
             opacity: 1;
+            transform: scale(1.1);
         }
 
         .speak-button:hover {
             background: var(--secondary-color);
             color: white;
+            transform: scale(1.2);
+            box-shadow: 0 3px 8px rgba(0,0,0,0.2);
         }
 
         .speak-button.speaking {
             background: var(--secondary-color);
             color: white;
-            animation: pulse 1.5s infinite;
+            animation: speak-pulse 1.5s infinite;
+            opacity: 1;
+        }
+
+        @keyframes speak-pulse {
+            0% {
+                box-shadow: 0 0 0 0 rgba(67, 160, 71, 0.7);
+            }
+            70% {
+                box-shadow: 0 0 0 8px rgba(67, 160, 71, 0);
+            }
+            100% {
+                box-shadow: 0 0 0 0 rgba(67, 160, 71, 0);
+            }
         }
 
         /* ===== PREGUNTAS SUGERIDAS ===== */
@@ -798,6 +864,118 @@
             color: white;
         }
 
+        /* ===== TOOLTIPS MEJORADOS ===== */
+        button[title] {
+            position: relative;
+        }
+
+        button[title]:hover::after {
+            content: attr(title);
+            position: absolute;
+            bottom: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(0, 0, 0, 0.8);
+            color: white;
+            padding: 5px 10px;
+            border-radius: 4px;
+            font-size: 12px;
+            white-space: nowrap;
+            z-index: 1000;
+            margin-bottom: 5px;
+            pointer-events: none;
+        }
+
+        button[title]:hover::before {
+            content: '';
+            position: absolute;
+            bottom: calc(100% - 5px);
+            left: 50%;
+            transform: translateX(-50%);
+            border: 5px solid transparent;
+            border-top-color: rgba(0, 0, 0, 0.8);
+            z-index: 1000;
+            pointer-events: none;
+        }
+
+        .copy-button[title]:hover::after,
+        .speak-button[title]:hover::after {
+            bottom: 120%;
+            font-size: 11px;
+        }
+
+        .copy-button[title]:hover::before,
+        .speak-button[title]:hover::before {
+            bottom: calc(120% - 5px);
+        }
+
+        body.dark-mode button[title]:hover::after {
+            background: rgba(255, 255, 255, 0.9);
+            color: var(--text-primary);
+        }
+
+        body.dark-mode button[title]:hover::before {
+            border-top-color: rgba(255, 255, 255, 0.9);
+        }
+
+        /* ===== NOTIFICACIONES ===== */
+        .notification {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            padding: 12px 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            z-index: 1000;
+            max-width: 300px;
+            animation: slideInRight 0.3s ease-out;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .notification-success {
+            background-color: #4caf50;
+            color: white;
+        }
+
+        .notification-error {
+            background-color: #f44336;
+            color: white;
+        }
+
+        .notification-warning {
+            background-color: #ff9800;
+            color: white;
+        }
+
+        .notification-info {
+            background-color: #2196f3;
+            color: white;
+        }
+
+        @keyframes slideInRight {
+            from {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+
+        @keyframes slideOutRight {
+            from {
+                transform: translateX(0);
+                opacity: 1;
+            }
+            to {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+        }
+
         /* ===== RESPONSIVE DESIGN ===== */
         @media (max-width: 768px) {
             body {
@@ -870,6 +1048,21 @@
                 min-width: auto;
                 font-size: 13px;
             }
+            
+            #voice-button {
+                width: 44px;
+                height: 44px;
+            }
+            
+            #voice-button i {
+                font-size: 18px;
+            }
+            
+            .speak-button {
+                width: 26px;
+                height: 26px;
+                font-size: 13px;
+            }
         }
 
         @media (max-width: 480px) {
@@ -900,6 +1093,21 @@
             #send-button, #clear-button, #export-button, #dark-mode-toggle, #voice-button {
                 width: 38px;
                 height: 38px;
+            }
+            
+            #voice-button {
+                width: 42px;
+                height: 42px;
+            }
+            
+            #voice-button i {
+                font-size: 17px;
+            }
+            
+            .speak-button {
+                width: 24px;
+                height: 24px;
+                font-size: 12px;
             }
         }
 
@@ -982,61 +1190,6 @@
             border-radius: 8px;
             overflow-x: auto;
         }
-        /* ===== TOOLTIPS MEJORADOS ===== */
-        button[title] {
-            position: relative;
-        }
-
-        button[title]:hover::after {
-            content: attr(title);
-            position: absolute;
-            bottom: 100%;
-            left: 50%;
-            transform: translateX(-50%);
-            background: rgba(0, 0, 0, 0.8);
-            color: white;
-            padding: 5px 10px;
-            border-radius: 4px;
-            font-size: 12px;
-            white-space: nowrap;
-            z-index: 1000;
-            margin-bottom: 5px;
-            pointer-events: none;
-        }
-
-        button[title]:hover::before {
-            content: '';
-            position: absolute;
-            bottom: calc(100% - 5px);
-            left: 50%;
-            transform: translateX(-50%);
-            border: 5px solid transparent;
-            border-top-color: rgba(0, 0, 0, 0.8);
-            z-index: 1000;
-            pointer-events: none;
-        }
-
-        /* Tooltips específicos para botones pequeños */
-        .copy-button[title]:hover::after,
-        .speak-button[title]:hover::after {
-            bottom: 120%;
-            font-size: 11px;
-        }
-
-        .copy-button[title]:hover::before,
-        .speak-button[title]:hover::before {
-            bottom: calc(120% - 5px);
-        }
-
-        /* Modo oscuro para tooltips */
-        body.dark-mode button[title]:hover::after {
-            background: rgba(255, 255, 255, 0.9);
-            color: var(--text-primary);
-        }
-
-        body.dark-mode button[title]:hover::before {
-            border-top-color: rgba(255, 255, 255, 0.9);
-        }
     </style>
 </head>
 <body>
@@ -1096,6 +1249,7 @@
             <i class="fas fa-shield-alt"></i> Asistente de Consultas - Información geoespacial para el cumplimiento del EUDR© 2025
         </div>
     </div>
+
     <script src="db.js"></script>
     <script src="pass.js"></script>
     <script src="data/compliance.js"></script>
@@ -1106,61 +1260,53 @@
     <script src="data/restriccion.js"></script>
 
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
-
+    
     <script>
-        /**
-         * CONFIGURACIÓN DE LA APLICACIÓN
-         * 
-         * En un entorno de producción, las claves de API deben almacenarse en variables de entorno
-         * o en un servidor backend, nunca en el código del cliente.
-         * 
-         * Para desarrollo local, puedes usar un archivo .env con variables de entorno.
-         */
+        // Configuración de la aplicación
+        const CHAT_CONFIG = {
+            MAX_HISTORY_LENGTH: 10,
+            MAX_INPUT_LENGTH: 500,
+            TYPING_SPEED: 3,
+            DEBOUNCE_DELAY: 500
+        };
 
-        // Configuración de la API
-        //const API_URL = "https://open.bigmodel.cn/api/paas/v4/chat/completions";
-        //const API_KEY =  API_KEY; // Reemplazar con tu API key real
-        
-        // Configuración del chatbot
-        const MAX_HISTORY_LENGTH = 10; // Máximo de mensajes en el historial
-        const MAX_INPUT_LENGTH = 500; // Máximo de caracteres en el input
-        const TYPING_SPEED = 3; // Velocidad de escritura en milisegundos
-        const DEBOUNCE_DELAY = 500; // Retraso para el debounce en milisegundos
-
-        
         // Estado de la aplicación
-        let historialConversacion = [];
-        let debounceTimer = null;
-        let darkMode = false;
-        let recognition = null;
-        let synthesis = window.speechSynthesis;
-        let currentUtterance = null;
+        const UIState = {
+            historialConversacion: [],
+            debounceTimer: null,
+            darkMode: false,
+            recognition: null,
+            synthesis: window.speechSynthesis,
+            currentUtterance: null
+        };
 
         // Elementos del DOM
-        const chatContainer = document.getElementById('chat-container');
-        const userInput = document.getElementById('user-input');
-        const sendButton = document.getElementById('send-button');
-        const clearButton = document.getElementById('clear-button');
-        const exportButton = document.getElementById('export-button');
-        const darkModeToggle = document.getElementById('dark-mode-toggle');
-        const voiceButton = document.getElementById('voice-button');
-        const typingIndicator = document.getElementById('typing-indicator');
-        const loadingIndicator = document.getElementById('loading-indicator');
-        const charCounter = document.getElementById('char-counter');
+        const DOMElements = {
+            chatContainer: document.getElementById('chat-container'),
+            userInput: document.getElementById('user-input'),
+            sendButton: document.getElementById('send-button'),
+            clearButton: document.getElementById('clear-button'),
+            exportButton: document.getElementById('export-button'),
+            darkModeToggle: document.getElementById('dark-mode-toggle'),
+            voiceButton: document.getElementById('voice-button'),
+            typingIndicator: document.getElementById('typing-indicator'),
+            loadingIndicator: document.getElementById('loading-indicator'),
+            charCounter: document.getElementById('char-counter')
+        };
 
         // Inicialización de la aplicación
         document.addEventListener('DOMContentLoaded', () => {
             // Configurar event listeners
-            sendButton.addEventListener('click', sendMessage);
-            clearButton.addEventListener('click', clearChat);
-            exportButton.addEventListener('click', exportConversation);
-            darkModeToggle.addEventListener('click', toggleDarkMode);
-            voiceButton.addEventListener('click', toggleVoiceRecognition);
+            DOMElements.sendButton.addEventListener('click', sendMessage);
+            DOMElements.clearButton.addEventListener('click', clearChat);
+            DOMElements.exportButton.addEventListener('click', exportConversation);
+            DOMElements.darkModeToggle.addEventListener('click', toggleDarkMode);
+            DOMElements.voiceButton.addEventListener('click', toggleVoiceRecognition);
             
             // Event listeners para el input
-            userInput.addEventListener('keypress', handleKeyPress);
-            userInput.addEventListener('input', handleInput);
-            userInput.addEventListener('touchstart', preventZoom);
+            DOMElements.userInput.addEventListener('keypress', handleKeyPress);
+            DOMElements.userInput.addEventListener('input', handleInput);
+            DOMElements.userInput.addEventListener('touchstart', preventZoom);
             
             // Configurar preguntas iniciales
             setupInitialQuestions();
@@ -1169,7 +1315,7 @@
             loadAppState();
             
             // Enfocar el input
-            userInput.focus();
+            DOMElements.userInput.focus();
             
             // Configurar atajos de teclado
             setupKeyboardShortcuts();
@@ -1181,9 +1327,9 @@
             initializeVoiceRecognition();
             
             // Verificar síntesis de voz
-            if (!synthesis) {
+            if (!UIState.synthesis) {
                 console.warn("La síntesis de voz no está disponible en este navegador.");
-                voiceButton.style.display = 'none';
+                DOMElements.voiceButton.style.display = 'none';
             }
         });
 
@@ -1193,38 +1339,38 @@
         function initializeVoiceRecognition() {
             if (!('webkitSpeechRecognition' in window) && !('SpeechRecognition' in window)) {
                 console.warn("El reconocimiento de voz no está disponible en este navegador.");
-                voiceButton.style.display = 'none';
+                DOMElements.voiceButton.style.display = 'none';
                 return;
             }
             
             const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
-            recognition = new SpeechRecognition();
+            UIState.recognition = new SpeechRecognition();
             
-            recognition.lang = 'es-ES';
-            recognition.continuous = false;
-            recognition.interimResults = false;
-            recognition.maxAlternatives = 1;
+            UIState.recognition.lang = 'es-ES';
+            UIState.recognition.continuous = false;
+            UIState.recognition.interimResults = false;
+            UIState.recognition.maxAlternatives = 1;
             
-            recognition.onstart = () => {
-                voiceButton.classList.add('listening');
-                voiceButton.innerHTML = '<i class="fas fa-stop"></i>';
-                userInput.placeholder = "Escuchando...";
+            UIState.recognition.onstart = () => {
+                DOMElements.voiceButton.classList.add('listening');
+                DOMElements.voiceButton.innerHTML = '<i class="fas fa-stop"></i>';
+                DOMElements.userInput.placeholder = "Escuchando...";
             };
             
-            recognition.onresult = (event) => {
+            UIState.recognition.onresult = (event) => {
                 const transcript = event.results[0][0].transcript;
-                userInput.value = transcript;
+                DOMElements.userInput.value = transcript;
                 updateCharCounter();
                 sendMessage();
             };
             
-            recognition.onerror = (event) => {
+            UIState.recognition.onerror = (event) => {
                 console.error('Error en el reconocimiento de voz:', event.error);
                 showNotification(`Error en el reconocimiento de voz: ${event.error}`, 'error');
                 resetVoiceButton();
             };
             
-            recognition.onend = () => {
+            UIState.recognition.onend = () => {
                 resetVoiceButton();
             };
         }
@@ -1233,24 +1379,26 @@
          * Restablece el botón de voz
          */
         function resetVoiceButton() {
-            voiceButton.classList.remove('listening');
-            voiceButton.innerHTML = '<i class="fas fa-microphone"></i>';
-            userInput.placeholder = "Escribe tu pregunta aquí...";
+            DOMElements.voiceButton.classList.remove('listening');
+            DOMElements.voiceButton.innerHTML = '<i class="fas fa-microphone"></i>';
+            DOMElements.userInput.placeholder = "Escribe tu pregunta aquí...";
         }
 
         /**
          * Activa o desactiva el reconocimiento de voz
          */
         function toggleVoiceRecognition() {
-            if (!recognition) {
+            if (!UIState.recognition) {
                 showNotification("El reconocimiento de voz no está disponible en este navegador.", 'warning');
                 return;
             }
             
-            if (voiceButton.classList.contains('listening')) {
-                recognition.stop();
+            if (DOMElements.voiceButton.classList.contains('listening')) {
+                UIState.recognition.stop();
+                showNotification("Grabación detenida", 'info');
             } else {
-                recognition.start();
+                UIState.recognition.start();
+                showNotification("Grabando... Habla ahora", 'info');
             }
         }
 
@@ -1260,14 +1408,14 @@
          * @param {HTMLElement} button - Botón que activó la acción
          */
         function speakText(text, button) {
-            if (!synthesis) {
+            if (!UIState.synthesis) {
                 showNotification("La síntesis de voz no está disponible en este navegador.", 'warning');
                 return;
             }
             
             // Detener cualquier reproducción en curso
-            if (synthesis.speaking) {
-                synthesis.cancel();
+            if (UIState.synthesis.speaking) {
+                UIState.synthesis.cancel();
                 if (button) {
                     button.classList.remove('speaking');
                     button.innerHTML = '<i class="fas fa-volume-up"></i>';
@@ -1276,7 +1424,7 @@
             }
             
             // Buscar una voz neutra en español
-            let voices = synthesis.getVoices();
+            let voices = UIState.synthesis.getVoices();
             let spanishVoice = voices.find(voice => 
                 voice.lang.includes('es') && 
                 (voice.name.includes('Google') || voice.name.includes('Microsoft')) &&
@@ -1294,42 +1442,44 @@
             }
             
             // Crear el utterance
-            currentUtterance = new SpeechSynthesisUtterance(text);
-            currentUtterance.lang = 'es-ES';
-            currentUtterance.rate = 1.0;
-            currentUtterance.pitch = 1.0;
-            currentUtterance.volume = 1.0;
+            UIState.currentUtterance = new SpeechSynthesisUtterance(text);
+            UIState.currentUtterance.lang = 'es-ES';
+            UIState.currentUtterance.rate = 1.0;
+            UIState.currentUtterance.pitch = 1.0;
+            UIState.currentUtterance.volume = 1.0;
             
             if (spanishVoice) {
-                currentUtterance.voice = spanishVoice;
+                UIState.currentUtterance.voice = spanishVoice;
             }
             
             // Eventos del utterance
-            currentUtterance.onstart = () => {
+            UIState.currentUtterance.onstart = () => {
                 if (button) {
                     button.classList.add('speaking');
                     button.innerHTML = '<i class="fas fa-stop"></i>';
                 }
+                showNotification("Reproduciendo audio...", 'info');
             };
-            
-            currentUtterance.onend = () => {
+
+            UIState.currentUtterance.onend = () => {
                 if (button) {
                     button.classList.remove('speaking');
                     button.innerHTML = '<i class="fas fa-volume-up"></i>';
                 }
+                showNotification("Reproducción finalizada", 'success');
             };
-            
-            currentUtterance.onerror = (event) => {
+                        
+            UIState.currentUtterance.onerror = (event) => {
                 console.error('Error en la síntesis de voz:', event.error);
                 if (button) {
                     button.classList.remove('speaking');
                     button.innerHTML = '<i class="fas fa-volume-up"></i>';
                 }
-                showNotification(`Error en la síntesis de voz: ${event.error}`, 'error');
+                showNotification(`Voz detenida`, 'error');
             };
             
             // Iniciar la síntesis
-            synthesis.speak(currentUtterance);
+            UIState.synthesis.speak(UIState.currentUtterance);
         }
 
         /**
@@ -1339,7 +1489,7 @@
             const initialQuestions = document.querySelectorAll('#initial-questions .suggested-question');
             initialQuestions.forEach(question => {
                 question.addEventListener('click', () => {
-                    userInput.value = question.textContent;
+                    DOMElements.userInput.value = question.textContent;
                     updateCharCounter();
                     sendMessage();
                 });
@@ -1363,31 +1513,31 @@
             updateCharCounter();
             
             // Implementar debounce para optimizar rendimiento
-            clearTimeout(debounceTimer);
-            debounceTimer = setTimeout(() => {
+            clearTimeout(UIState.debounceTimer);
+            UIState.debounceTimer = setTimeout(() => {
                 // Aquí podrías implementar autocompletado o sugerencias en tiempo real
-            }, DEBOUNCE_DELAY);
+            }, CHAT_CONFIG.DEBOUNCE_DELAY);
         }
 
         /**
          * Previene el zoom en iOS cuando se enfoca el input
          */
         function preventZoom() {
-            userInput.style.fontSize = '16px';
+            DOMElements.userInput.style.fontSize = '16px';
         }
 
         /**
          * Actualiza el contador de caracteres
          */
         function updateCharCounter() {
-            const currentLength = userInput.value.length;
-            charCounter.textContent = `${currentLength}/${MAX_INPUT_LENGTH}`;
+            const currentLength = DOMElements.userInput.value.length;
+            DOMElements.charCounter.textContent = `${currentLength}/${CHAT_CONFIG.MAX_INPUT_LENGTH}`;
             
             // Cambiar color si se acerca al límite
-            if (currentLength > MAX_INPUT_LENGTH * 0.9) {
-                charCounter.style.color = 'var(--accent-color)';
+            if (currentLength > CHAT_CONFIG.MAX_INPUT_LENGTH * 0.9) {
+                DOMElements.charCounter.style.color = 'var(--accent-color)';
             } else {
-                charCounter.style.color = 'var(--text-secondary)';
+                DOMElements.charCounter.style.color = 'var(--text-secondary)';
             }
         }
 
@@ -1395,7 +1545,7 @@
          * Envía un mensaje del usuario
          */
         async function sendMessage() {
-            const message = userInput.value.trim();
+            const message = DOMElements.userInput.value.trim();
             
             // Validar entrada
             if (message === '') {
@@ -1403,8 +1553,8 @@
                 return;
             }
             
-            if (message.length > MAX_INPUT_LENGTH) {
-                showNotification(`Tu mensaje es demasiado largo. Máximo ${MAX_INPUT_LENGTH} caracteres.`, 'error');
+            if (message.length > CHAT_CONFIG.MAX_INPUT_LENGTH) {
+                showNotification(`Tu mensaje es demasiado largo. Máximo ${CHAT_CONFIG.MAX_INPUT_LENGTH} caracteres.`, 'error');
                 return;
             }
             
@@ -1413,19 +1563,19 @@
             
             // Agregar mensaje del usuario al chat
             addMessageToChat('user', message);
-            userInput.value = '';
+            DOMElements.userInput.value = '';
             updateCharCounter();
             
             // Mostrar indicador de carga
-            loadingIndicator.classList.add('active');
-            chatContainer.scrollTop = chatContainer.scrollHeight;
+            DOMElements.loadingIndicator.classList.add('active');
+            DOMElements.chatContainer.scrollTop = DOMElements.chatContainer.scrollHeight;
             
             try {
                 // Obtener respuesta del bot
                 const response = await obtenerRespuesta(message);
                 
                 // Ocultar indicador de carga
-                loadingIndicator.classList.remove('active');
+                DOMElements.loadingIndicator.classList.remove('active');
                 
                 // Agregar respuesta del bot al chat
                 addMessageToChat('bot', response.respuesta, response.preguntas, true);
@@ -1434,12 +1584,12 @@
                 saveAppState();
             } catch (error) {
                 console.error("Error al enviar mensaje:", error);
-                loadingIndicator.classList.remove('active');
+                DOMElements.loadingIndicator.classList.remove('active');
                 showNotification('Error al procesar tu solicitud. Por favor, intenta nuevamente.', 'error');
             } finally {
                 // Rehabilitar elementos
                 setSendingState(false);
-                userInput.focus();
+                DOMElements.userInput.focus();
             }
         }
 
@@ -1448,14 +1598,14 @@
          * @param {boolean} isSending - Indica si se está enviando un mensaje
          */
         function setSendingState(isSending) {
-            sendButton.disabled = isSending;
-            userInput.disabled = isSending;
-            voiceButton.disabled = isSending;
+            DOMElements.sendButton.disabled = isSending;
+            DOMElements.userInput.disabled = isSending;
+            DOMElements.voiceButton.disabled = isSending;
             
             if (isSending) {
-                sendButton.classList.add('rotating');
+                DOMElements.sendButton.classList.add('rotating');
             } else {
-                sendButton.classList.remove('rotating');
+                DOMElements.sendButton.classList.remove('rotating');
             }
         }
 
@@ -1537,7 +1687,7 @@
                         button.classList.add('suggested-question');
                         button.textContent = question;
                         button.addEventListener('click', () => {
-                            userInput.value = question;
+                            DOMElements.userInput.value = question;
                             updateCharCounter();
                             sendMessage();
                         });
@@ -1549,12 +1699,12 @@
             }
 
             messageDiv.appendChild(messageWrapper);
-            chatContainer.appendChild(messageDiv);
+            DOMElements.chatContainer.appendChild(messageDiv);
 
             // Desplazar suavemente al final
             setTimeout(() => {
-                chatContainer.scrollTo({
-                    top: chatContainer.scrollHeight,
+                DOMElements.chatContainer.scrollTo({
+                    top: DOMElements.chatContainer.scrollHeight,
                     behavior: 'smooth'
                 });
             }, 100);
@@ -1627,7 +1777,7 @@
                 }
                 
                 // Scroll al final
-                chatContainer.scrollTop = chatContainer.scrollHeight;
+                DOMElements.chatContainer.scrollTop = DOMElements.chatContainer.scrollHeight;
                 
                 // Si quedan caracteres, continuar con el siguiente paso
                 if (index < text.length) {
@@ -1673,7 +1823,7 @@
                     index++;
                     
                     // Scroll al final
-                    chatContainer.scrollTop = chatContainer.scrollHeight;
+                    DOMElements.chatContainer.scrollTop = DOMElements.chatContainer.scrollHeight;
                     
                     // Reiniciar el tiempo de inicio para el siguiente carácter
                     startTime = Date.now();
@@ -1776,7 +1926,7 @@
             const preguntaSanitizada = sanitizeInput(pregunta);
             
             // Agregar la pregunta del usuario al historial
-            historialConversacion.push({
+            UIState.historialConversacion.push({
                 role: "user",
                 content: preguntaSanitizada
             });
@@ -1828,8 +1978,8 @@
             Pregunta del usuario: ${preguntaSanitizada}`;
 
 
-            // Preparar mensajes con el historial (máximo últimas MAX_HISTORY_LENGTH interacciones)
-            const historialReciente = historialConversacion.slice(-MAX_HISTORY_LENGTH);
+            // Preparar mensajes con el historial (máximo últimas CHAT_CONFIG.MAX_HISTORY_LENGTH interacciones)
+            const historialReciente = UIState.historialConversacion.slice(-CHAT_CONFIG.MAX_HISTORY_LENGTH);
             const mensajes = [
                 {
                     role: "user",
@@ -1869,65 +2019,77 @@
                 const dataResp = await response.json();
 
                 // Manejo seguro de la respuesta
+                // Manejo seguro de la respuesta
                 if (dataResp?.choices?.[0]?.message?.content) {
                     const respuestaCompleta = dataResp.choices[0].message.content.trim();
-                    
-                    // Extraer la respuesta principal y las preguntas
+
                     let respuestaPrincipal = "";
                     let preguntasSeguimiento = [];
-                    
-                    // Parsear la respuesta - manejo robusto de etiquetas
-                    const respuestaMatch = respuestaCompleta.match(/\[RESPUESTA\]([\s\S]*?)\[\/RESPUESTA\]/i);
-                    if (respuestaMatch && respuestaMatch[1]) {
-                        respuestaPrincipal = respuestaMatch[1].trim();
+
+                    // --- 1️⃣ Intentar extraer el bloque de respuesta ---
+                    // Caso 1: formato estándar [RESPUESTA] ... [/RESPUESTA]
+                    const matchConEtiquetas = respuestaCompleta.match(/\[RESPUESTA\]([\s\S]*?)\[\/RESPUESTA\]/i);
+
+                    // Caso 2: texto antes de [PREGUNTAS] (sin etiqueta de respuesta)
+                    const matchAntesDePreguntas = respuestaCompleta.match(/^([\s\S]*?)(?=\[PREGUNTAS\]|PREGUNTAS:|$)/i);
+
+                    // Caso 3: encabezado tipo "RESPUESTA:" sin corchetes
+                    const matchConEncabezado = respuestaCompleta.match(/RESPUESTA:\s*([\s\S]*?)(?=\[PREGUNTAS\]|PREGUNTAS:|$)/i);
+
+                    if (matchConEtiquetas?.[1]) {
+                        respuestaPrincipal = matchConEtiquetas[1].trim();
+                    } else if (matchConEncabezado?.[1]) {
+                        respuestaPrincipal = matchConEncabezado[1].trim();
+                    } else if (matchAntesDePreguntas?.[1]) {
+                        respuestaPrincipal = matchAntesDePreguntas[1].trim();
                     } else {
-                        // Si no se encuentra el formato, buscar sin etiqueta de cierre
-                        const respuestaSinCierre = respuestaCompleta.match(/\[RESPUESTA\]([\s\S]*?)(?=\[PREGUNTAS\]|$)/i);
-                        if (respuestaSinCierre && respuestaSinCierre[1]) {
-                            respuestaPrincipal = respuestaSinCierre[1].trim();
-                        } else {
-                            // Si no se encuentra, quitar cualquier etiqueta y mostrar todo
-                            respuestaPrincipal = respuestaCompleta.replace(/\[\/?RESPUESTA\]/gi, '').trim();
+                        respuestaPrincipal = respuestaCompleta.trim();
+                    }
+
+                    // --- 2️⃣ Intentar extraer el bloque de preguntas ---
+                    // Soporta tanto [PREGUNTAS]...[/PREGUNTAS] como PREGUNTAS: sin corchetes
+                    const matchPreguntas = respuestaCompleta.match(/\[PREGUNTAS\]([\s\S]*?)\[\/PREGUNTAS\]/i)
+                        || respuestaCompleta.match(/PREGUNTAS:\s*([\s\S]*)/i);
+
+                    if (matchPreguntas?.[1]) {
+                        const lineas = matchPreguntas[1]
+                            .split('\n')
+                            .map(l => l.trim())
+                            .filter(l => l);
+
+                        for (const linea of lineas) {
+                            const matchLinea = linea.match(/^\d+\.\s*(.+)$/); // 1. Pregunta
+                            if (matchLinea?.[1]) {
+                                preguntasSeguimiento.push(matchLinea[1].trim());
+                            }
                         }
                     }
-                    
-                    const preguntasMatch = respuestaCompleta.match(/\[PREGUNTAS\]([\s\S]*?)\[\/PREGUNTAS\]/i);
-                    if (preguntasMatch && preguntasMatch[1]) {
-                        // Extraer las preguntas numeradas
-                        const lineas = preguntasMatch[1].split('\n');
-                        for (const linea of lineas) {
-                            const match = linea.match(/^\d+\.\s*(.+)$/);
-                            if (match && match[1]) {
-                                preguntasSeguimiento.push(match[1].trim());
-                            }
-                        }
-                        
-                        // Si no se extrajeron suficientes preguntas, generar algunas genéricas
-                        if (preguntasSeguimiento.length < 3) {
-                            const preguntasGenericas = [
-                                "¿Puedes darme más detalles sobre este tema?",
-                                "¿Cómo se relaciona esto con otras áreas protegidas?",
-                                "¿Qué implicaciones tiene esto para el cumplimiento del EUDR?"
-                            ];
-                            
-                            while (preguntasSeguimiento.length < 3) {
-                                preguntasSeguimiento.push(preguntasGenericas[preguntasSeguimiento.length]);
-                            }
-                        }
-                    } else {
-                        // Si no se encuentran preguntas, generar algunas genéricas
-                        preguntasSeguimiento = [
+
+                    // --- 3️⃣ Si no hay preguntas o son pocas, agregar genéricas ---
+                    if (preguntasSeguimiento.length < 3) {
+                        const preguntasGenericas = [
                             "¿Puedes darme más detalles sobre este tema?",
                             "¿Cómo se relaciona esto con otras áreas protegidas?",
                             "¿Qué implicaciones tiene esto para el cumplimiento del EUDR?"
                         ];
+                        while (preguntasSeguimiento.length < 3) {
+                            preguntasSeguimiento.push(preguntasGenericas[preguntasSeguimiento.length]);
+                        }
                     }
-                    
-                    // Agregamos los enlaces a la respuesta principal
+
+                    // --- 4️⃣ Limpieza final de texto ---
+                    respuestaPrincipal = respuestaPrincipal
+                        .replace(/\[\/?RESPUESTA\]/gi, '')
+                        .replace(/RESPUESTA:/gi, '')
+                        .replace(/\[\/?PREGUNTAS\]/gi, '')
+                        .replace(/PREGUNTAS:/gi, '')
+                        .trim();
+
+                    // --- 5️⃣ Postprocesamiento (agregar enlaces u otros)
                     respuestaPrincipal = agregarEnlacesARespuesta(respuestaPrincipal);
-                    
-                    // Agregar la respuesta del modelo al historial (solo la respuesta principal)
-                    historialConversacion.push({
+
+                    // --- 6️⃣ Guardar en historial
+                    UIState.historialConversacion.push({
                         role: "assistant",
                         content: respuestaPrincipal
                     });
@@ -1939,6 +2101,9 @@
                 } else {
                     throw new Error("Respuesta inesperada de la API");
                 }
+
+
+
             } catch (error) {
                 console.error("Error al llamar a la API:", error);
                 
@@ -1973,13 +2138,13 @@
             }
             
             // Limpiar el contenedor de chat excepto el mensaje inicial
-            const messages = chatContainer.querySelectorAll('.message');
+            const messages = DOMElements.chatContainer.querySelectorAll('.message');
             for (let i = 1; i < messages.length; i++) {
                 messages[i].remove();
             }
             
             // Limpiar el historial
-            historialConversacion = [];
+            UIState.historialConversacion = [];
             
             // Limpiar el almacenamiento local
             localStorage.removeItem('chatHistory');
@@ -1989,7 +2154,7 @@
             showNotification('Conversación limpiada correctamente', 'success');
             
             // Enfocar el input
-            userInput.focus();
+            DOMElements.userInput.focus();
         }
 
         /**
@@ -1998,7 +2163,7 @@
         function exportConversation() {
             try {
                 // Recopilar todos los mensajes
-                const messages = chatContainer.querySelectorAll('.message');
+                const messages = DOMElements.chatContainer.querySelectorAll('.message');
                 let conversationText = "Conversación con el Asistente de Áreas Protegidas de Belice\n";
                 conversationText += "================================================\n\n";
                 
@@ -2040,18 +2205,18 @@
          * Alterna el modo oscuro
          */
         function toggleDarkMode() {
-            darkMode = !darkMode;
+            UIState.darkMode = !UIState.darkMode;
             
-            if (darkMode) {
+            if (UIState.darkMode) {
                 document.body.classList.add('dark-mode');
-                darkModeToggle.innerHTML = '<i class="fas fa-sun"></i>';
+                DOMElements.darkModeToggle.innerHTML = '<i class="fas fa-sun"></i>';
             } else {
                 document.body.classList.remove('dark-mode');
-                darkModeToggle.innerHTML = '<i class="fas fa-moon"></i>';
+                DOMElements.darkModeToggle.innerHTML = '<i class="fas fa-moon"></i>';
             }
             
             // Guardar preferencia
-            localStorage.setItem('darkMode', darkMode);
+            localStorage.setItem('darkMode', UIState.darkMode);
         }
 
         /**
@@ -2110,36 +2275,6 @@
             
             notification.innerHTML = `${icon} ${message}`;
             
-            // Estilos para la notificación
-            notification.style.position = 'fixed';
-            notification.style.bottom = '20px';
-            notification.style.right = '20px';
-            notification.style.padding = '12px 20px';
-            notification.style.borderRadius = '8px';
-            notification.style.boxShadow = '0 4px 12px rgba(0, 0, 0, 0.15)';
-            notification.style.zIndex = '1000';
-            notification.style.maxWidth = '300px';
-            notification.style.animation = 'slideInRight 0.3s ease-out';
-            
-            // Colores según el tipo
-            switch (type) {
-                case 'success':
-                    notification.style.backgroundColor = '#4caf50';
-                    notification.style.color = 'white';
-                    break;
-                case 'error':
-                    notification.style.backgroundColor = '#f44336';
-                    notification.style.color = 'white';
-                    break;
-                case 'warning':
-                    notification.style.backgroundColor = '#ff9800';
-                    notification.style.color = 'white';
-                    break;
-                default:
-                    notification.style.backgroundColor = '#2196f3';
-                    notification.style.color = 'white';
-            }
-            
             // Añadir al DOM
             document.body.appendChild(notification);
             
@@ -2158,10 +2293,10 @@
         function saveAppState() {
             try {
                 // Guardar historial de conversación
-                localStorage.setItem('chatHistory', JSON.stringify(historialConversacion));
+                localStorage.setItem('chatHistory', JSON.stringify(UIState.historialConversacion));
                 
                 // Guardar preferencia de modo oscuro
-                localStorage.setItem('darkMode', darkMode);
+                localStorage.setItem('darkMode', UIState.darkMode);
             } catch (error) {
                 console.error("Error al guardar el estado de la aplicación:", error);
             }
@@ -2175,17 +2310,17 @@
                 // Cargar preferencia de modo oscuro
                 const savedDarkMode = localStorage.getItem('darkMode');
                 if (savedDarkMode !== null) {
-                    darkMode = savedDarkMode === 'true';
-                    if (darkMode) {
+                    UIState.darkMode = savedDarkMode === 'true';
+                    if (UIState.darkMode) {
                         document.body.classList.add('dark-mode');
-                        darkModeToggle.innerHTML = '<i class="fas fa-sun"></i>';
+                        DOMElements.darkModeToggle.innerHTML = '<i class="fas fa-sun"></i>';
                     }
                 }
                 
                 // Cargar historial de conversación (opcional, deshabilitado por defecto)
                 // const savedHistory = localStorage.getItem('chatHistory');
                 // if (savedHistory) {
-                //     historialConversacion = JSON.parse(savedHistory);
+                //     UIState.historialConversacion = JSON.parse(savedHistory);
                 // }
             } catch (error) {
                 console.error("Error al cargar el estado de la aplicación:", error);
@@ -2214,13 +2349,6 @@
                     e.preventDefault();
                     toggleDarkMode();
                 }
-                /*
-                // Ctrl/Cmd + V para activar voz
-                if ((e.ctrlKey || e.metaKey) && e.key === 'v') {
-                    e.preventDefault();
-                    toggleVoiceRecognition();
-                }
-                */
             });
         }
 
@@ -2229,36 +2357,9 @@
          */
         function handleOrientationChange() {
             setTimeout(() => {
-                chatContainer.scrollTop = chatContainer.scrollHeight;
+                DOMElements.chatContainer.scrollTop = DOMElements.chatContainer.scrollHeight;
             }, 300);
         }
-
-        // Añadir estilos para animaciones de notificaciones
-        const style = document.createElement('style');
-        style.textContent = `
-            @keyframes slideInRight {
-                from {
-                    transform: translateX(100%);
-                    opacity: 0;
-                }
-                to {
-                    transform: translateX(0);
-                    opacity: 1;
-                }
-            }
-            
-            @keyframes slideOutRight {
-                from {
-                    transform: translateX(0);
-                    opacity: 1;
-                }
-                to {
-                    transform: translateX(100%);
-                    opacity: 0;
-                }
-            }
-        `;
-        document.head.appendChild(style);
         
         /**
          * Establece la hora actual en el mensaje inicial del bot
@@ -2277,7 +2378,6 @@
 
         // Llamar a la función al cargar la página
         document.addEventListener('DOMContentLoaded', setInitialTimestamp);
-
     </script>
 </body>
 </html>
