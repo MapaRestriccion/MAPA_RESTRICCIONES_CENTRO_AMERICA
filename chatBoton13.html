@@ -1262,6 +1262,7 @@
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
     
     <script>
+        const datos = restrictionsData;
         // Configuración de la aplicación
         const CHAT_CONFIG = {
             MAX_HISTORY_LENGTH: 10,
@@ -1870,12 +1871,58 @@
          * @param {string} message - Mensaje a formatear
          * @returns {string} Mensaje formateado
          */
-        function formatMessage(message) {
+        function formatMessage2(message) {
             if (!message) return '';
             const sanitized = sanitizeInput(message);
             console.log(sanitized)
             return marked.parse(sanitized, { breaks: true, gfm: true });
         }
+
+        function formatMessage(message) {
+            if (!message) return '';
+
+            const sanitized = sanitizeInput(message); // asumes que esto ya deja limpio el markdown
+
+            // Helpers
+            function sanitizeHref(h) {
+                if (!h) return '#';
+                const s = String(h).trim();
+                if (/^\s*javascript:/i.test(s)) return '#';
+                return s.replace(/"/g, '&quot;');
+            }
+
+            // Instalamos un renderer que maneja ambas firmas
+            marked.use({
+                renderer: {
+                link: function(arg1, maybeTitle, maybeText) {
+                    let href, title, text;
+
+                    // Caso nuevo: un único token-objeto
+                    if (typeof arg1 === 'object' && arg1 !== null && !('startsWith' in arg1)) {
+                    // extraemos posibles campos (los nombres pueden variar según la versión)
+                    href  = arg1.href ?? arg1.url ?? arg1.destination ?? '';
+                    title = arg1.title ?? '';
+                    text  = arg1.text ?? arg1.raw ?? arg1.textRaw ?? '';
+                    } else {
+                    // Caso clásico: (href, title, text)
+                    href  = arg1 || '';
+                    title = maybeTitle || '';
+                    text  = maybeText || '';
+                    }
+
+                    const safeHref = sanitizeHref(href);
+                    const titleAttr = title ? ` title="${String(title).replace(/"/g,'&quot;')}"` : '';
+                    const display = text || safeHref;
+
+                    return `<a href="${safeHref}" target="_blank" rel="noopener noreferrer"${titleAttr}>${display}</a>`;
+                }
+                }
+            });
+
+            return marked.parse(sanitized, { breaks: true, gfm: true });
+            }
+
+
 
         /**
          * Escapa caracteres especiales en HTML
