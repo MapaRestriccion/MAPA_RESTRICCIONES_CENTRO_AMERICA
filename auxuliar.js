@@ -1,497 +1,561 @@
-// Variables globales
+// =============================================
+// CONSTANTES Y CONFIGURACIÓN GLOBAL
+// =============================================
+
+const CONFIG = {
+    MAP: {
+        CENTER: [-15.0, -60.0],
+        ZOOM: 4,
+        TILE_LAYER: 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+        ATTRIBUTION: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+    },
+    COLORS: {
+        LAYERS: {
+            'layer000': '#4CAF50',
+            'layer001': '#F44336',
+            'layer002': '#2196F3',
+            'layer003': '#00BCD4',
+            'layer004': '#FF9800',
+            'layer005': '#9C27B0',
+            'layer006': '#795548'
+        },
+        BADGES: {
+            'ambiental': 'bg-primary',
+            'forestal': 'bg-primary',
+            'Conservación': 'bg-primary',
+            'hidrica': 'bg-danger',
+            'Hídrica': 'bg-danger',
+            'fauna': 'bg-success',
+            'default': 'bg-secondary'
+        }
+    },
+    COUNTRY_CENTERS: {
+        "Belice": { center: [17.0, -88.0], zoom: 8 },
+        "Chile": { center: [-35.0, -71.0], zoom: 5 },
+        "Perú": { center: [-13.0, -74.0], zoom: 6 },
+        "Colombia": { center: [4.0, -73.0], zoom: 6 },
+        "Brasil": { center: [-10.0, -55.0], zoom: 5 },
+        "México": { center: [19.0, -99.0], zoom: 5 },
+        "Argentina": { center: [-40.0, -72.0], zoom: 5 },
+        "Ecuador": { center: [-2.0, -44.0], zoom: 7 },
+        "Bolivia": { center: [-17.0, -65.0], zoom: 6 },
+        "Venezuela": { center: [8.0, -66.0], zoom: 6 },
+        "Paraguay": { center: [-23.0, -58.0], zoom: 7 },
+        "Uruguay": { center: [-33.0, -56.0], zoom: 8 },
+        "Guyana": { center: [5.0, -58.0], zoom: 7 },
+        "Surinam": { center: [4.0, -56.0], zoom: 7 },
+        "Guayana Francesa": { center: [4.0, -53.0], zoom: 8 }
+    }
+};
+
+// =============================================
+// VARIABLES GLOBALES
+// =============================================
+
 let table;
 let filteredData = [...restrictionsData];
 let map;
 let currentFeature = null;
 let geojsonLayers = {};
+let mapInitialized = false;
+let currentRestriction = null;
 
-// Función para actualizar las opciones de un filtro específico
-function updateFilterOptions(filterId, data, property) {
-    const select = document.getElementById(filterId);
-    const currentValue = select.value;
+// =============================================
+// CLASE PRINCIPAL DE LA APLICACIÓN
+// =============================================
 
-    // Obtener valores únicos y ordenar
-    let values = [...new Set(data.map(item => item[property]))].sort();
-
-    // Filtrar valores vacíos o nulos
-    values = values.filter(value => value !== undefined && value !== null && value !== '');
-
-    // Limpiar el select, pero dejando la opción "Todos"
-    select.innerHTML = '<option value="">Todos</option>';
-
-    // Agregar las nuevas opciones
-    values.forEach(value => {
-        const option = document.createElement('option');
-        option.value = value;
-        option.textContent = value;
-        select.appendChild(option);
-    });
-
-    // Restaurar el valor seleccionado si aún existe
-    if (currentValue && values.includes(currentValue)) {
-        select.value = currentValue;
-    } else {
-        select.value = '';
+class RestrictionsApp {
+    constructor() {
+        this.init();
     }
-}
 
-// Función para actualizar todos los filtros basados en los datos filtrados
-function updateAllFilters() {
-    updateFilterOptions('countryFilter', filteredData, 'pais');
-    updateFilterOptions('typeFilter', filteredData, 'tipo_descrip');
-    updateFilterOptions('eudrFilter', filteredData, 'eudr_cat');
-    updateFilterOptions('cuantifyFilter', filteredData, 'cuantificable');
-    updateFilterOptions('datasetFilter', filteredData, 'tipo_dataset');
-    updateFilterOptions('processFilter', filteredData, 'tipo_geoproceso');
-    updateFilterOptions('scaleFilter', filteredData, 'nivel_escala');
-}
+    init() {
+        this.initializeTable();
+        this.populateFilters();
+        this.setupEventListeners();
+        this.updateStats();
+        // No inicializamos el mapa aquí, lo haremos cuando se active la pestaña
+    }
 
-$(document).ready(function () {
-    initializeTable();
-    populateFilters();
-    setupEventListeners();
-    updateStats();
-    initializeMap();
+    // =============================================
+    // INICIALIZACIÓN DEL MAPA
+    // =============================================
 
-    // Ocultar el indicador de carga del mapa después de un tiempo
-    setTimeout(() => {
+    initializeMap() {
+        if (mapInitialized) return;
+
+        map = L.map('map').setView(CONFIG.MAP.CENTER, CONFIG.MAP.ZOOM);
+
+        // Capa base
+        const osmLayer = L.tileLayer(CONFIG.MAP.TILE_LAYER, {
+            attribution: CONFIG.MAP.ATTRIBUTION
+        });
+        osmLayer.addTo(map);
+
+        // Agregar leyenda
+        this.addLegend();
+
+        // Evento para cuando se hace clic en el mapa
+        map.on('click', () => {
+            this.hideFeatureInfo();
+        });
+
+        mapInitialized = true;
+
+        // Ocultar el indicador de carga del mapa
         $('#map-loading').fadeOut();
-    }, 1500);
-});
-
-function initializeMap() {
-    // Inicializar el mapa centrado en Sudamérica
-    map = L.map('map').setView([-15.0, -60.0], 4);
-
-    // Capa base (solo OpenStreetMap)
-    const osmLayer = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-    });
-    osmLayer.addTo(map);
-
-    // Agregar leyenda
-    addLegend();
-
-    // Evento para cuando se hace clic en el mapa
-    map.on('click', function () {
-        $('#featureInfo').hide();
-        if (currentFeature) {
-            resetFeatureStyle(currentFeature);
-            currentFeature = null;
-        }
-    });
-
-    // Cargar las capas GeoJSON desde los datos
-    loadGeoJsonLayers();
-}
-
-function loadGeoJsonLayers() {
-    // Mostrar indicador de carga
-    document.getElementById('loading-indicator').style.display = 'block';
-
-    // Contadores para el progreso
-    let totalLayers = restrictionsData.length;
-    let loadedLayers = 0;
-    let errorLayers = 0;
-
-    // Actualizar el indicador de carga
-    updateLoadingIndicator(loadedLayers, totalLayers, errorLayers);
-
-    // Colores predefinidos para las capas
-    const predefinedColors = {
-        'layer000': '#4CAF50',
-        'layer001': '#F44336',
-        'layer002': '#2196F3',
-        'layer003': '#00BCD4',
-        'layer004': '#FF9800',
-        'layer005': '#9C27B0',
-        'layer006': '#795548'
-    };
-
-    // Función para generar un color aleatorio
-    function getRandomColor() {
-        const letters = '0123456789ABCDEF';
-        let color = '#';
-        for (let i = 0; i < 6; i++) {
-            color += letters[Math.floor(Math.random() * 16)];
-        }
-        return color;
     }
 
-    // Función para añadir una capa GeoJSON
-    function addGeoJSONLayer(id, name, url, color = null) {
-        // Si no se especifica color, usar uno predefinido o aleatorio
-        if (!color) {
-            color = predefinedColors[id] || getRandomColor();
-        }
+    addLegend() {
+        const legend = L.control({ position: 'bottomright' });
+        legend.onAdd = function (map) {
+            const div = L.DomUtil.create('div', 'legend');
+            div.innerHTML = '<p>Mapa visualizar restricciones</p>';
+            return div;
+        };
+        legend.addTo(map);
+    }
 
-        fetch(url)
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error(`Error al cargar el GeoJSON: ${response.statusText}`);
-                }
-                return response.json();
-            })
-            .then(data => {
-                // Crear capa GeoJSON
-                const layer = L.geoJSON(data, {
-                    style: {
-                        color: color,
-                        weight: 2,
-                        fillOpacity: 0.3
-                    },
-                    onEachFeature: function (feature, layer) {
-                        // Añadir popup con propiedades
-                        if (feature.properties) {
-                            let popupContent = '<div class="popup-content">';
-
-                            for (const key in feature.properties) {
-                                popupContent += `<div><strong>${key}:</strong> ${feature.properties[key]}</div>`;
-                            }
-
-                            popupContent += '</div>';
-                            layer.bindPopup(popupContent);
-                        }
-
-                        // Evento de clic en la capa
-                        layer.on('click', function (e) {
-                            // Buscar el registro correspondiente por id_layer
-                            const restriction = restrictionsData.find(r => r.id_layer === id);
-                            if (restriction) {
-                                showFeatureInfo(restriction);
-                            }
-
-                            // Resaltar la capa
-                            if (currentFeature) {
-                                resetFeatureStyle(currentFeature);
-                            }
-                            currentFeature = layer;
-                            highlightFeature(layer);
-                        });
-                    }
+    // =============================================
+    // GESTIÓN DE CAPAS GEOJSON
+    // =============================================
+    async loadGeoJsonLayer(id, name, urls) {
+        const color = "#3F51B5";
+        try {
+            // 🔹 Crear o mostrar overlay elegante
+            let overlay = document.getElementById('loading-overlay');
+            if (!overlay) {
+                overlay = document.createElement('div');
+                overlay.id = 'loading-overlay';
+                Object.assign(overlay.style, {
+                    position: 'fixed',
+                    top: 0,
+                    left: 0,
+                    width: '100vw',
+                    height: '100vh',
+                    background: 'rgba(15, 23, 42, 0.75)',
+                    display: 'flex',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    zIndex: '999999',
+                    backdropFilter: 'blur(8px)',
+                    opacity: '0',
+                    transition: 'opacity 0.3s ease'
                 });
 
-                // Guardar la capa
-                geojsonLayers[id] = {
-                    layer: layer,
-                    url: url,
-                    color: color,
-                    visible: false,
-                    name: name
-                };
+                // Container del contenido
+                const container = document.createElement('div');
+                Object.assign(container.style, {
+                    background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+                    padding: '32px 48px',
+                    borderRadius: '20px',
+                    boxShadow: '0 20px 60px rgba(0, 0, 0, 0.3), 0 0 0 1px rgba(255, 255, 255, 0.1)',
+                    display: 'flex',
+                    flexDirection: 'column',
+                    alignItems: 'center',
+                    gap: '20px',
+                    minWidth: '320px',
+                    transform: 'scale(0.9)',
+                    transition: 'transform 0.3s ease'
+                });
 
-                // Actualizar el contador
-                loadedLayers++;
-                updateLoadingIndicator(loadedLayers, totalLayers, errorLayers);
+                // Spinner mejorado con doble anillo
+                const spinnerWrapper = document.createElement('div');
+                spinnerWrapper.style.position = 'relative';
+                spinnerWrapper.style.width = '60px';
+                spinnerWrapper.style.height = '60px';
 
-                // Actualizar la lista de capas
-                updateLayersList();
+                const spinner1 = document.createElement('div');
+                Object.assign(spinner1.style, {
+                    position: 'absolute',
+                    width: '60px',
+                    height: '60px',
+                    border: '3px solid rgba(255, 255, 255, 0.2)',
+                    borderTop: '3px solid #fff',
+                    borderRadius: '50%',
+                    animation: 'spin 1s cubic-bezier(0.68, -0.55, 0.265, 1.55) infinite'
+                });
 
-                // Si todas las capas se han cargado, ocultar el indicador
-                if (loadedLayers + errorLayers === totalLayers) {
-                    setTimeout(() => {
-                        document.getElementById('loading-indicator').style.display = 'none';
-                        if (errorLayers === 0) {
-                            showNotification('Todas las capas se han cargado correctamente');
-                        } else {
-                            showNotification(`Se cargaron ${loadedLayers} de ${totalLayers} capas. ${errorLayers} capa(s) no se pudieron cargar.`, true);
-                        }
-                    }, 1000);
+                const spinner2 = document.createElement('div');
+                Object.assign(spinner2.style, {
+                    position: 'absolute',
+                    width: '46px',
+                    height: '46px',
+                    top: '7px',
+                    left: '7px',
+                    border: '3px solid rgba(255, 255, 255, 0.1)',
+                    borderBottom: '3px solid rgba(255, 255, 255, 0.8)',
+                    borderRadius: '50%',
+                    animation: 'spin 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.55) infinite reverse'
+                });
+
+                spinnerWrapper.appendChild(spinner1);
+                spinnerWrapper.appendChild(spinner2);
+
+                // Texto principal
+                const text = document.createElement('div');
+                text.id = 'loading-progress';
+                Object.assign(text.style, {
+                    color: '#fff',
+                    fontSize: '18px',
+                    fontWeight: '600',
+                    fontFamily: 'system-ui, -apple-system, sans-serif',
+                    textAlign: 'center',
+                    letterSpacing: '0.3px'
+                });
+                text.textContent = name;
+
+                // Subtexto
+                const subtext = document.createElement('div');
+                Object.assign(subtext.style, {
+                    color: 'rgba(255, 255, 255, 0.8)',
+                    fontSize: '14px',
+                    fontWeight: '400',
+                    fontFamily: 'system-ui, -apple-system, sans-serif',
+                    textAlign: 'center'
+                });
+                subtext.textContent = 'Cargando capas...';
+
+                // Barra de progreso animada
+                const progressBar = document.createElement('div');
+                Object.assign(progressBar.style, {
+                    width: '100%',
+                    height: '3px',
+                    background: 'rgba(255, 255, 255, 0.2)',
+                    borderRadius: '10px',
+                    overflow: 'hidden',
+                    marginTop: '8px'
+                });
+
+                const progressFill = document.createElement('div');
+                Object.assign(progressFill.style, {
+                    height: '100%',
+                    width: '0%',
+                    background: 'linear-gradient(90deg, rgba(255,255,255,0.5), #fff)',
+                    borderRadius: '10px',
+                    animation: 'progress 1.5s ease-in-out infinite'
+                });
+
+                progressBar.appendChild(progressFill);
+                container.appendChild(spinnerWrapper);
+                container.appendChild(text);
+                container.appendChild(subtext);
+                container.appendChild(progressBar);
+                overlay.appendChild(container);
+                document.body.appendChild(overlay);
+
+                // 🔹 Agregar animaciones CSS
+                if (!document.getElementById('spinner-style')) {
+                    const style = document.createElement('style');
+                    style.id = 'spinner-style';
+                    style.textContent = `
+                                @keyframes spin {
+                                    from { transform: rotate(0deg); }
+                                    to { transform: rotate(360deg); }
+                                }
+                                @keyframes progress {
+                                    0% { width: 0%; margin-left: 0; }
+                                    50% { width: 70%; margin-left: 15%; }
+                                    100% { width: 0%; margin-left: 100%; }
+                                }
+                            `;
+                    document.head.appendChild(style);
                 }
-            })
-            .catch(error => {
-                console.error('Error:', error);
 
-                // Actualizar el contador de errores
-                errorLayers++;
-                updateLoadingIndicator(loadedLayers, totalLayers, errorLayers);
-
-                // Si todas las capas se han cargado (con o sin errores), ocultar el indicador
-                if (loadedLayers + errorLayers === totalLayers) {
-                    setTimeout(() => {
-                        document.getElementById('loading-indicator').style.display = 'none';
-                        if (errorLayers === 0) {
-                            showNotification('Todas las capas se han cargado correctamente');
-                        } else {
-                            showNotification(`Se cargaron ${loadedLayers} de ${totalLayers} capas. ${errorLayers} capa(s) no se pudieron cargar.`, true);
-                        }
-                    }, 1000);
-                }
-            });
-    }
-
-    // Cargar cada capa desde los datos
-    restrictionsData.forEach(restriction => {
-        if (restriction.id_layer && restriction.url_geojson) {
-            addGeoJSONLayer(
-                restriction.id_layer,
-                restriction.entregable,
-                restriction.url_geojson
-            );
-        }
-    });
-}
-
-function updateLoadingIndicator(loaded, total, errors) {
-    const loadingProgress = document.getElementById('loading-progress');
-    const loadingLayers = document.getElementById('loading-layers');
-    const loadingError = document.getElementById('loading-error');
-
-    if (loaded === 0) {
-        loadingProgress.textContent = 'Iniciando carga de capas...';
-        loadingLayers.textContent = '';
-        loadingError.textContent = '';
-    } else if (loaded < total) {
-        loadingProgress.textContent = `Cargando capas... (${loaded}/${total})`;
-        loadingLayers.textContent = `${total - loaded} capas restantes por cargar`;
-
-        if (errors > 0) {
-            loadingError.textContent = `${errors} error(es) de carga`;
-        }
-    } else {
-        // Todas las capas se han cargado (con o sin errores)
-        loadingProgress.textContent = `Carga completada (${loaded}/${total})`;
-        loadingLayers.textContent = '';
-
-        if (errors > 0) {
-            loadingError.textContent = `${errors} error(es) de carga`;
-        }
-    }
-}
-
-function showNotification(message, isError = false) {
-    const notification = document.getElementById('notification');
-    const icon = isError ? 'fas fa-exclamation-circle' : 'fas fa-check-circle';
-    notification.innerHTML = `<i class="${icon}"></i> ${message}`;
-    notification.className = isError ? 'notification error' : 'notification';
-    notification.classList.add('show');
-
-    setTimeout(() => {
-        notification.classList.remove('show');
-    }, 5000);
-}
-
-function updateLayersList() {
-    const layersList = document.getElementById('layers-list');
-    layersList.innerHTML = '';
-
-    if (Object.keys(geojsonLayers).length === 0) {
-        layersList.innerHTML = `
-                    <div class="empty-state">
-                        <i class="fas fa-map-marked-alt"></i>
-                        <p>No hay capas disponibles</p>
-                    </div>
-                `;
-        return;
-    }
-
-    for (const id in geojsonLayers) {
-        const layerInfo = geojsonLayers[id];
-        const layerItem = document.createElement('div');
-        layerItem.className = 'layer-item';
-
-        layerItem.innerHTML = `
-                    <div>
-                        <span class="layer-color" style="background-color: ${layerInfo.color}"></span>
-                        <span class="layer-name">${layerInfo.name}</span>
-                    </div>
-                    <div class="layer-actions">
-                        <button class="btn btn-sm ${layerInfo.visible ? 'btn-success' : 'btn-outline-secondary'} btn-layer toggle-layer" data-id="${id}" title="${layerInfo.visible ? 'Ocultar capa' : 'Mostrar capa'}">
-                            <i class="fas ${layerInfo.visible ? 'fa-eye' : 'fa-eye-slash'}"></i>
-                        </button>
-                        <button class="btn btn-sm btn-danger btn-layer remove-layer" data-id="${id}" title="Eliminar capa">
-                            <i class="fas fa-trash"></i>
-                        </button>
-                    </div>
-                `;
-
-        layersList.appendChild(layerItem);
-    }
-
-    // Añadir event listeners a los botones
-    document.querySelectorAll('.toggle-layer').forEach(button => {
-        button.addEventListener('click', function () {
-            const id = this.getAttribute('data-id');
-            toggleLayer(id);
-        });
-    });
-
-    document.querySelectorAll('.remove-layer').forEach(button => {
-        button.addEventListener('click', function () {
-            const id = this.getAttribute('data-id');
-            removeLayer(id);
-        });
-    });
-
-    // Añadir funcionalidad de búsqueda
-    document.getElementById('searchLayers').addEventListener('input', function (e) {
-        const searchTerm = e.target.value.toLowerCase();
-        const layerItems = document.querySelectorAll('.layer-item');
-
-        layerItems.forEach(item => {
-            const layerName = item.querySelector('.layer-name').textContent.toLowerCase();
-            if (layerName.includes(searchTerm)) {
-                item.style.display = 'flex';
+                // Animación de entrada
+                requestAnimationFrame(() => {
+                    overlay.style.opacity = '1';
+                    container.style.transform = 'scale(1)';
+                });
             } else {
-                item.style.display = 'none';
+                overlay.style.display = 'flex';
+                overlay.style.opacity = '1';
+                document.getElementById('loading-progress').textContent = name;
             }
-        });
-    });
-}
 
-function toggleLayer(id) {
-    if (geojsonLayers[id]) {
-        const layerInfo = geojsonLayers[id];
+            // 🔹 Descargar GeoJSONs
+            let allFeatures = [];
 
-        if (layerInfo.visible) {
-            map.removeLayer(layerInfo.layer);
-            layerInfo.visible = false;
-        } else {
-            map.addLayer(layerInfo.layer);
-            layerInfo.visible = true;
+            // Asegurarse de que urls sea un array
+            const urlsArray = Array.isArray(urls) ? urls : [urls];
 
-            // Ajustar el mapa a los límites de la capa
+            // Cargar cada GeoJSON
+            for (const url of urlsArray) {
+                console.log(url)
+                try {
+                    const response = await fetch(url);
+                    if (!response.ok) throw new Error(`Error al cargar el GeoJSON: ${response.statusText}`);
+                    const data = await response.json();
+
+                    // Agregar features al array
+                    if (data.features) {
+                        allFeatures = allFeatures.concat(data.features);
+                    } else if (data.type === 'Feature') {
+                        allFeatures.push(data);
+                    }
+                } catch (error) {
+                    console.error(`Error cargando ${url}:`, error);
+                    // Continuar con el siguiente URL aunque uno falle
+                }
+            }
+
+            // Crear un GeoJSON combinado
+            const combinedGeoJSON = {
+                type: "FeatureCollection",
+                features: allFeatures
+            };
+
+            const canvasRenderer = L.canvas({ padding: 0.5 });
+
+            const layer = L.geoJSON(combinedGeoJSON, {
+                renderer: canvasRenderer,
+                style: {
+                    color: color,
+                    weight: 2,
+                    fillOpacity: 0.3
+                },
+                onEachFeature: (feature, layer) => {
+                    this.setupLayerInteraction(feature, layer, id);
+                }
+            }).addTo(map);
+
+            // 🔹 Guardar referencia
+            geojsonLayers[id] = {
+                layer: layer,
+                urls: urlsArray,
+                color: color,
+                visible: true,
+                name: name
+            };
+
+            // 🔹 Mostrar capa
+            layer.addTo(map);
+
             try {
-                map.fitBounds(layerInfo.layer.getBounds(), {
-                    padding: [20, 20]
-                });
+                map.fitBounds(layer.getBounds(), { padding: [20, 20] });
             } catch (e) {
                 console.error("Error al ajustar los límites de la capa:", e);
             }
+
+            // 🔹 Ocultar overlay con animación
+            overlay.style.opacity = '0';
+            setTimeout(() => {
+                overlay.style.display = 'none';
+            }, 300);
+
+            this.showNotification(`Capa "${name}" cargada correctamente`);
+            return layer;
+
+        } catch (error) {
+            console.error('Error cargando capa:', error);
+            const overlay = document.getElementById('loading-overlay');
+            if (overlay) {
+                overlay.style.opacity = '0';
+                setTimeout(() => {
+                    overlay.style.display = 'none';
+                }, 300);
+            }
+            this.showNotification(`Error al cargar la capa "${name}"`, true);
+            throw error;
+        }
+    }
+
+    setupLayerInteraction(feature, layer, id) {
+        // Añadir popup con propiedades
+        if (feature.properties) {
+            let popupContent = '<div class="popup-content">';
+            for (const key in feature.properties) {
+                popupContent += `<div><strong>${key}:</strong> ${feature.properties[key]}</div>`;
+            }
+            popupContent += '</div>';
+            layer.bindPopup(popupContent);
         }
 
-        updateLayersList();
+        // Evento de clic en la capa
+        layer.on('click', (e) => {
+            const restriction = restrictionsData.find(r => r.id_layer === id);
+            if (restriction) {
+                this.showFeatureInfo(restriction);
+            }
+
+            // Resaltar la capa
+            if (currentFeature) {
+                this.resetFeatureStyle(currentFeature);
+            }
+            currentFeature = layer;
+            this.highlightFeature(layer);
+        });
     }
-}
 
-function removeLayer(id) {
-    if (geojsonLayers[id]) {
-        const layerInfo = geojsonLayers[id];
+    // =============================================
+    // GESTIÓN DE FILTROS
+    // =============================================
 
-        if (layerInfo.visible) {
-            map.removeLayer(layerInfo.layer);
-        }
-
-        delete geojsonLayers[id];
-        updateLayersList();
-
-        showNotification(`Capa "${layerInfo.name}" eliminada`);
+    populateFilters() {
+        this.updateFilterOptions('countryFilter', restrictionsData, 'pais');
+        this.updateFilterOptions('typeFilter', restrictionsData, 'tipo_descrip');
+        this.updateFilterOptions('eudrFilter', restrictionsData, 'eudr_cat');
+        this.updateFilterOptions('cuantifyFilter', restrictionsData, 'cuantificable');
+        this.updateFilterOptions('datasetFilter', restrictionsData, 'tipo_dataset');
+        this.updateFilterOptions('processFilter', restrictionsData, 'tipo_geoproceso');
+        this.updateFilterOptions('scaleFilter', restrictionsData, 'nivel_escala');
     }
-}
 
-function showFeatureInfo(restriction) {
-    let content = `
-                <strong>${restriction.descripcion_restriccion}</strong><br>
-                <strong>País:</strong> ${restriction.pais}<br>
-                <strong>Tipo:</strong> ${restriction.tipo_restriccion}<br>
-                <strong>ID:</strong> ${restriction.ip_restriccion}<br>
-                <button class="btn btn-sm btn-primary mt-2" onclick="viewOnMap('${restriction.pais}', '${restriction.tipo_restriccion}', '${restriction.id_layer}')">Ver en Mapa</button>
-                <button class="btn btn-sm btn-outline-primary mt-2 ms-1" onclick="showDetailForId('${restriction.ip_restriccion}')">Ver Detalle</button>
-            `;
-    $('#featureContent').html(content);
-    $('#featureInfo').show();
-}
+    updateFilterOptions(filterId, data, property) {
+        const select = document.getElementById(filterId);
+        const currentValue = select.value;
 
-function showDetailForId(id) {
-    const item = restrictionsData.find(row => row.ip_restriccion === id);
-    if (item) {
-        showDetailModal(item.ip_restriccion);
+        let values = [...new Set(data.map(item => item[property]))]
+            .filter(value => value !== undefined && value !== null && value !== '')
+            .sort();
+
+        select.innerHTML = '<option value="">Todos</option>';
+        values.forEach(value => {
+            const option = document.createElement('option');
+            option.value = value;
+            option.textContent = value;
+            select.appendChild(option);
+        });
+
+        select.value = currentValue && values.includes(currentValue) ? currentValue : '';
     }
-}
 
-function resetFeatureStyle(feature) {
-    feature.setStyle({
-        color: feature.options.color,
-        weight: 2,
-        fillOpacity: 0.3
-    });
-}
+    updateAllFilters() {
+        this.updateFilterOptions('countryFilter', filteredData, 'pais');
+        this.updateFilterOptions('typeFilter', filteredData, 'tipo_descrip');
+        this.updateFilterOptions('eudrFilter', filteredData, 'eudr_cat');
+        this.updateFilterOptions('cuantifyFilter', filteredData, 'cuantificable');
+        this.updateFilterOptions('datasetFilter', filteredData, 'tipo_dataset');
+        this.updateFilterOptions('processFilter', filteredData, 'tipo_geoproceso');
+        this.updateFilterOptions('scaleFilter', filteredData, 'nivel_escala');
+    }
 
-function highlightFeature(feature) {
-    feature.setStyle({
-        weight: 5,
-        color: '#e74c3c',
-        fillOpacity: 0.9
-    });
-}
+    applyFilters() {
+        const filters = this.getCurrentFilters();
 
-function addLegend() {
-    const legend = L.control({ position: 'bottomright' });
-    legend.onAdd = function (map) {
-        const div = L.DomUtil.create('div', 'legend');
-        div.innerHTML = '<h4>Leyenda</h4>' +
-            '<i style="background:#3498db"></i> Ambiental/Forestal<br>' +
-            '<i style="background:#e74c3c"></i> Hídrica<br>' +
-            '<i style="background:#27ae60"></i> Fauna<br>' +
-            '<i style="background:#8e44ad"></i> Urbana<br>' +
-            '<i style="background:#1abc9c"></i> Cultural<br>' +
-            '<i style="background:#95a5a6"></i> Otros<br>';
-        return div;
-    };
-    legend.addTo(map);
-}
+        filteredData = restrictionsData.filter(item => {
+            return Object.keys(filters).every(key => {
+                if (!filters[key].value) return true;
 
-function initializeTable() {
-    table = $('#restrictionsTable').DataTable({
-        data: restrictionsData,
-        columns: [
-            //1 Pais
+                switch (key) {
+                    case 'search':
+                        return this.matchesSearch(item, filters[key].value);
+                    default:
+                        return item[filters[key].property] === filters[key].value;
+                }
+            });
+        });
+
+        this.updateTable();
+        this.updateStats();
+        this.updateResultsCount();
+        this.updateActiveFilters();
+        this.toggleNoResults();
+        this.updateAllFilters();
+    }
+
+    getCurrentFilters() {
+        return {
+            country: { value: $('#countryFilter').val(), property: 'pais' },
+            type: { value: $('#typeFilter').val(), property: 'tipo_descrip' },
+            eudr: { value: $('#eudrFilter').val(), property: 'eudr_cat' },
+            cuantify: { value: $('#cuantifyFilter').val(), property: 'cuantificable' },
+            dataset: { value: $('#datasetFilter').val(), property: 'tipo_dataset' },
+            process: { value: $('#processFilter').val(), property: 'tipo_geoproceso' },
+            scale: { value: $('#scaleFilter').val(), property: 'nivel_escala' },
+            search: { value: $('#searchInput').val().toLowerCase() }
+        };
+    }
+
+    matchesSearch(item, searchTerm) {
+        if (!searchTerm) return true;
+
+        const searchFields = [
+            'pais', 'normativa_aplicable', 'descripcion_restriccion',
+            'ip_restriccion', 'tipo_restriccion', 'nombre_del_dataset'
+        ];
+
+        return searchFields.some(field =>
+            item[field] && item[field].toLowerCase().includes(searchTerm)
+        );
+    }
+
+    resetFilters() {
+        $('#countryFilter, #typeFilter, #eudrFilter, #cuantifyFilter, #datasetFilter, #processFilter, #scaleFilter, #searchInput').val('');
+
+        filteredData = [...restrictionsData];
+        this.updateTable();
+        this.updateStats();
+        this.updateResultsCount();
+        this.updateActiveFilters();
+        this.toggleNoResults();
+        this.updateAllFilters();
+    }
+
+    // =============================================
+    // GESTIÓN DE LA TABLA
+    // =============================================
+
+    initializeTable() {
+        table = $('#restrictionsTable').DataTable({
+            data: restrictionsData,
+            columns: this.getTableColumns(),
+            language: {
+                url: '//cdn.datatables.net/plug-ins/1.13.6/i18n/es-ES.json'
+            },
+            pageLength: 10,
+            lengthMenu: [5, 10, 25, 50],
+            responsive: true,
+            order: [[0, 'asc']],
+            initComplete: () => {
+                this.updateResultsCount();
+            }
+        });
+
+        this.setupTableEventListeners();
+    }
+
+    getTableColumns() {
+        return [
             {
                 data: "pais",
                 title: "País",
-                render: function (data) {
-                    return `<span class="fw-bold">${data}</span>`;
-                }
+                render: (data) => `<span class="fw-bold">${data}</span>`
             },
-            //2 ID Restriccion
             {
                 data: "ip_restriccion",
                 title: "ID Restricción",
-                render: function (data) {
-                    return `<code class="bg-light">${data}</code>`;
-                }
+                render: (data) => `<code class="bg-light">${data}</code>`
             },
-            //3 Norma Aplicable
             {
                 data: "normativa_aplicable",
                 title: "Norma Aplicable",
-                render: function (data, type, row) {
+                render: (data, type, row) => {
                     if (row.enlace_norma && row.enlace_norma !== "") {
                         return `<a href="${row.enlace_norma}" target="_blank" class="text-decoration-none text-primary">${data}</a>`;
                     }
                     return data;
                 }
             },
-            //4 Descripción Restricción
             {
                 data: "descripcion_restriccion",
                 title: "Restricción",
-                render: function (data) {
-                    return data.length > 100 ? data.substring(0, 100) + '...' : data;
-                }
+                render: (data) => data.length > 100 ? data.substring(0, 100) + '...' : data
             },
-            //5 Tipo Restricción
             {
                 data: "tipo_restriccion",
                 title: "Tipo",
-                render: function (data) {
-                    return data;
-                }
+                render: (data) => data
             },
-            //6 Categoria EUDR
             {
                 data: "eudr_cat",
-                title: " Categoría EUDR",
-                render: function (data) {
-                    // Si data existe y no está vacío, es pertinente
-                    return data;
-                }
+                title: "Categoría EUDR",
+                render: (data) => data
             },
-            //7 Nombre Dataset
             {
                 data: "nombre_del_dataset",
                 title: "Dataset",
-                render: function (data, type, row) {
+                render: (data, type, row) => {
                     if (!data || data === "") return "<span class='text-muted'>No especificado</span>";
                     if (row.enlace_dataset && row.enlace_dataset !== "") {
                         return `<a href="${row.enlace_dataset}" target="_blank" class="text-decoration-none text-info">${data}</a>`;
@@ -499,11 +563,10 @@ function initializeTable() {
                     return data;
                 }
             },
-            //8 Tipo Geoanalisis
             {
                 data: "tipo_analisis",
                 title: "Tipo Analisis",
-                render: function (data) {
+                render: (data) => {
                     if (!data || data === "") return "<span class='text-muted'>No especificado</span>";
                     return data.length > 50 ? data.substring(0, 50) + '...' : data;
                 }
@@ -512,330 +575,329 @@ function initializeTable() {
                 data: null,
                 title: "Acciones",
                 orderable: false,
-                render: function (data, type, row) {
-                    return `
-                                <button class="btn btn-sm btn-outline-primary view-detail" data-id="${row.ip_restriccion}" title="Ver detalle">
-                                    <i class="fas fa-info-circle"></i>
-                                </button>
-                                <button class="btn btn-sm btn-outline-success export-row" data-id="${row.ip_restriccion}" title="Exportar">
-                                    <i class="fas fa-download"></i>
-                                </button>
-                                <button class="btn btn-sm btn-outline-info view-on-map" data-country="${row.pais}" data-type="${row.tipo_restriccion}" data-id_layer="${row.id_layer}" title="Ver en mapa">
-                                    <i class="fas fa-map-marked-alt"></i>
-                                </button>
-                            `;
+                render: (data, type, row) => this.getActionButtons(row)
+            }
+        ];
+    }
+
+    getActionButtons(row) {
+        return `
+                    <button class="btn btn-sm btn-outline-primary view-detail" data-id="${row.ip_restriccion}" title="Ver detalle">
+                        <i class="fas fa-info-circle"></i>
+                    </button>
+                    <button class="btn btn-sm btn-outline-success export-row" data-id="${row.ip_restriccion}" title="Exportar">
+                        <i class="fas fa-download"></i>
+                    </button>
+                    <button class="btn btn-sm btn-outline-info view-on-map" data-country="${row.pais}" data-type="${row.tipo_restriccion}" data-id_layer="${row.id_layer}" data-id="${row.ip_restriccion}" title="Ver en mapa">
+                        <i class="fas fa-map-marked-alt"></i>
+                    </button>
+                `;
+    }
+
+    setupTableEventListeners() {
+        $('#restrictionsTable tbody')
+            .on('click', '.view-detail', (e) => {
+                const id = $(e.currentTarget).data('id');
+                this.showDetailModal(id);
+            })
+            .on('click', '.export-row', (e) => {
+                const id = $(e.currentTarget).data('id');
+                this.exportRow(id);
+            })
+            .on('click', '.view-on-map', (e) => {
+                const $target = $(e.currentTarget);
+                const country = $target.data('country');
+                const type = $target.data('type');
+                const id_layer = $target.data('id_layer');
+                const id = $target.data('id');
+                $('#map-tab').tab('show');
+                this.viewOnMap(country, type, id_layer, id);
+            });
+    }
+
+    updateTable() {
+        table.clear();
+        table.rows.add(filteredData);
+        table.draw();
+    }
+
+    // =============================================
+    // GESTIÓN DE EVENTOS
+    // =============================================
+
+    setupEventListeners() {
+        // Filtros
+        $('#applyFilters').click(() => this.applyFilters());
+        $('#resetFilters').click(() => this.resetFilters());
+        $('#searchInput').on('keyup', () => this.applyFilters());
+        $('#countryFilter, #typeFilter, #eudrFilter, #cuantifyFilter, #datasetFilter, #processFilter, #scaleFilter')
+            .on('change', () => this.applyFilters());
+
+        // Evento para cuando se active la pestaña del mapa
+        $('#map-tab').on('shown.bs.tab', (e) => {
+            if (!mapInitialized) {
+                this.initializeMap();
+            } else {
+                // Si el mapa ya está inicializado, actualizamos su tamaño
+                setTimeout(() => {
+                    map.invalidateSize();
+                }, 100);
+            }
+        });
+
+        // Tarjetas de estadísticas clickeables
+        $('#totalRestrictionsCard').click(() => {
+            this.resetFilters();
+            $('#table-tab').tab('show');
+        });
+
+        $('#highEudrCard').click(() => {
+            this.resetFilters();
+            $('#eudrFilter').val('true');
+            $('#table-tab').tab('show');
+            this.applyFilters();
+        });
+
+        $('#protectedAreasCard').click(() => {
+            this.resetFilters();
+            $('#typeFilter').val('ambiental');
+            $('#table-tab').tab('show');
+            this.applyFilters();
+        });
+
+        $('#waterBuffersCard').click(() => {
+            this.resetFilters();
+            $('#typeFilter').val('hidrica');
+            $('#table-tab').tab('show');
+            this.applyFilters();
+        });
+    }
+
+    // =============================================
+    // ESTADÍSTICAS Y UI
+    // =============================================
+
+    updateStats() {
+        const total = filteredData.length;
+        const eudr = filteredData.filter(item => item.eudr_cat).length;
+        const environmental = filteredData.filter(item =>
+            item.tipo_restriccion.includes('ambiental') ||
+            item.tipo_restriccion.includes('forestal') ||
+            item.tipo_restriccion.includes('Conservación')
+        ).length;
+        const water = filteredData.filter(item =>
+            item.tipo_restriccion.includes('hidrica') ||
+            item.tipo_restriccion.includes('Hídrica')
+        ).length;
+
+        $('#totalRestrictions').text(total);
+        $('#highEudr').text(eudr);
+        $('#protectedAreas').text(environmental);
+        $('#waterBuffers').text(water);
+    }
+
+    updateResultsCount() {
+        $('#resultsCount').text(`${filteredData.length} resultados`);
+    }
+
+    updateActiveFilters() {
+        const filters = this.getCurrentFilters();
+        let badgesHtml = '';
+        let hasActiveFilters = false;
+
+        const badgeConfig = {
+            country: { icon: 'fa-globe-americas', text: (val) => val },
+            type: { icon: 'fa-layer-group', text: (val) => val },
+            eudr: { icon: 'fa-leaf', text: (val) => `EUDR ${val === "true" ? "Sí" : "No"}` },
+            cuantify: { icon: 'fa-check-circle', text: (val) => `Cuantificable ${val}` },
+            dataset: { icon: 'fa-database', text: (val) => val },
+            process: { icon: 'fa-cogs', text: (val) => val },
+            scale: { icon: 'fa-ruler', text: (val) => val },
+            search: { icon: 'fa-search', text: (val) => `"${val}"` }
+        };
+
+        Object.keys(filters).forEach(key => {
+            if (filters[key].value) {
+                const config = badgeConfig[key];
+                badgesHtml += `<span class="filter-badge" data-filter="${key}">
+                            <i class="fas ${config.icon}"></i> ${config.text(filters[key].value)}
+                        </span>`;
+                hasActiveFilters = true;
+            }
+        });
+
+        $('#filterBadges').html(badgesHtml);
+        $('#activeFilters').toggle(hasActiveFilters);
+
+        $('.filter-badge').on('click', (e) => {
+            const filterType = $(e.currentTarget).data('filter');
+            $(`#${filterType}Filter`).val('');
+            this.applyFilters();
+        });
+    }
+
+    toggleNoResults() {
+        const hasResults = filteredData.length > 0;
+        $('#noResults').toggle(!hasResults);
+        $('.table-responsive').toggle(hasResults);
+    }
+
+    // =============================================
+    // FUNCIONALIDADES DEL MAPA
+    // =============================================
+
+    showFeatureInfo(restriction) {
+        const content = `
+                    <strong>${restriction.descripcion_restriccion}</strong><br>
+                    <strong>País:</strong> ${restriction.pais}<br>
+                    <strong>Tipo:</strong> ${restriction.tipo_restriccion}<br>
+                    <strong>ID:</strong> ${restriction.ip_restriccion}<br>
+                    <button class="btn btn-sm btn-primary mt-2" onclick="app.viewOnMap('${restriction.pais}', '${restriction.tipo_restriccion}', '${restriction.id_layer}', '${restriction.ip_restriccion}')">Ver en Mapa</button>
+                    <button class="btn btn-sm btn-outline-primary mt-2 ms-1" onclick="app.showDetailForId('${restriction.ip_restriccion}')">Ver Detalle</button>
+                `;
+        $('#featureContent').html(content);
+        $('#featureInfo').show();
+    }
+
+    hideFeatureInfo() {
+        $('#featureInfo').hide();
+        if (currentFeature) {
+            this.resetFeatureStyle(currentFeature);
+            currentFeature = null;
+        }
+    }
+
+    showDetailForId(id) {
+        const item = restrictionsData.find(row => row.ip_restriccion === id);
+        if (item) {
+            this.showDetailModal(item.ip_restriccion);
+        }
+    }
+
+    resetFeatureStyle(feature) {
+        feature.setStyle({
+            color: feature.options.color,
+            weight: 2,
+            fillOpacity: 0.3
+        });
+    }
+
+    highlightFeature(feature) {
+        feature.setStyle({
+            weight: 5,
+            color: '#e74c3c',
+            fillOpacity: 0.9
+        });
+    }
+
+    async viewOnMap(country, type, id_layer, restrictionId) {
+        // Cerrar modal si está abierto
+        const detailModal = document.getElementById('detailModal');
+        const modalInstance = bootstrap.Modal.getInstance(detailModal);
+        if (modalInstance) {
+            modalInstance.hide();
+        }
+
+        $('#map-tab').tab('show');
+
+        // Esperar a que la pestaña del mapa se muestre
+        setTimeout(async () => {
+            // Buscar la restricción correspondiente
+            const restriction = restrictionsData.find(row => row.ip_restriccion === restrictionId);
+
+
+            if (restriction && restriction.id_layer && restriction.url_geojson) {
+                try {
+                    // 🔹 LIMPIAR el mapa antes de agregar la nueva capa
+                    for (const key in geojsonLayers) {
+                        const layerInfo = geojsonLayers[key];
+                        if (layerInfo.visible) {
+                            map.removeLayer(layerInfo.layer);
+                            layerInfo.visible = false;
+                        }
+                    }
+
+                    // Verificar si la capa ya está cargada
+                    if (!geojsonLayers[restriction.id_layer]) {
+                        // Cargar la capa con el array de URLs
+                        await this.loadGeoJsonLayer(
+                            restriction.id_layer,
+                            //restriction.entregable || restriction.nombre_del_dataset,
+                            restriction.entregable,
+                            restriction.url_geojson // Ahora es un array
+                        );
+                    }
+
+                    // Mostrar y ajustar el mapa a la nueva capa
+                    const layerInfo = geojsonLayers[restriction.id_layer];
+                    if (!map.hasLayer(layerInfo.layer)) {
+                        layerInfo.layer.addTo(map);
+                        layerInfo.visible = true;
+                    }
+
+                    try {
+                        map.fitBounds(layerInfo.layer.getBounds(), { padding: [20, 20] });
+                    } catch (e) {
+                        console.error("Error al ajustar los límites de la capa:", e);
+                        this.centerMapOnCountry(country);
+                    }
+
+                } catch (error) {
+                    console.error('Error cargando capa:', error);
+                    this.centerMapOnCountry(country);
+                }
+            } else {
+                // Si no hay capa, centrar en el país
+                this.centerMapOnCountry(country);
+            }
+
+            // Mostrar la información de la restricción
+            if (restrictionId) {
+                const restriction = restrictionsData.find(row => row.ip_restriccion === restrictionId);
+                if (restriction) {
+                    this.showFeatureInfo(restriction);
                 }
             }
-        ],
-        language: {
-            url: '//cdn.datatables.net/plug-ins/1.13.6/i18n/es-ES.json'
-        },
-        pageLength: 10,
-        lengthMenu: [5, 10, 25, 50],
-        responsive: true,
-        order: [[0, 'asc']],
-        initComplete: function () {
-            updateResultsCount();
+        }, 300);
+    }
+
+    centerMapOnCountry(country) {
+        const countryConfig = CONFIG.COUNTRY_CENTERS[country] || { center: CONFIG.MAP.CENTER, zoom: CONFIG.MAP.ZOOM };
+        map.setView(countryConfig.center, countryConfig.zoom);
+    }
+
+    // =============================================
+    // MODALES Y DETALLES
+    // =============================================
+
+    showDetailModal(id) {
+        const item = restrictionsData.find(row => row.ip_restriccion === id);
+        if (item) {
+            const modalContent = this.generateModalContent(item);
+            $('#modalContent').html(modalContent);
+            $('#detailModalLabel').text(`Detalle de la Restricción: ${item.ip_restriccion}`);
+            new bootstrap.Modal(document.getElementById('detailModal')).show();
         }
-    });
-
-    $('#restrictionsTable tbody').on('click', '.view-detail', function () {
-        const id = $(this).data('id');
-        showDetailModal(id);
-    });
-
-    $('#restrictionsTable tbody').on('click', '.export-row', function () {
-        const id = $(this).data('id');
-        exportRow(id);
-    });
-
-    $('#restrictionsTable tbody').on('click', '.view-on-map', function () {
-        const country = $(this).data('country');
-        const type = $(this).data('type');
-        const id_layer = $(this).data('id_layer');
-        $('#map-tab').tab('show');
-        viewOnMap(country, type, id_layer);
-    });
-}
-
-function populateFilters() {
-    updateFilterOptions('countryFilter', restrictionsData, 'pais');
-    updateFilterOptions('typeFilter', restrictionsData, 'tipo_descrip');
-    updateFilterOptions('eudrFilter', restrictionsData, 'eudr_cat');
-    updateFilterOptions('cuantifyFilter', restrictionsData, 'cuantificable');
-    updateFilterOptions('datasetFilter', restrictionsData, 'tipo_dataset');
-    updateFilterOptions('processFilter', restrictionsData, 'tipo_geoproceso');
-    updateFilterOptions('scaleFilter', restrictionsData, 'nivel_escala');
-}
-
-function setupEventListeners() {
-    $('#applyFilters').click(function () {
-        applyFilters();
-    });
-
-    $('#resetFilters').click(function () {
-        resetFilters();
-    });
-
-    $('#searchInput').on('keyup', function () {
-        applyFilters();
-    });
-
-    $('#countryFilter, #typeFilter, #eudrFilter, #cuantifyFilter, #datasetFilter, #processFilter, #scaleFilter').on('change', function () {
-        applyFilters();
-    });
-
-    // Evento para recargar capas
-    document.getElementById('reload-btn').addEventListener('click', function () {
-        // Limpiar capas existentes
-        for (const id in geojsonLayers) {
-            const layerInfo = geojsonLayers[id];
-            if (layerInfo.visible) {
-                map.removeLayer(layerInfo.layer);
-            }
-        }
-
-        // Reiniciar objeto de capas
-        geojsonLayers = {};
-
-        // Actualizar la lista de capas
-        updateLayersList();
-
-        // Volver a cargar las capas
-        loadGeoJsonLayers();
-    });
-
-    // Hacer las tarjetas de estadísticas clickeables
-    $('#totalRestrictionsCard').click(function () {
-        resetFilters();
-        $('#table-tab').tab('show');
-    });
-
-    $('#highEudrCard').click(function () {
-        resetFilters();
-        $('#eudrFilter').val('true');
-        $('#table-tab').tab('show');
-        applyFilters();
-    });
-
-    $('#protectedAreasCard').click(function () {
-        resetFilters();
-        $('#typeFilter').val('ambiental');
-        $('#table-tab').tab('show');
-        applyFilters();
-    });
-
-    $('#waterBuffersCard').click(function () {
-        resetFilters();
-        $('#typeFilter').val('hidrica');
-        $('#table-tab').tab('show');
-        applyFilters();
-    });
-}
-
-function applyFilters() {
-    const countryFilter = $('#countryFilter').val();
-    const typeFilter = $('#typeFilter').val();
-    const eudrFilter = $('#eudrFilter').val();
-    const cuantifyFilter = $('#cuantifyFilter').val();
-    const datasetFilter = $('#datasetFilter').val();
-    const processFilter = $('#processFilter').val();
-    const scaleFilter = $('#scaleFilter').val();
-    const searchFilter = $('#searchInput').val().toLowerCase();
-
-    filteredData = restrictionsData.filter(item => {
-        const countryMatch = !countryFilter || item.pais === countryFilter;
-        const typeMatch = !typeFilter || item.tipo_descrip === typeFilter;
-        const eudrMatch = !eudrFilter || item.eudr_cat === eudrFilter;
-        const cuantifyMatch = !cuantifyFilter || item.cuantificable === cuantifyFilter;
-        const datasetMatch = !datasetFilter || item.tipo_dataset === datasetFilter;
-        const processMatch = !processFilter || item.tipo_geoproceso === processFilter;
-        const scaleMatch = !scaleFilter || item.nivel_escala === scaleFilter;
-        const searchMatch = !searchFilter ||
-            item.pais.toLowerCase().includes(searchFilter) ||
-            item.normativa_aplicable.toLowerCase().includes(searchFilter) ||
-            item.descripcion_restriccion.toLowerCase().includes(searchFilter) ||
-            item.ip_restriccion.toLowerCase().includes(searchFilter) ||
-            item.tipo_restriccion.toLowerCase().includes(searchFilter) ||
-            (item.nombre_del_dataset && item.nombre_del_dataset.toLowerCase().includes(searchFilter));
-
-        return countryMatch && typeMatch && eudrMatch && cuantifyMatch && datasetMatch && processMatch && scaleMatch && searchMatch;
-    });
-
-    // Actualizar la tabla y estadísticas
-    table.clear();
-    table.rows.add(filteredData);
-    table.draw();
-    updateStats();
-    updateResultsCount();
-    updateActiveFilters();
-    toggleNoResults();
-
-    // Actualizar las opciones de los filtros (comportamiento anidado)
-    updateAllFilters();
-}
-
-function resetFilters() {
-    // Restablecer los valores de los filtros
-    $('#countryFilter').val('');
-    $('#typeFilter').val('');
-    $('#eudrFilter').val('');
-    $('#cuantifyFilter').val('');
-    $('#datasetFilter').val('');
-    $('#processFilter').val('');
-    $('#scaleFilter').val('');
-    $('#searchInput').val('');
-
-    // Restablecer los datos
-    filteredData = [...restrictionsData];
-
-    // Actualizar la tabla y estadísticas
-    table.clear();
-    table.rows.add(filteredData);
-    table.draw();
-    updateStats();
-    updateResultsCount();
-    updateActiveFilters();
-    toggleNoResults();
-
-    // Actualizar las opciones de los filtros (con todos los datos)
-    updateAllFilters();
-}
-
-function updateStats() {
-    const total = filteredData.length;
-    const eudr = filteredData.filter(item => item.eudr_cat).length;
-    const environmental = filteredData.filter(item =>
-        item.tipo_restriccion.includes('ambiental') ||
-        item.tipo_restriccion.includes('forestal') ||
-        item.tipo_restriccion.includes('Conservación')
-    ).length;
-    const water = filteredData.filter(item =>
-        item.tipo_restriccion.includes('hidrica') ||
-        item.tipo_restriccion.includes('Hídrica')
-    ).length;
-
-    $('#totalRestrictions').text(total);
-    $('#highEudr').text(eudr);
-    $('#protectedAreas').text(environmental);
-    $('#waterBuffers').text(water);
-}
-
-function updateResultsCount() {
-    $('#resultsCount').text(`${filteredData.length} resultados`);
-}
-
-function updateActiveFilters() {
-    const countryFilter = $('#countryFilter').val();
-    const typeFilter = $('#typeFilter').val();
-    const eudrFilter = $('#eudrFilter').val();
-    const cuantifyFilter = $('#cuantifyFilter').val();
-    const datasetFilter = $('#datasetFilter').val();
-    const processFilter = $('#processFilter').val();
-    const scaleFilter = $('#scaleFilter').val();
-    const searchFilter = $('#searchInput').val();
-
-    let badgesHtml = '';
-    let hasActiveFilters = false;
-
-    if (countryFilter) {
-        badgesHtml += `<span class="filter-badge"><i class="fas fa-globe-americas"></i> ${countryFilter}</span>`;
-        hasActiveFilters = true;
     }
 
-    if (typeFilter) {
-        badgesHtml += `<span class="filter-badge"><i class="fas fa-layer-group"></i> ${typeFilter}</span>`;
-        hasActiveFilters = true;
-    }
-
-    if (eudrFilter) {
-        badgesHtml += `<span class="filter-badge"><i class="fas fa-leaf"></i> EUDR ${eudrFilter === "true" ? "Sí" : "No"}</span>`;
-        hasActiveFilters = true;
-    }
-
-    if (cuantifyFilter) {
-        badgesHtml += `<span class="filter-badge"><i class="fas fa-check-circle"></i> Cuantificable ${cuantifyFilter}</span>`;
-        hasActiveFilters = true;
-    }
-
-    if (datasetFilter) {
-        badgesHtml += `<span class="filter-badge"><i class="fas fa-database"></i> ${datasetFilter}</span>`;
-        hasActiveFilters = true;
-    }
-
-    if (processFilter) {
-        badgesHtml += `<span class="filter-badge"><i class="fas fa-cogs"></i> ${processFilter}</span>`;
-        hasActiveFilters = true;
-    }
-
-    if (scaleFilter) {
-        badgesHtml += `<span class="filter-badge"><i class="fas fa-ruler"></i> ${scaleFilter}</span>`;
-        hasActiveFilters = true;
-    }
-
-    if (searchFilter) {
-        badgesHtml += `<span class="filter-badge"><i class="fas fa-search"></i> "${searchFilter}"</span>`;
-        hasActiveFilters = true;
-    }
-
-    $('#filterBadges').html(badgesHtml);
-    $('#activeFilters').toggle(hasActiveFilters);
-
-    $('.filter-badge').on('click', function () {
-        const badgeText = $(this).text().trim();
-
-        if (badgeText.includes('EUDR')) {
-            $('#eudrFilter').val('');
-        } else if (badgeText.includes('ambiental') || badgeText.includes('forestal') || badgeText.includes('Conservación') || badgeText.includes('hidrica') || badgeText.includes('Hídrica')) {
-            $('#typeFilter').val('');
-        } else if (badgeText.includes('Cuantificable')) {
-            $('#cuantifyFilter').val('');
-        } else if (badgeText.includes('Dataset')) {
-            $('#datasetFilter').val('');
-        } else if (badgeText.includes('Proceso')) {
-            $('#processFilter').val('');
-        } else if (badgeText.includes('Escala')) {
-            $('#scaleFilter').val('');
-        } else if (badgeText.startsWith('"')) {
-            $('#searchInput').val('');
-        } else {
-            $('#countryFilter').val('');
-        }
-
-        applyFilters();
-    });
-}
-
-function toggleNoResults() {
-    const hasResults = filteredData.length > 0;
-    $('#noResults').toggle(!hasResults);
-    $('.table-responsive').toggle(hasResults);
-}
-
-function showDetailModal(id) {
-    const item = restrictionsData.find(row => row.ip_restriccion === id);
-    if (item) {
-        let modalContent = `
+    generateModalContent(item) {
+        return `
                     <div class="row">
                         <div class="col-md-6">
                             <h5><i class="fas fa-balance-scale"></i> Información Legal</h5>
                             <hr>
-                            <p><strong><i class="fas fa-flag"></i> País:</strong> ${item.pais}</p>
-                            <p><strong><i class="fas fa-id-card"></i> ID Restricción:</strong> <code>${item.ip_restriccion}</code></p>
-                            <p><strong><i class="fas fa-book"></i> Normativa:</strong> <a href="${item.enlace_norma}" target="_blank" class="text-decoration-none">${item.normativa_aplicable}</a></p>
-                            <p><strong><i class="fas fa-file-alt"></i> Artículo:</strong> ${item.articulo_norma}</p>
-                            <p><strong><i class="fas fa-calendar-alt"></i> Fecha Norma:</strong> ${item.fecha_norma}</p>
-                            <p><strong><i class="fas fa-building"></i> Institución Responsable:</strong> ${item.institucion_responsable}</p>
-                            <p><strong><i class="fas fa-map-marker-alt"></i> Nivel/Escala:</strong> ${item.nivel_escala}</p>
+                            ${this.generateLegalInfo(item)}
                         </div>
                         <div class="col-md-6">
                             <h5><i class="fas fa-tools"></i> Detalles Técnicos</h5>
                             <hr>
-                            <p><strong><i class="fas fa-layer-group"></i> Tipo de Restricción:</strong> <span class="badge ${getBadgeClass(item.tipo_restriccion)}">${item.tipo_restriccion}</span></p>
-                            <p><strong><i class="fas fa-check-circle"></i> Cuantificable:</strong> ${item.cuantificable === 'Si' ? 'Sí' : 'No'}</p>
-                            <p><strong><i class="fas fa-ruler"></i> Parámetros Geográficos:</strong> ${item.parametros_geo}</p>
-                            <p><strong><i class="fas fa-draw-polygon"></i> Representación:</strong> ${item.representacion}</p>
-                            <p><strong><i class="fas fa-chart-line"></i> Tipo de Análisis:</strong> ${item.tipo_analisis || "No especificado"}</p>
+                            ${this.generateTechnicalDetails(item)}
+                        </div>
+                        <div class="col-md-12">
+                            <h5><i class="fas fa-balance-scale"></i> Texto Norma</h5>
+                            <hr>
+                            ${item.texto_norma ? `<p>${item.texto_norma}</p>` : ''}
+
                         </div>
                     </div>
                     <div class="row mt-4">
@@ -858,15 +920,7 @@ function showDetailModal(id) {
                         <div class="col-12">
                             <h5><i class="fas fa-database"></i> Dataset y Geoproceso</h5>
                             <hr>
-                            <p><strong><i class="fas fa-layer-group"></i> Nombre de la Capa:</strong> ${item.nombre_del_dataset || "<span class='text-muted'>No especificado</span>"}</p>
-                            <p><strong><i class="fas fa-calendar-day"></i> Fecha del Dataset:</strong> ${item.fecha_dataset ? excelDateToJSDate(item.fecha_dataset).toLocaleDateString() : "<span class='text-muted'>No especificado</span>"}</p>
-                            <p><strong><i class="fas fa-info-circle"></i> Descripción del Dataset:</strong> ${item.descripcion_dataset || "<span class='text-muted'>No especificado</span>"}</p>
-                            <p><strong><i class="fas fa-building"></i> Proveedor del Dataset:</strong> ${item.proveedor_dataset || "<span class='text-muted'>No especificado</span>"}</p>
-                            <p><strong><i class="fas fa-globe-americas"></i> Cobertura espacial:</strong> ${item.cobertura_espacial || "<span class='text-muted'>No especificado</span>"}</p>
-                            <p><strong><i class="fas fa-link"></i> Fuente:</strong> ${item.fuente || "<span class='text-muted'>No especificado</span>"}</p>
-                            <p><strong><i class="fas fa-file-contract"></i> Licencia/Condiciones de uso:</strong> ${item.licencia_condiciones_de_uso || "<span class='text-muted'>No especificado</span>"}</p>
-                            <p><strong><i class="fas fa-external-link-alt"></i> Enlace al Dataset:</strong> ${item.enlace_dataset ? `<a href="${item.enlace_dataset}" target="_blank" class="text-decoration-none">${item.enlace_dataset}</a>` : "<span class='text-muted'>No especificado</span>"}</p>
-                            <p><strong><i class="fas fa-comment"></i> Observaciones:</strong> ${item.observaciones_relevantes || "<span class='text-muted'>No hay observaciones</span>"}</p>
+                            ${this.generateDatasetInfo(item)}
                         </div>
                     </div>
                     <div class="row mt-4">
@@ -882,169 +936,179 @@ function showDetailModal(id) {
                         <div class="col-12">
                             <h5><i class="fas fa-info"></i> Información Adicional</h5>
                             <hr>
-                            <p><strong><i class="fas fa-tag"></i> Categoría EUDR:</strong> ${item.eudr_cat || "<span class='text-muted'>No especificado</span>"}</p>
-                            <p><strong><i class="fas fa-file"></i> Tipo de Descripción:</strong> ${item.tipo_descrip || "<span class='text-muted'>No especificado</span>"}</p>
-                            <p><strong><i class="fas fa-map"></i> Cartografía Base:</strong> ${item.cartografia_base || "<span class='text-muted'>No especificado</span>"}</p>
-                            <p><strong><i class="fas fa-cog"></i> Tipo de Geoproceso:</strong> ${item.tipo_geoproceso || "<span class='text-muted'>No especificado</span>"}</p>
-                            <p><strong><i class="fas fa-file-export"></i> Entregable:</strong> ${item.entregable || "<span class='text-muted'>No especificado</span>"}</p>
-                            <p><strong><i class="fas fa-link"></i> Link Entregable:</strong> ${item.link_entregable ? `<a href="${item.link_entregable}" target="_blank" class="text-decoration-none">${item.link_entregable}</a>` : "<span class='text-muted'>No especificado</span>"}</p>
+                            ${this.generateAdditionalInfo(item)}
                         </div>
                     </div>
                     <div class="row mt-4">
                         <div class="col-12">
-                            <button class="btn btn-primary" onclick="viewOnMap('${item.pais}', '${item.tipo_restriccion}', '${item.id_layer}')">
+                            <button class="btn btn-primary" onclick="app.viewOnMap('${item.pais}', '${item.tipo_restriccion}', '${item.id_layer}', '${item.ip_restriccion}')">
                                 <i class="fas fa-map-marked-alt"></i> Ver esta restricción en el mapa
                             </button>
                         </div>
                     </div>
                 `;
-
-        $('#modalContent').html(modalContent);
-        $('#detailModalLabel').text(`Detalle de la Restricción: ${item.ip_restriccion}`);
-        new bootstrap.Modal(document.getElementById('detailModal')).show();
-    }
-}
-
-function viewOnMap(country, type, id_layer) {
-    // Verificar si el modal está abierto antes de intentar ocultarlo
-    const detailModal = document.getElementById('detailModal');
-    const modalInstance = bootstrap.Modal.getInstance(detailModal);
-    if (modalInstance) {
-        modalInstance.hide();
     }
 
-    $('#map-tab').tab('show');
+    generateLegalInfo(item) {
+        return `
+                    <p><strong><i class="fas fa-flag"></i> País:</strong> ${item.pais} (${item.iso})</p>
+                    <p><strong><i class="fas fa-id-card"></i> ID Restricción:</strong> <code>${item.ip_restriccion}</code></p>
+                    <p><strong><i class="fas fa-book"></i> Normativa:</strong> <a href="${item.enlace_norma}" target="_blank" class="text-decoration-none">${item.normativa_aplicable}</a> (${item.normativa_tipo})</p>
+                    <p><strong><i class="fas fa-file-alt"></i> Artículo:</strong> ${item.articulo_norma}</p>
+                    <p><strong><i class="fas fa-calendar-alt"></i> Fecha Norma:</strong> ${item.fecha_norma} (${item.decada_norma})</p>
+                    <p><strong><i class="fas fa-building"></i> Institución Responsable:</strong> ${item.institucion_responsable}</p>
+                    <p><strong><i class="fas fa-map-marker-alt"></i> Nivel/Escala:</strong> ${item.nivel_escala}</p>
+                    ${item.observaciones_relevantes ? `<p><strong><i class="fas fa-sticky-note"></i> Observaciones Relevantes:</strong> ${item.observaciones_relevantes}</p>` : ''}
+                `;
+    }
 
-    // Activar la capa correspondiente si existe
-    if (id_layer && geojsonLayers[id_layer]) {
-        const layerInfo = geojsonLayers[id_layer];
-        if (!layerInfo.visible) {
-            map.addLayer(layerInfo.layer);
-            layerInfo.visible = true;
-            updateLayersList();
+    generateTechnicalDetails(item) {
+        return `
+                    <p><strong><i class="fas fa-layer-group"></i> Tipo de Restricción:</strong> <span class="badge ${this.getBadgeClass(item.tipo_restriccion)}">${item.tipo_restriccion}</span></p>
+                    <p><strong><i class="fas fa-tag"></i> Tipo Descripción:</strong> ${item.tipo_descrip}</p>
+                    <p><strong><i class="fas fa-check-circle"></i> Cuantificable:</strong> ${item.cuantificable === 'Si' ? 'Sí' : 'No'}</p>
+                    <p><strong><i class="fas fa-ruler"></i> Parámetros Geográficos:</strong> ${item.parametros_geo}</p>
+                    <p><strong><i class="fas fa-draw-polygon"></i> Representación:</strong> ${item.representacion}</p>
+                    <p><strong><i class="fas fa-chart-line"></i> Tipo de Análisis:</strong> ${item.tipo_analisis || "No especificado"}</p>
+                    <p><strong><i class="fas fa-database"></i> ID Dato:</strong> ${item.id_dato || "No especificado"}</p>
+                    <p><strong><i class="fas fa-map"></i> Cartografía Base:</strong> ${item.cartografia_base || "No especificado"}</p>
+                `;
+    }
+
+    generateDatasetInfo(item) {
+        let geojsonLinks = '';
+
+        // Manejar el array de URLs GeoJSON
+        if (item.url_geojson) {
+            const urls = Array.isArray(item.url_geojson) ? item.url_geojson : [item.url_geojson];
+            geojsonLinks = urls.map((url, index) =>
+                `<a href="${url}" target="_blank" class="text-decoration-none">GeoJSON ${index + 1}</a>`
+            ).join(', ');
         }
 
-        // Ajustar el mapa a los límites de la capa
+        return `
+                    <p><strong><i class="fas fa-database"></i> Dataset:</strong> 
+                        ${item.nombre_del_dataset && item.enlace_dataset ?
+                `<a href="${item.enlace_dataset}" target="_blank" class="text-decoration-none">${item.nombre_del_dataset}</a>` :
+                (item.nombre_del_dataset || "<span class='text-muted'>No especificado</span>")
+            }
+                    </p>
+                    <p><strong><i class="fas fa-map"></i> GeoJSON:</strong> 
+                        ${geojsonLinks || "<span class='text-muted'>No especificado</span>"}
+                    </p>
+                    <p><strong><i class="fas fa-calendar"></i> Fecha Dataset:</strong> ${item.fecha_dataset ? new Date(item.fecha_dataset).toLocaleDateString() : "No especificado"} (${item.decada_dataset})</p>
+                    <p><strong><i class="fas fa-cogs"></i> Tipo de Dataset:</strong> ${item.tipo_dataset || "<span class='text-muted'>No especificado</span>"}</p>
+                    <p><strong><i class="fas fa-project-diagram"></i> Tipo de Geoproceso:</strong> ${item.tipo_geoproceso || "<span class='text-muted'>No especificado</span>"}</p>
+                    <p><strong><i class="fas fa-code-branch"></i> ID Capa:</strong> ${item.id_layer || "<span class='text-muted'>No especificado</span>"}</p>
+                    <p><strong><i class="fas fa-file-alt"></i> Descripción Dataset:</strong> ${item.descripcion_dataset || "<span class='text-muted'>No especificado</span>"}</p>
+                    <p><strong><i class="fas fa-globe"></i> Cobertura Espacial:</strong> ${item.cobertura_espacial || "<span class='text-muted'>No especificado</span>"}</p>
+                    <p><strong><i class="fas fa-building"></i> Proveedor Dataset:</strong> ${item.proveedor_dataset || "<span class='text-muted'>No especificado</span>"}</p>
+                    <p><strong><i class="fas fa-link"></i> Fuente:</strong> ${item.fuente || "<span class='text-muted'>No especificado</span>"}</p>
+                    <p><strong><i class="fas fa-shield-alt"></i> Licencia:</strong> ${item.licencia_condiciones_de_uso || "<span class='text-muted'>No especificado</span>"}</p>
+                    <p><strong><i class="fas fa-envelope"></i> Contacto Oficial:</strong> ${item.contacto_oficial || "<span class='text-muted'>No especificado</span>"}</p>
+                    ${item.observaciones_dataset ? `<p><strong><i class="fas fa-sticky-note"></i> Observaciones Dataset:</strong> ${item.observaciones_dataset}</p>` : ''}
+                    ${item.entregable ? `<p><strong><i class="fas fa-file"></i> Entregable:</strong> ${item.entregable}</p>` : ''}
+                    ${item.link_entregable ? `<p><strong><i class="fas fa-link"></i> Link Entregable:</strong> <a href="${item.link_entregable}" target="_blank">${item.link_entregable}</a></p>` : ''}
+                `;
+    }
+
+    generateAdditionalInfo(item) {
+        let info = '';
+
+        if (item.analisis_geoespacial && item.analisis_geoespacial !== "") {
+            info += `<p><strong><i class="fas fa-globe-americas"></i> Análisis Geoespacial:</strong> ${item.analisis_geoespacial}</p>`;
+        }
+
+        if (item.observaciones && item.observaciones !== "") {
+            info += `<p><strong><i class="fas fa-sticky-note"></i> Observaciones:</strong> ${item.observaciones}</p>`;
+        }
+
+        if (item.fuente_informacion && item.fuente_informacion !== "") {
+            info += `<p><strong><i class="fas fa-font"></i> Fuente Información:</strong> ${item.fuente_informacion}</p>`;
+        }
+
+        if (item.fecha_actualizacion && item.fecha_actualizacion !== "") {
+            info += `<p><strong><i class="fas fa-calendar-check"></i> Fecha Actualización:</strong> ${item.fecha_actualizacion}</p>`;
+        }
+
+        if (item.estado && item.estado !== "") {
+            info += `<p><strong><i class="fas fa-check-circle"></i> Estado:</strong> ${item.estado}</p>`;
+        }
+
+        return info || '<p class="text-muted">No hay información adicional disponible.</p>';
+    }
+
+    // =============================================
+    // MÉTODOS FALTANTES
+    // =============================================
+
+    getBadgeClass(type) {
+        if (!type) return 'badge-otros';
+
+        const typeLower = type.toLowerCase();
+
+        if (typeLower.includes('ambiental') || typeLower.includes('forestal') || typeLower.includes('conservación')) {
+            return 'badge-eudr';
+        } else if (typeLower.includes('hidrica') || typeLower.includes('hídrica')) {
+            return 'badge-buffer';
+        } else if (typeLower.includes('fauna')) {
+            return 'badge-ap';
+        } else {
+            return 'badge-otros';
+        }
+    }
+
+    exportRow(id) {
+        const item = restrictionsData.find(row => row.ip_restriccion === id);
+        if (!item) {
+            this.showNotification('No se pudo encontrar el registro para exportar', true);
+            return;
+        }
+
         try {
-            map.fitBounds(layerInfo.layer.getBounds(), {
-                padding: [20, 20] // Añadir padding para mejor visualización
-            });
-        } catch (e) {
-            console.error("Error al ajustar los límites de la capa:", e);
-            // Si falla, centrar en el país
-            centerMapOnCountry(country);
+            // Crear workbook y worksheet
+            const wb = XLSX.utils.book_new();
+            const ws = XLSX.utils.json_to_sheet([item]);
+
+            // Añadir worksheet al workbook
+            XLSX.utils.book_append_sheet(wb, ws, 'Restricción');
+
+            // Exportar el archivo
+            XLSX.writeFile(wb, `restriccion_${id}.xlsx`);
+
+            this.showNotification(`Restricción ${id} exportada correctamente`);
+        } catch (error) {
+            console.error('Error al exportar:', error);
+            this.showNotification('Error al exportar el registro', true);
         }
-    } else {
-        // Si no hay capa, centrar en el país
-        centerMapOnCountry(country);
+    }
+
+    getRandomColor() {
+        const letters = '0123456789ABCDEF';
+        let color = '#';
+        for (let i = 0; i < 6; i++) {
+            color += letters[Math.floor(Math.random() * 16)];
+        }
+        return color;
+    }
+
+    showNotification(message, isError = false) {
+        const notification = document.getElementById('notification');
+        notification.textContent = message;
+        notification.className = `notification ${isError ? 'error' : ''}`;
+        notification.classList.add('show');
+
+        setTimeout(() => {
+            notification.classList.remove('show');
+        }, 5000);
     }
 }
 
-function centerMapOnCountry(country) {
-    let center;
-    let zoom = 6; // Zoom por defecto
+// =============================================
+// INICIALIZACIÓN DE LA APLICACIÓN
+// =============================================
 
-    // Coordenadas centrales para cada país
-    const countryCenters = {
-        "Belice": { center: [17.0, -88.0], zoom: 8 },
-        "Chile": { center: [-35.0, -71.0], zoom: 5 },
-        "Perú": { center: [-13.0, -74.0], zoom: 6 },
-        "Colombia": { center: [4.0, -73.0], zoom: 6 },
-        "Brasil": { center: [-10.0, -55.0], zoom: 5 },
-        "México": { center: [19.0, -99.0], zoom: 5 },
-        "Argentina": { center: [-40.0, -72.0], zoom: 5 },
-        "Ecuador": { center: [-2.0, -44.0], zoom: 7 },
-        "Bolivia": { center: [-17.0, -65.0], zoom: 6 },
-        "Venezuela": { center: [8.0, -66.0], zoom: 6 },
-        "Paraguay": { center: [-23.0, -58.0], zoom: 7 },
-        "Uruguay": { center: [-33.0, -56.0], zoom: 8 },
-        "Guyana": { center: [5.0, -58.0], zoom: 7 },
-        "Surinam": { center: [4.0, -56.0], zoom: 7 },
-        "Guayana Francesa": { center: [4.0, -53.0], zoom: 8 }
-    };
-
-    if (countryCenters[country]) {
-        center = countryCenters[country].center;
-        zoom = countryCenters[country].zoom;
-    } else {
-        console.warn(`No se ha definido un centro para el país: ${country}`);
-        // Coordenadas por defecto para Sudamérica
-        center = [-15.0, -60.0];
-        zoom = 4;
-    }
-
-    if (center) {
-        map.setView(center, zoom);
-    }
-}
-
-function getBadgeClass(type) {
-    if (type.includes('ambiental') || type.includes('forestal') || type.includes('Conservación')) {
-        return 'bg-primary';
-    } else if (type.includes('hidrica') || type.includes('Hídrica')) {
-        return 'bg-danger';
-    } else if (type.includes('fauna')) {
-        return 'bg-success';
-    } else {
-        return 'bg-secondary';
-    }
-}
-
-function exportRow(id) {
-    const item = restrictionsData.find(row => row.ip_restriccion === id);
-    if (item) {
-        const { jsPDF } = window.jspdf;
-        const doc = new jsPDF();
-
-        doc.setFontSize(18);
-        doc.text(`Detalle de Restricción: ${item.ip_restriccion}`, 14, 22);
-
-        doc.setFontSize(12);
-        doc.text(`País: ${item.pais}`, 14, 35);
-        doc.text(`Normativa: ${item.normativa_aplicable}`, 14, 42);
-        doc.text(`Tipo: ${item.tipo_restriccion}`, 14, 49);
-
-        doc.setFontSize(11);
-        doc.text("Descripción:", 14, 60);
-        doc.setFontSize(10);
-        const splitDescription = doc.splitTextToSize(item.descripcion_restriccion, 180);
-        doc.text(splitDescription, 14, 65);
-
-        let currentY = 65 + (splitDescription.length * 5) + 10;
-
-        doc.setFontSize(11);
-        doc.text("Pertinencia EUDR:", 14, currentY);
-        doc.setFontSize(10);
-        const splitEudr = doc.splitTextToSize(item.eudr_cat ? `Categoría: ${item.eudr_cat}. ${item.pertinencia_eudr}` : 'Esta restricción no es pertinente para el cumplimiento del EUDR', 180);
-        doc.text(splitEudr, 14, currentY + 5);
-
-        currentY = currentY + (splitEudr.length * 5) + 15;
-
-        doc.setFontSize(11);
-        doc.text("Dataset:", 14, currentY);
-        doc.setFontSize(10);
-        doc.text(`Nombre: ${item.nombre_del_dataset || "No especificado"}`, 14, currentY + 5);
-        doc.text(`Proveedor: ${item.proveedor_dataset || "No especificado"}`, 14, currentY + 10);
-
-        currentY = currentY + 25;
-
-        doc.setFontSize(11);
-        doc.text("Geoproceso a Realizar:", 14, currentY);
-        doc.setFontSize(10);
-        const splitGeoproceso = doc.splitTextToSize(item.geoproceso_a_realizar || "No especificado", 180);
-        doc.text(splitGeoproceso, 14, currentY + 5);
-
-        doc.save(`restriccion_${item.ip_restriccion}.pdf`);
-    }
-}
-
-// Función para convertir fecha de Excel a JavaScript
-function excelDateToJSDate(excelDate) {
-    // Excel date is days since 1900-01-01, with 1900 being a leap year (incorrectly)
-    // JavaScript date is milliseconds since 1970-01-01
-    const jsDate = new Date((excelDate - 25569) * 86400 * 1000);
-    return jsDate;
-}
+const app = new RestrictionsApp();
 
 $('#exportExcel').click(function () {
     const wb = XLSX.utils.book_new();
@@ -1096,7 +1160,6 @@ $('#exportExcelAll').click(function () {
     XLSX.writeFile(wb, "restricciones_todo.xlsx");
 });
 
-
 $('#exportPDF').click(function () {
     const { jsPDF } = window.jspdf;
     const doc = new jsPDF();
@@ -1127,26 +1190,4 @@ $('#exportPDF').click(function () {
     });
 
     doc.save('restricciones_eudr.pdf');
-});
-
-// Función para mostrar/ocultar el panel de capas
-document.addEventListener('DOMContentLoaded', function () {
-    const toggleLayersPanel = document.getElementById('toggleLayersPanel');
-    const layersPanel = document.getElementById('layersPanel');
-    const toggleIcon = toggleLayersPanel.querySelector('i');
-
-    toggleLayersPanel.addEventListener('click', function () {
-        layersPanel.classList.toggle('show');
-
-        // Cambiar el ícono del botón según el estado del panel
-        if (layersPanel.classList.contains('show')) {
-            toggleIcon.classList.remove('fa-layer-group');
-            toggleIcon.classList.add('fa-times');
-        } else {
-            toggleIcon.classList.remove('fa-times');
-            toggleIcon.classList.add('fa-layer-group');
-        }
-    });
-
-    // El resto del código JavaScript existente...
 });

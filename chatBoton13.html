@@ -1190,6 +1190,77 @@
             border-radius: 8px;
             overflow-x: auto;
         }
+
+        /* ===== TOOLTIPS MEJORADOS ===== */
+        button[title] {
+            position: relative;
+        }
+
+        button[title]:hover::after {
+            content: attr(title);
+            position: absolute;
+            bottom: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(0, 0, 0, 0.8);
+            color: white;
+            padding: 5px 10px;
+            border-radius: 4px;
+            font-size: 12px;
+            white-space: nowrap;
+            z-index: 1000;
+            margin-bottom: 5px;
+            pointer-events: none;
+        }
+
+        button[title]:hover::before {
+            content: '';
+            position: absolute;
+            bottom: calc(100% - 5px);
+            left: 50%;
+            transform: translateX(-50%);
+            border: 5px solid transparent;
+            border-top-color: rgba(0, 0, 0, 0.8);
+            z-index: 1000;
+            pointer-events: none;
+        }
+
+        .copy-button[title]:hover::after,
+        .speak-button[title]:hover::after {
+            bottom: 120%;
+            font-size: 11px;
+        }
+
+        .copy-button[title]:hover::before,
+        .speak-button[title]:hover::before {
+            bottom: calc(120% - 5px);
+        }
+
+        /* MODO OSCURO PARA TOOLTIPS - CORREGIDO */
+        body.dark-mode button[title]:hover::after {
+            background: rgba(255, 255, 255, 0.95);
+            color: #212121;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+        }
+
+        body.dark-mode button[title]:hover::before {
+            border-top-color: rgba(255, 255, 255, 0.95);
+        }
+
+        /* Asegurar que los tooltips sean visibles en modo oscuro */
+        body.dark-mode .copy-button[title]:hover::after,
+        body.dark-mode .speak-button[title]:hover::after {
+            background: rgba(255, 255, 255, 0.95);
+            color: #212121;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+        }
+
+        body.dark-mode .copy-button[title]:hover::before,
+        body.dark-mode .speak-button[title]:hover::before {
+            border-top-color: rgba(255, 255, 255, 0.95);
+        }
     </style>
 </head>
 <body>
