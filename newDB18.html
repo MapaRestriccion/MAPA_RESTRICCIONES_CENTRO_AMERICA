@@ -1512,6 +1512,7 @@
                     
                     // Cargar cada GeoJSON
                     for (const url of urlsArray) {
+                        console.log(url)
                         try {
                             const response = await fetch(url);
                             if (!response.ok) throw new Error(`Error al cargar el GeoJSON: ${response.statusText}`);
@@ -2034,6 +2035,7 @@
                 setTimeout(async () => {
                     // Buscar la restricción correspondiente
                     const restriction = restrictionsData.find(row => row.ip_restriccion === restrictionId);
+                    
 
                     if (restriction && restriction.id_layer && restriction.url_geojson) {
                         try {

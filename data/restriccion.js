@@ -19,7 +19,7 @@ const restrictionsData = [{
   "observaciones_relevantes": "Vigente. Se propone reemplazar por NPAS 2024 (aún en borrador). (FAOLEX)",
   "pertinencia_eudr": "Asegura exclusión de producción en APs y soporte a debida diligencia (ubicación/tenencia).",
   "eudr_cat": "prohibe",
-  "ip_restriccion": "BLZ-RES-001",
+  "ip_restriccion": "AAA-AAA9999",
   "tipo_analisis": "Exclusión de parcelas agrícolas en Áreas Protegidas",
   "id_dato": "BLZ-DAT-001",
   "cartografia_base": "Protected Areas of Belize",
@@ -40,7 +40,7 @@ const restrictionsData = [{
   "contacto_oficial": "UNEP-WCMC / Instituto nacional que reporte a WDPA",
   "enlace_dataset": "ProtectedPlanet.net (descarga shapefile o formatos GIS) (Protected Planet)",
   "observaciones_dataset": "Puede haber discrepancias en nombres o límites con datos nacionales",
-  "id_layer": "layer000",
+  "id_layer": "layer999",
   "url_geojson": [
    "https://raw.githubusercontent.com/Sud-Austral/MAPA_RESTRICCIONES_CENTRO_AMERICA/refs/heads/main/mapaData/parte_1_de_15.json",
    "https://raw.githubusercontent.com/Sud-Austral/MAPA_RESTRICCIONES_CENTRO_AMERICA/refs/heads/main/mapaData/parte_2_de_15.json",
