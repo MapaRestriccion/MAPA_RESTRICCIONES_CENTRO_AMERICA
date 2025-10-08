@@ -43,7 +43,7 @@ const restrictionsData = [
   "observaciones_dataset": "Puede haber discrepancias en nombres o límites con datos nacionales",
   "id_layer": "layer000",
   "url_geojson": [
-   "https://raw.githubusercontent.com/Sud-Austral/MAPA_RESTRICCIONES_CENTRO_AMERICA/refs/heads/main/mapaData/BLZ_AreasProt.json"
+   "https://raw.githubusercontent.com/MapaRestriccion/MAPA_RESTRICCIONES_CENTRO_AMERICA/refs/heads/main/mapaData/BLZ_AreasProt.json"
   ]
  },
  {
@@ -90,7 +90,7 @@ const restrictionsData = [
   "observaciones_dataset": "Puede haber discrepancias en nombres o límites con datos nacionales",
   "id_layer": "layer001",
   "url_geojson": [
-   "https://raw.githubusercontent.com/Sud-Austral/MAPA_RESTRICCIONES_CENTRO_AMERICA/refs/heads/main/mapaData/BLZ_AreasProt.json"
+   "https://raw.githubusercontent.com/MapaRestriccion/MAPA_RESTRICCIONES_CENTRO_AMERICA/refs/heads/main/mapaData/BLZ_AreasProt.json"
   ]
  },
  {
@@ -137,7 +137,7 @@ const restrictionsData = [
   "observaciones_dataset": "Puede haber discrepancias en nombres o límites con datos nacionales",
   "id_layer": "layer002",
   "url_geojson": [
-   "https://raw.githubusercontent.com/Sud-Austral/MAPA_RESTRICCIONES_CENTRO_AMERICA/refs/heads/main/mapaData/BLZ_AreasProt.json"
+   "https://raw.githubusercontent.com/MapaRestriccion/MAPA_RESTRICCIONES_CENTRO_AMERICA/refs/heads/main/mapaData/BLZ_AreasProt.json"
   ]
  },
  {
@@ -184,7 +184,7 @@ const restrictionsData = [
   "observaciones_dataset": "Puede haber discrepancias en nombres o límites con datos nacionales",
   "id_layer": "layer003",
   "url_geojson": [
-   "https://raw.githubusercontent.com/Sud-Austral/MAPA_RESTRICCIONES_CENTRO_AMERICA/refs/heads/main/mapaData/BLZ_AreasProt.json"
+   "https://raw.githubusercontent.com/MapaRestriccion/MAPA_RESTRICCIONES_CENTRO_AMERICA/refs/heads/main/mapaData/BLZ_AreasProt.json"
   ]
  },
  {
@@ -231,7 +231,7 @@ const restrictionsData = [
   "observaciones_dataset": "Puede haber discrepancias en nombres o límites con datos nacionales",
   "id_layer": "layer004",
   "url_geojson": [
-   "https://raw.githubusercontent.com/Sud-Austral/MAPA_RESTRICCIONES_CENTRO_AMERICA/refs/heads/main/mapaData/BLZ_AreasProt.json"
+   "https://raw.githubusercontent.com/MapaRestriccion/MAPA_RESTRICCIONES_CENTRO_AMERICA/refs/heads/main/mapaData/BLZ_AreasProt.json"
   ]
  },
  {
@@ -278,7 +278,7 @@ const restrictionsData = [
   "observaciones_dataset": "Puede haber discrepancias en nombres o límites con datos nacionales",
   "id_layer": "layer005",
   "url_geojson": [
-   "https://raw.githubusercontent.com/Sud-Austral/MAPA_RESTRICCIONES_CENTRO_AMERICA/refs/heads/main/mapaData/BLZ_AreasProt.json"
+   "https://raw.githubusercontent.com/MapaRestriccion/MAPA_RESTRICCIONES_CENTRO_AMERICA/refs/heads/main/mapaData/BLZ_AreasProt.json"
   ]
  },
  {
@@ -325,7 +325,7 @@ const restrictionsData = [
   "observaciones_dataset": "Puede haber discrepancias en nombres o límites con datos nacionales",
   "id_layer": "layer006",
   "url_geojson": [
-   "https://raw.githubusercontent.com/Sud-Austral/MAPA_RESTRICCIONES_CENTRO_AMERICA/refs/heads/main/mapaData/BLZ_ForestReserve.json"
+   "https://raw.githubusercontent.com/MapaRestriccion/MAPA_RESTRICCIONES_CENTRO_AMERICA/refs/heads/main/mapaData/BLZ_ForestReserve.json"
   ]
  },
  {
@@ -372,7 +372,7 @@ const restrictionsData = [
   "observaciones_dataset": "Útil para auditoría EUDR; capa dinámica de permisos.",
   "id_layer": "layer007",
   "url_geojson": [
-   "https://raw.githubusercontent.com/Sud-Austral/MAPA_RESTRICCIONES_CENTRO_AMERICA/refs/heads/main/mapaData/BLZ_ZonasHidricas.json"
+   "https://raw.githubusercontent.com/MapaRestriccion/MAPA_RESTRICCIONES_CENTRO_AMERICA/refs/heads/main/mapaData/BLZ_ZonasHidricas.json"
   ]
  },
  {
@@ -419,7 +419,7 @@ const restrictionsData = [
   "observaciones_dataset": "No incluye buffer prehecho; debe calcularse en SIG a partir de línea costera/hidrografía.",
   "id_layer": "layer008",
   "url_geojson": [
-   "https://raw.githubusercontent.com/Sud-Austral/MAPA_RESTRICCIONES_CENTRO_AMERICA/refs/heads/main/mapaData/BLZ_ZonasHidricas.json"
+   "https://raw.githubusercontent.com/MapaRestriccion/MAPA_RESTRICCIONES_CENTRO_AMERICA/refs/heads/main/mapaData/BLZ_ZonasHidricas.json"
   ]
  },
  {
@@ -466,7 +466,7 @@ const restrictionsData = [
   "observaciones_dataset": "Dataset reconocido en catálogo SNIT, pero metadato incompleto (sin fecha clara ni licencia).",
   "id_layer": "layer009",
   "url_geojson": [
-   "https://raw.githubusercontent.com/Sud-Austral/MAPA_RESTRICCIONES_CENTRO_AMERICA/refs/heads/main/mapaData/CRI_AreasProt.json"
+   "https://raw.githubusercontent.com/MapaRestriccion/MAPA_RESTRICCIONES_CENTRO_AMERICA/refs/heads/main/mapaData/CRI_AreasProt.json"
   ]
  },
  {
@@ -513,7 +513,7 @@ const restrictionsData = [
   "observaciones_dataset": "Dataset reconocido en catálogo SNIT, pero metadato incompleto (sin fecha clara ni licencia).",
   "id_layer": "layer010",
   "url_geojson": [
-   "https://raw.githubusercontent.com/Sud-Austral/MAPA_RESTRICCIONES_CENTRO_AMERICA/refs/heads/main/mapaData/CRI_AreasProt.json"
+   "https://raw.githubusercontent.com/MapaRestriccion/MAPA_RESTRICCIONES_CENTRO_AMERICA/refs/heads/main/mapaData/CRI_AreasProt.json"
   ]
  },
  {
@@ -560,7 +560,7 @@ const restrictionsData = [
   "observaciones_dataset": "Último metadato en SNIT corresponde a 2013; versiones recientes (2021–2023) no localizadas con metadato.",
   "id_layer": "layer011",
   "url_geojson": [
-   "https://raw.githubusercontent.com/Sud-Austral/MAPA_RESTRICCIONES_CENTRO_AMERICA/refs/heads/main/mapaData/CRI_Restriccion_cambiouso.json"
+   "https://raw.githubusercontent.com/MapaRestriccion/MAPA_RESTRICCIONES_CENTRO_AMERICA/refs/heads/main/mapaData/CRI_Restriccion_cambiouso.json"
   ]
  },
  {
@@ -607,7 +607,7 @@ const restrictionsData = [
   "observaciones_dataset": "Existe servicio WMS/WFS en SNIT, pero sin detalles completos de precisión ni fecha.",
   "id_layer": "layer012",
   "url_geojson": [
-   "https://raw.githubusercontent.com/Sud-Austral/MAPA_RESTRICCIONES_CENTRO_AMERICA/refs/heads/main/mapaData/CRI_Zonas_hidricas100m.json"
+   "https://raw.githubusercontent.com/MapaRestriccion/MAPA_RESTRICCIONES_CENTRO_AMERICA/refs/heads/main/mapaData/CRI_Zonas_hidricas100m.json"
   ]
  },
  {
@@ -654,7 +654,7 @@ const restrictionsData = [
   "observaciones_dataset": "Existe servicio WMS/WFS en SNIT, pero sin detalles completos de precisión ni fecha.",
   "id_layer": "layer013",
   "url_geojson": [
-   "https://raw.githubusercontent.com/Sud-Austral/MAPA_RESTRICCIONES_CENTRO_AMERICA/refs/heads/main/mapaData/CRI_Zonas_hidricas10m.json"
+   "https://raw.githubusercontent.com/MapaRestriccion/MAPA_RESTRICCIONES_CENTRO_AMERICA/refs/heads/main/mapaData/CRI_Zonas_hidricas10m.json"
   ]
  },
  {
@@ -701,7 +701,7 @@ const restrictionsData = [
   "observaciones_dataset": "Existe servicio WMS/WFS en SNIT, pero sin detalles completos de precisión ni fecha.",
   "id_layer": "layer014",
   "url_geojson": [
-   "https://raw.githubusercontent.com/Sud-Austral/MAPA_RESTRICCIONES_CENTRO_AMERICA/refs/heads/main/mapaData/CRI_Zonas_hidricas15m.json"
+   "https://raw.githubusercontent.com/MapaRestriccion/MAPA_RESTRICCIONES_CENTRO_AMERICA/refs/heads/main/mapaData/CRI_Zonas_hidricas15m.json"
   ]
  },
  {
@@ -748,7 +748,7 @@ const restrictionsData = [
   "observaciones_dataset": "Existe servicio WMS/WFS en SNIT, pero sin detalles completos de precisión ni fecha.",
   "id_layer": "layer015",
   "url_geojson": [
-   "https://raw.githubusercontent.com/Sud-Austral/MAPA_RESTRICCIONES_CENTRO_AMERICA/refs/heads/main/mapaData/CRI_Zonas_hidricas50m_pend.json"
+   "https://raw.githubusercontent.com/MapaRestriccion/MAPA_RESTRICCIONES_CENTRO_AMERICA/refs/heads/main/mapaData/CRI_Zonas_hidricas50m_pend.json"
   ]
  },
  {
@@ -795,7 +795,7 @@ const restrictionsData = [
   "observaciones_dataset": "Inventario de humedales existe; metadatos en SNIT incompletos (fecha y licencia faltan).",
   "id_layer": "layer016",
   "url_geojson": [
-   "https://raw.githubusercontent.com/Sud-Austral/MAPA_RESTRICCIONES_CENTRO_AMERICA/refs/heads/main/mapaData/CRI_Zonas_hidricas50m.json"
+   "https://raw.githubusercontent.com/MapaRestriccion/MAPA_RESTRICCIONES_CENTRO_AMERICA/refs/heads/main/mapaData/CRI_Zonas_hidricas50m.json"
   ]
  },
  {
@@ -842,7 +842,7 @@ const restrictionsData = [
   "observaciones_dataset": "No encontré metadato en SNIT que lo documente como dataset disponible públicamente.",
   "id_layer": "layer017",
   "url_geojson": [
-   "https://raw.githubusercontent.com/Sud-Austral/MAPA_RESTRICCIONES_CENTRO_AMERICA/refs/heads/main/mapaData/CRI_Restriccion_dominio.json"
+   "https://raw.githubusercontent.com/MapaRestriccion/MAPA_RESTRICCIONES_CENTRO_AMERICA/refs/heads/main/mapaData/CRI_Restriccion_dominio.json"
   ]
  },
  {
@@ -889,7 +889,7 @@ const restrictionsData = [
   "observaciones_dataset": null,
   "id_layer": "layer018",
   "url_geojson": [
-   "https://raw.githubusercontent.com/Sud-Austral/MAPA_RESTRICCIONES_CENTRO_AMERICA/refs/heads/main/mapaData/BLZ_RecargaHidrica.json"
+   "https://raw.githubusercontent.com/MapaRestriccion/MAPA_RESTRICCIONES_CENTRO_AMERICA/refs/heads/main/mapaData/BLZ_RecargaHidrica.json"
   ]
  },
  {
@@ -936,7 +936,7 @@ const restrictionsData = [
   "observaciones_dataset": null,
   "id_layer": "layer019",
   "url_geojson": [
-   "https://raw.githubusercontent.com/Sud-Austral/MAPA_RESTRICCIONES_CENTRO_AMERICA/refs/heads/main/mapaData/BLZ_EIA.json"
+   "https://raw.githubusercontent.com/MapaRestriccion/MAPA_RESTRICCIONES_CENTRO_AMERICA/refs/heads/main/mapaData/BLZ_EIA.json"
   ]
  },
  {
@@ -983,7 +983,7 @@ const restrictionsData = [
   "observaciones_dataset": null,
   "id_layer": "layer020",
   "url_geojson": [
-   "https://raw.githubusercontent.com/Sud-Austral/MAPA_RESTRICCIONES_CENTRO_AMERICA/refs/heads/main/mapaData/HN_EIA.json"
+   "https://raw.githubusercontent.com/MapaRestriccion/MAPA_RESTRICCIONES_CENTRO_AMERICA/refs/heads/main/mapaData/HN_EIA.json"
   ]
  },
  {
@@ -1030,7 +1030,7 @@ const restrictionsData = [
   "observaciones_dataset": "No localicé metadato público que confirme capa digital oficial completa de ZMT.",
   "id_layer": "layer021",
   "url_geojson": [
-   "https://raw.githubusercontent.com/Sud-Austral/MAPA_RESTRICCIONES_CENTRO_AMERICA/refs/heads/main/mapaData/CRI_Zonas_costeras200m.json"
+   "https://raw.githubusercontent.com/MapaRestriccion/MAPA_RESTRICCIONES_CENTRO_AMERICA/refs/heads/main/mapaData/CRI_Zonas_costeras200m.json"
   ]
  },
  {
@@ -1077,7 +1077,7 @@ const restrictionsData = [
   "observaciones_dataset": "Confirmado en metadatos SNIT; escala 1:50 000; shapefile.",
   "id_layer": "layer022",
   "url_geojson": [
-   "https://raw.githubusercontent.com/Sud-Austral/MAPA_RESTRICCIONES_CENTRO_AMERICA/refs/heads/main/mapaData/CRI_Pendientes.json"
+   "https://raw.githubusercontent.com/MapaRestriccion/MAPA_RESTRICCIONES_CENTRO_AMERICA/refs/heads/main/mapaData/CRI_Pendientes.json"
   ]
  },
  {
@@ -1124,7 +1124,7 @@ const restrictionsData = [
   "observaciones_dataset": "Referencias en estudios académicos; no encontré metadato oficial actualizado nacional en SNIT.",
   "id_layer": "layer023",
   "url_geojson": [
-   "https://raw.githubusercontent.com/Sud-Austral/MAPA_RESTRICCIONES_CENTRO_AMERICA/refs/heads/main/mapaData/CRI_Restriccion100m.json"
+   "https://raw.githubusercontent.com/MapaRestriccion/MAPA_RESTRICCIONES_CENTRO_AMERICA/refs/heads/main/mapaData/CRI_Restriccion100m.json"
   ]
  },
  {
@@ -1171,7 +1171,7 @@ const restrictionsData = [
   "observaciones_dataset": "Confirmar disponibilidad en shapefile con clasificación legal VI–VIII",
   "id_layer": "layer024",
   "url_geojson": [
-   "https://raw.githubusercontent.com/Sud-Austral/MAPA_RESTRICCIONES_CENTRO_AMERICA/refs/heads/main/mapaData/SV_RestriccionSuelo.json"
+   "https://raw.githubusercontent.com/MapaRestriccion/MAPA_RESTRICCIONES_CENTRO_AMERICA/refs/heads/main/mapaData/SV_RestriccionSuelo.json"
   ]
  },
  {
@@ -1218,7 +1218,7 @@ const restrictionsData = [
   "observaciones_dataset": "Confirmar disponibilidad en shapefile con clasificación legal VI–VIII",
   "id_layer": "layer025",
   "url_geojson": [
-   "https://raw.githubusercontent.com/Sud-Austral/MAPA_RESTRICCIONES_CENTRO_AMERICA/refs/heads/main/mapaData/SV_RestriccionVIII.json"
+   "https://raw.githubusercontent.com/MapaRestriccion/MAPA_RESTRICCIONES_CENTRO_AMERICA/refs/heads/main/mapaData/SV_RestriccionVIII.json"
   ]
  },
  {
@@ -1265,7 +1265,7 @@ const restrictionsData = [
   "observaciones_dataset": null,
   "id_layer": "layer026",
   "url_geojson": [
-   "https://raw.githubusercontent.com/Sud-Austral/MAPA_RESTRICCIONES_CENTRO_AMERICA/refs/heads/main/mapaData/SV_RestriccionRecarga.json"
+   "https://raw.githubusercontent.com/MapaRestriccion/MAPA_RESTRICCIONES_CENTRO_AMERICA/refs/heads/main/mapaData/SV_RestriccionRecarga.json"
   ]
  },
  {
@@ -1312,7 +1312,7 @@ const restrictionsData = [
   "observaciones_dataset": null,
   "id_layer": "layer027",
   "url_geojson": [
-   "https://raw.githubusercontent.com/Sud-Austral/MAPA_RESTRICCIONES_CENTRO_AMERICA/refs/heads/main/mapaData/SV_RestriccionAcuifera.json"
+   "https://raw.githubusercontent.com/MapaRestriccion/MAPA_RESTRICCIONES_CENTRO_AMERICA/refs/heads/main/mapaData/SV_RestriccionAcuifera.json"
   ]
  },
  {
@@ -1359,7 +1359,7 @@ const restrictionsData = [
   "observaciones_dataset": "Cobertura parcial (solo AMSS)",
   "id_layer": "layer028",
   "url_geojson": [
-   "https://raw.githubusercontent.com/Sud-Austral/MAPA_RESTRICCIONES_CENTRO_AMERICA/refs/heads/main/mapaData/SV_Restriccion25m.json"
+   "https://raw.githubusercontent.com/MapaRestriccion/MAPA_RESTRICCIONES_CENTRO_AMERICA/refs/heads/main/mapaData/SV_Restriccion25m.json"
   ]
  },
  {
@@ -1406,7 +1406,7 @@ const restrictionsData = [
   "observaciones_dataset": null,
   "id_layer": "layer029",
   "url_geojson": [
-   "https://raw.githubusercontent.com/Sud-Austral/MAPA_RESTRICCIONES_CENTRO_AMERICA/refs/heads/main/mapaData/SV_PendientesDesliza.json"
+   "https://raw.githubusercontent.com/MapaRestriccion/MAPA_RESTRICCIONES_CENTRO_AMERICA/refs/heads/main/mapaData/SV_PendientesDesliza.json"
   ]
  },
  {
@@ -1453,7 +1453,7 @@ const restrictionsData = [
   "observaciones_dataset": "No incluye nacimientos puntuales",
   "id_layer": "layer030",
   "url_geojson": [
-   "https://raw.githubusercontent.com/Sud-Austral/MAPA_RESTRICCIONES_CENTRO_AMERICA/refs/heads/main/mapaData/SV_Zonas_hidricas.json"
+   "https://raw.githubusercontent.com/MapaRestriccion/MAPA_RESTRICCIONES_CENTRO_AMERICA/refs/heads/main/mapaData/SV_Zonas_hidricas.json"
   ]
  },
  {
@@ -1500,7 +1500,7 @@ const restrictionsData = [
   "observaciones_dataset": "No incluye nacimientos puntuales",
   "id_layer": "layer031",
   "url_geojson": [
-   "https://raw.githubusercontent.com/Sud-Austral/MAPA_RESTRICCIONES_CENTRO_AMERICA/refs/heads/main/mapaData/SV_Prot_Superficial.json"
+   "https://raw.githubusercontent.com/MapaRestriccion/MAPA_RESTRICCIONES_CENTRO_AMERICA/refs/heads/main/mapaData/SV_Prot_Superficial.json"
   ]
  },
  {
@@ -1547,7 +1547,7 @@ const restrictionsData = [
   "observaciones_dataset": "No especifica línea de máxima crecida",
   "id_layer": "layer032",
   "url_geojson": [
-   "https://raw.githubusercontent.com/Sud-Austral/MAPA_RESTRICCIONES_CENTRO_AMERICA/refs/heads/main/mapaData/SV_Zonas_hidricas50m.json"
+   "https://raw.githubusercontent.com/MapaRestriccion/MAPA_RESTRICCIONES_CENTRO_AMERICA/refs/heads/main/mapaData/SV_Zonas_hidricas50m.json"
   ]
  },
  {
@@ -1594,7 +1594,7 @@ const restrictionsData = [
   "observaciones_dataset": "No incluye polígonos de amortiguamiento",
   "id_layer": "layer033",
   "url_geojson": [
-   "https://raw.githubusercontent.com/Sud-Austral/MAPA_RESTRICCIONES_CENTRO_AMERICA/refs/heads/main/mapaData/SLV_AreasProt.json"
+   "https://raw.githubusercontent.com/MapaRestriccion/MAPA_RESTRICCIONES_CENTRO_AMERICA/refs/heads/main/mapaData/SLV_AreasProt.json"
   ]
  },
  {
@@ -1641,7 +1641,7 @@ const restrictionsData = [
   "observaciones_dataset": "Limites nacionales",
   "id_layer": "layer034",
   "url_geojson": [
-   "https://raw.githubusercontent.com/Sud-Austral/MAPA_RESTRICCIONES_CENTRO_AMERICA/refs/heads/main/mapaData/GTM_Restriccion15km.json"
+   "https://raw.githubusercontent.com/MapaRestriccion/MAPA_RESTRICCIONES_CENTRO_AMERICA/refs/heads/main/mapaData/GTM_Restriccion15km.json"
   ]
  },
  {
@@ -1688,7 +1688,7 @@ const restrictionsData = [
   "observaciones_dataset": "Requiere identificar ríos navegables y nacimientos de agua",
   "id_layer": "layer035",
   "url_geojson": [
-   "https://raw.githubusercontent.com/Sud-Austral/MAPA_RESTRICCIONES_CENTRO_AMERICA/refs/heads/main/mapaData/GTM_Reserva200m.json"
+   "https://raw.githubusercontent.com/MapaRestriccion/MAPA_RESTRICCIONES_CENTRO_AMERICA/refs/heads/main/mapaData/GTM_Reserva200m.json"
   ]
  },
  {
@@ -1735,7 +1735,7 @@ const restrictionsData = [
   "observaciones_dataset": "Requiere identificar ríos navegables y nacimientos de agua",
   "id_layer": "layer036",
   "url_geojson": [
-   "https://raw.githubusercontent.com/Sud-Austral/MAPA_RESTRICCIONES_CENTRO_AMERICA/refs/heads/main/mapaData/GTM_Reserva100m.json"
+   "https://raw.githubusercontent.com/MapaRestriccion/MAPA_RESTRICCIONES_CENTRO_AMERICA/refs/heads/main/mapaData/GTM_Reserva100m.json"
   ]
  },
  {
@@ -1782,7 +1782,7 @@ const restrictionsData = [
   "observaciones_dataset": "Requiere identificar ríos navegables y nacimientos de agua",
   "id_layer": "layer037",
   "url_geojson": [
-   "https://raw.githubusercontent.com/Sud-Austral/MAPA_RESTRICCIONES_CENTRO_AMERICA/refs/heads/main/mapaData/GTM_Reserva50m.json"
+   "https://raw.githubusercontent.com/MapaRestriccion/MAPA_RESTRICCIONES_CENTRO_AMERICA/refs/heads/main/mapaData/GTM_Reserva50m.json"
   ]
  },
  {
@@ -1829,7 +1829,7 @@ const restrictionsData = [
   "observaciones_dataset": "No incluye directamente el buffer → debe generarse en SIG",
   "id_layer": "layer038",
   "url_geojson": [
-   "https://raw.githubusercontent.com/Sud-Austral/MAPA_RESTRICCIONES_CENTRO_AMERICA/refs/heads/main/mapaData/GTM_Reserva3000m.json"
+   "https://raw.githubusercontent.com/MapaRestriccion/MAPA_RESTRICCIONES_CENTRO_AMERICA/refs/heads/main/mapaData/GTM_Reserva3000m.json"
   ]
  },
  {
@@ -1876,7 +1876,7 @@ const restrictionsData = [
   "observaciones_dataset": "Se debe intersectar con un DEM para delimitar zonas ≤30% pendiente",
   "id_layer": "layer039",
   "url_geojson": [
-   "https://raw.githubusercontent.com/Sud-Austral/MAPA_RESTRICCIONES_CENTRO_AMERICA/refs/heads/main/mapaData/GTM_Volcanes_pend.json"
+   "https://raw.githubusercontent.com/MapaRestriccion/MAPA_RESTRICCIONES_CENTRO_AMERICA/refs/heads/main/mapaData/GTM_Volcanes_pend.json"
   ]
  },
  {
@@ -1923,7 +1923,7 @@ const restrictionsData = [
   "observaciones_dataset": "Dataset oficial CEPAL; usar como respaldo si no hay capa nacional de INAB/CONAP",
   "id_layer": "layer040",
   "url_geojson": [
-   "https://raw.githubusercontent.com/Sud-Austral/MAPA_RESTRICCIONES_CENTRO_AMERICA/refs/heads/main/mapaData/GTM_Manglar.json"
+   "https://raw.githubusercontent.com/MapaRestriccion/MAPA_RESTRICCIONES_CENTRO_AMERICA/refs/heads/main/mapaData/GTM_Manglar.json"
   ]
  },
  {
@@ -1970,7 +1970,7 @@ const restrictionsData = [
   "observaciones_dataset": "Tiene múltiples cortes temporales (1991–2020); útil para trazabilidad EUDR",
   "id_layer": "layer041",
   "url_geojson": [
-   "https://raw.githubusercontent.com/Sud-Austral/MAPA_RESTRICCIONES_CENTRO_AMERICA/refs/heads/main/mapaData/GTM_VocacionForestal.json"
+   "https://raw.githubusercontent.com/MapaRestriccion/MAPA_RESTRICCIONES_CENTRO_AMERICA/refs/heads/main/mapaData/GTM_VocacionForestal.json"
   ]
  },
  {
@@ -2017,7 +2017,7 @@ const restrictionsData = [
   "observaciones_dataset": "Tiene múltiples cortes temporales (1991–2020); útil para trazabilidad EUDR",
   "id_layer": "layer042",
   "url_geojson": [
-   "https://raw.githubusercontent.com/Sud-Austral/MAPA_RESTRICCIONES_CENTRO_AMERICA/refs/heads/main/mapaData/GTM_CuencasRecarga.json"
+   "https://raw.githubusercontent.com/MapaRestriccion/MAPA_RESTRICCIONES_CENTRO_AMERICA/refs/heads/main/mapaData/GTM_CuencasRecarga.json"
   ]
  },
  {
@@ -2064,7 +2064,7 @@ const restrictionsData = [
   "observaciones_dataset": "Capa oficial, sustituye necesidad de WDPA",
   "id_layer": "layer043",
   "url_geojson": [
-   "https://raw.githubusercontent.com/Sud-Austral/MAPA_RESTRICCIONES_CENTRO_AMERICA/refs/heads/main/mapaData/GTM_AreasProt.json"
+   "https://raw.githubusercontent.com/MapaRestriccion/MAPA_RESTRICCIONES_CENTRO_AMERICA/refs/heads/main/mapaData/GTM_AreasProt.json"
   ]
  },
  {
@@ -2111,7 +2111,7 @@ const restrictionsData = [
   "observaciones_dataset": "Shapefiles oficiales con metadatos",
   "id_layer": "layer044",
   "url_geojson": [
-   "https://raw.githubusercontent.com/Sud-Austral/MAPA_RESTRICCIONES_CENTRO_AMERICA/refs/heads/main/mapaData/MEX_AreasProt.json"
+   "https://raw.githubusercontent.com/MapaRestriccion/MAPA_RESTRICCIONES_CENTRO_AMERICA/refs/heads/main/mapaData/MEX_AreasProt.json"
   ]
  },
  {
@@ -2158,7 +2158,7 @@ const restrictionsData = [
   "observaciones_dataset": "Corresponden al las plantaciones forestales establecidas en el periodo 2010-2021",
   "id_layer": "layer045",
   "url_geojson": [
-   "https://raw.githubusercontent.com/Sud-Austral/MAPA_RESTRICCIONES_CENTRO_AMERICA/refs/heads/main/mapaData/MEX_Plantaciones_forestales.json"
+   "https://raw.githubusercontent.com/MapaRestriccion/MAPA_RESTRICCIONES_CENTRO_AMERICA/refs/heads/main/mapaData/MEX_Plantaciones_forestales.json"
   ]
  },
  {
@@ -2205,7 +2205,7 @@ const restrictionsData = [
   "observaciones_dataset": "En el caso de la categoría de áreas naturales protegidas se recomienda reemplazar por el shapefile más actualizado disponible",
   "id_layer": "layer046",
   "url_geojson": [
-   "https://raw.githubusercontent.com/Sud-Austral/MAPA_RESTRICCIONES_CENTRO_AMERICA/refs/heads/main/mapaData/MEX_Restricciones_zonificacion_forestal.json"
+   "https://raw.githubusercontent.com/MapaRestriccion/MAPA_RESTRICCIONES_CENTRO_AMERICA/refs/heads/main/mapaData/MEX_Restricciones_zonificacion_forestal.json"
   ]
  },
  {
@@ -2252,20 +2252,20 @@ const restrictionsData = [
   "observaciones_dataset": "Las corrientes de agua no tienen el parámetro de ancho del río el cual es requerido para aplicar la norma",
   "id_layer": "layer047",
   "url_geojson": [
-   "https://raw.githubusercontent.com/Sud-Austral/MAPA_RESTRICCIONES_CENTRO_AMERICA/refs/heads/main/mapaData/parte_1_de_14.json",
-   "https://raw.githubusercontent.com/Sud-Austral/MAPA_RESTRICCIONES_CENTRO_AMERICA/refs/heads/main/mapaData/parte_2_de_14.json",
-   "https://raw.githubusercontent.com/Sud-Austral/MAPA_RESTRICCIONES_CENTRO_AMERICA/refs/heads/main/mapaData/parte_3_de_14.json",
-   "https://raw.githubusercontent.com/Sud-Austral/MAPA_RESTRICCIONES_CENTRO_AMERICA/refs/heads/main/mapaData/parte_4_de_14.json",
-   "https://raw.githubusercontent.com/Sud-Austral/MAPA_RESTRICCIONES_CENTRO_AMERICA/refs/heads/main/mapaData/parte_5_de_14.json",
-   "https://raw.githubusercontent.com/Sud-Austral/MAPA_RESTRICCIONES_CENTRO_AMERICA/refs/heads/main/mapaData/parte_6_de_14.json",
-   "https://raw.githubusercontent.com/Sud-Austral/MAPA_RESTRICCIONES_CENTRO_AMERICA/refs/heads/main/mapaData/parte_7_de_14.json",
-   "https://raw.githubusercontent.com/Sud-Austral/MAPA_RESTRICCIONES_CENTRO_AMERICA/refs/heads/main/mapaData/parte_8_de_14.json",
-   "https://raw.githubusercontent.com/Sud-Austral/MAPA_RESTRICCIONES_CENTRO_AMERICA/refs/heads/main/mapaData/parte_9_de_14.json",
-   "https://raw.githubusercontent.com/Sud-Austral/MAPA_RESTRICCIONES_CENTRO_AMERICA/refs/heads/main/mapaData/parte_10_de_14.json",
-   "https://raw.githubusercontent.com/Sud-Austral/MAPA_RESTRICCIONES_CENTRO_AMERICA/refs/heads/main/mapaData/parte_11_de_14.json",
-   "https://raw.githubusercontent.com/Sud-Austral/MAPA_RESTRICCIONES_CENTRO_AMERICA/refs/heads/main/mapaData/parte_12_de_14.json",
-   "https://raw.githubusercontent.com/Sud-Austral/MAPA_RESTRICCIONES_CENTRO_AMERICA/refs/heads/main/mapaData/parte_13_de_14.json",
-   "https://raw.githubusercontent.com/Sud-Austral/MAPA_RESTRICCIONES_CENTRO_AMERICA/refs/heads/main/mapaData/parte_14_de_14.json",
+   "https://raw.githubusercontent.com/MapaRestriccion/MAPA_RESTRICCIONES_CENTRO_AMERICA/refs/heads/main/mapaData/parte_1_de_14.json",
+   "https://raw.githubusercontent.com/MapaRestriccion/MAPA_RESTRICCIONES_CENTRO_AMERICA/refs/heads/main/mapaData/parte_2_de_14.json",
+   "https://raw.githubusercontent.com/MapaRestriccion/MAPA_RESTRICCIONES_CENTRO_AMERICA/refs/heads/main/mapaData/parte_3_de_14.json",
+   "https://raw.githubusercontent.com/MapaRestriccion/MAPA_RESTRICCIONES_CENTRO_AMERICA/refs/heads/main/mapaData/parte_4_de_14.json",
+   "https://raw.githubusercontent.com/MapaRestriccion/MAPA_RESTRICCIONES_CENTRO_AMERICA/refs/heads/main/mapaData/parte_5_de_14.json",
+   "https://raw.githubusercontent.com/MapaRestriccion/MAPA_RESTRICCIONES_CENTRO_AMERICA/refs/heads/main/mapaData/parte_6_de_14.json",
+   "https://raw.githubusercontent.com/MapaRestriccion/MAPA_RESTRICCIONES_CENTRO_AMERICA/refs/heads/main/mapaData/parte_7_de_14.json",
+   "https://raw.githubusercontent.com/MapaRestriccion/MAPA_RESTRICCIONES_CENTRO_AMERICA/refs/heads/main/mapaData/parte_8_de_14.json",
+   "https://raw.githubusercontent.com/MapaRestriccion/MAPA_RESTRICCIONES_CENTRO_AMERICA/refs/heads/main/mapaData/parte_9_de_14.json",
+   "https://raw.githubusercontent.com/MapaRestriccion/MAPA_RESTRICCIONES_CENTRO_AMERICA/refs/heads/main/mapaData/parte_10_de_14.json",
+   "https://raw.githubusercontent.com/MapaRestriccion/MAPA_RESTRICCIONES_CENTRO_AMERICA/refs/heads/main/mapaData/parte_11_de_14.json",
+   "https://raw.githubusercontent.com/MapaRestriccion/MAPA_RESTRICCIONES_CENTRO_AMERICA/refs/heads/main/mapaData/parte_12_de_14.json",
+   "https://raw.githubusercontent.com/MapaRestriccion/MAPA_RESTRICCIONES_CENTRO_AMERICA/refs/heads/main/mapaData/parte_13_de_14.json",
+   "https://raw.githubusercontent.com/MapaRestriccion/MAPA_RESTRICCIONES_CENTRO_AMERICA/refs/heads/main/mapaData/parte_14_de_14.json",
   ]
  },
  {
@@ -2312,7 +2312,7 @@ const restrictionsData = [
   "observaciones_dataset": "No hay una capa específica de zonas costera pero se puede extraer de la capa de cuerpos de agua del INGEI.",
   "id_layer": "layer048",
   "url_geojson": [
-   "https://raw.githubusercontent.com/Sud-Austral/MAPA_RESTRICCIONES_CENTRO_AMERICA/refs/heads/main/mapaData/MEX_Buffer_costa.json"
+   "https://raw.githubusercontent.com/MapaRestriccion/MAPA_RESTRICCIONES_CENTRO_AMERICA/refs/heads/main/mapaData/MEX_Buffer_costa.json"
   ]
  },
  {
@@ -2359,7 +2359,7 @@ const restrictionsData = [
   "observaciones_dataset": "No es capa espacial",
   "id_layer": "layer049",
   "url_geojson": [
-   "https://raw.githubusercontent.com/Sud-Austral/MAPA_RESTRICCIONES_CENTRO_AMERICA/refs/heads/main/mapaData/MX_RestriccionGeneral.json"
+   "https://raw.githubusercontent.com/MapaRestriccion/MAPA_RESTRICCIONES_CENTRO_AMERICA/refs/heads/main/mapaData/MX_RestriccionGeneral.json"
   ]
  },
  {
@@ -2406,7 +2406,7 @@ const restrictionsData = [
   "observaciones_dataset": "No es capa espacial",
   "id_layer": "layer050",
   "url_geojson": [
-   "https://raw.githubusercontent.com/Sud-Austral/MAPA_RESTRICCIONES_CENTRO_AMERICA/refs/heads/main/mapaData/MX_EIA.json"
+   "https://raw.githubusercontent.com/MapaRestriccion/MAPA_RESTRICCIONES_CENTRO_AMERICA/refs/heads/main/mapaData/MX_EIA.json"
   ]
  },
  {
@@ -2453,7 +2453,7 @@ const restrictionsData = [
   "observaciones_dataset": "Puede requerir georreferenciación adicional",
   "id_layer": "layer051",
   "url_geojson": [
-   "https://raw.githubusercontent.com/Sud-Austral/MAPA_RESTRICCIONES_CENTRO_AMERICA/refs/heads/main/mapaData/MX_ZonasHidricas.json"
+   "https://raw.githubusercontent.com/MapaRestriccion/MAPA_RESTRICCIONES_CENTRO_AMERICA/refs/heads/main/mapaData/MX_ZonasHidricas.json"
   ]
  },
  {
@@ -2500,7 +2500,7 @@ const restrictionsData = [
   "observaciones_dataset": "Validar zonificación/plan de manejo por AP",
   "id_layer": "layer052",
   "url_geojson": [
-   "https://raw.githubusercontent.com/Sud-Austral/MAPA_RESTRICCIONES_CENTRO_AMERICA/refs/heads/main/mapaData/HND_AreasProt.json"
+   "https://raw.githubusercontent.com/MapaRestriccion/MAPA_RESTRICCIONES_CENTRO_AMERICA/refs/heads/main/mapaData/HND_AreasProt.json"
   ]
  },
  {
@@ -2547,7 +2547,7 @@ const restrictionsData = [
   "observaciones_dataset": "Verificar actualización con ICF",
   "id_layer": "layer053",
   "url_geojson": [
-   "https://raw.githubusercontent.com/Sud-Austral/MAPA_RESTRICCIONES_CENTRO_AMERICA/refs/heads/main/mapaData/HND_Microc_declarada.json"
+   "https://raw.githubusercontent.com/MapaRestriccion/MAPA_RESTRICCIONES_CENTRO_AMERICA/refs/heads/main/mapaData/HND_Microc_declarada.json"
   ]
  },
  {
@@ -2594,7 +2594,7 @@ const restrictionsData = [
   "observaciones_dataset": "Requiere combinar con red hídrica/nacientes",
   "id_layer": "layer054",
   "url_geojson": [
-   "https://raw.githubusercontent.com/Sud-Austral/MAPA_RESTRICCIONES_CENTRO_AMERICA/refs/heads/main/mapaData/HN_UsoPublico.json"
+   "https://raw.githubusercontent.com/MapaRestriccion/MAPA_RESTRICCIONES_CENTRO_AMERICA/refs/heads/main/mapaData/HN_UsoPublico.json"
   ]
  },
  {
@@ -2641,7 +2641,7 @@ const restrictionsData = [
   "observaciones_dataset": "Confirmar capa de nacientes/puntos",
   "id_layer": "layer055",
   "url_geojson": [
-   "https://raw.githubusercontent.com/Sud-Austral/MAPA_RESTRICCIONES_CENTRO_AMERICA/refs/heads/main/mapaData/HN_ProtecciónHidricas.json"
+   "https://raw.githubusercontent.com/MapaRestriccion/MAPA_RESTRICCIONES_CENTRO_AMERICA/refs/heads/main/mapaData/HN_ProtecciónHidricas.json"
   ]
  },
  {
@@ -2688,7 +2688,7 @@ const restrictionsData = [
   "observaciones_dataset": "Confirmar capa de nacientes/puntos",
   "id_layer": "layer056",
   "url_geojson": [
-   "https://raw.githubusercontent.com/Sud-Austral/MAPA_RESTRICCIONES_CENTRO_AMERICA/refs/heads/main/mapaData/HN_Nacimientos30m.json"
+   "https://raw.githubusercontent.com/MapaRestriccion/MAPA_RESTRICCIONES_CENTRO_AMERICA/refs/heads/main/mapaData/HN_Nacimientos30m.json"
   ]
  },
  {
@@ -2735,7 +2735,7 @@ const restrictionsData = [
   "observaciones_dataset": "Base para reglas según pendiente",
   "id_layer": "layer057",
   "url_geojson": [
-   "https://raw.githubusercontent.com/Sud-Austral/MAPA_RESTRICCIONES_CENTRO_AMERICA/refs/heads/main/mapaData/HN_VocacionForestal.json"
+   "https://raw.githubusercontent.com/MapaRestriccion/MAPA_RESTRICCIONES_CENTRO_AMERICA/refs/heads/main/mapaData/HN_VocacionForestal.json"
   ]
  },
  {
@@ -2782,7 +2782,7 @@ const restrictionsData = [
   "observaciones_dataset": "Nivel de detalle varía por municipio",
   "id_layer": "layer058",
   "url_geojson": [
-   "https://raw.githubusercontent.com/Sud-Austral/MAPA_RESTRICCIONES_CENTRO_AMERICA/refs/heads/main/mapaData/HN_Pendientes.json"
+   "https://raw.githubusercontent.com/MapaRestriccion/MAPA_RESTRICCIONES_CENTRO_AMERICA/refs/heads/main/mapaData/HN_Pendientes.json"
   ]
  },
  {
@@ -2829,7 +2829,7 @@ const restrictionsData = [
   "observaciones_dataset": "Revisar oficialidad/licencia y concordancia con catastro/IP",
   "id_layer": "layer059",
   "url_geojson": [
-   "https://raw.githubusercontent.com/Sud-Austral/MAPA_RESTRICCIONES_CENTRO_AMERICA/refs/heads/main/mapaData/HND_Titulacion_indigena.json"
+   "https://raw.githubusercontent.com/MapaRestriccion/MAPA_RESTRICCIONES_CENTRO_AMERICA/refs/heads/main/mapaData/HND_Titulacion_indigena.json"
   ]
  },
  {
@@ -2876,7 +2876,7 @@ const restrictionsData = [
   "observaciones_dataset": "Contiene varias capas adicionales (DEM, pendientes, uso del suelo).",
   "id_layer": "layer060",
   "url_geojson": [
-   "https://raw.githubusercontent.com/Sud-Austral/MAPA_RESTRICCIONES_CENTRO_AMERICA/refs/heads/main/mapaData/NIC_Zonas_hidricas200m.json"
+   "https://raw.githubusercontent.com/MapaRestriccion/MAPA_RESTRICCIONES_CENTRO_AMERICA/refs/heads/main/mapaData/NIC_Zonas_hidricas200m.json"
   ]
  },
  {
@@ -2923,7 +2923,7 @@ const restrictionsData = [
   "observaciones_dataset": "Contiene varias capas adicionales (DEM, pendientes, uso del suelo).",
   "id_layer": "layer061",
   "url_geojson": [
-   "https://raw.githubusercontent.com/Sud-Austral/MAPA_RESTRICCIONES_CENTRO_AMERICA/refs/heads/main/mapaData/NIC_Zonas_hidricas50m.json"
+   "https://raw.githubusercontent.com/MapaRestriccion/MAPA_RESTRICCIONES_CENTRO_AMERICA/refs/heads/main/mapaData/NIC_Zonas_hidricas50m.json"
   ]
  },
  {
@@ -2970,7 +2970,7 @@ const restrictionsData = [
   "observaciones_dataset": "Se puede complementar con Copernicus DEM o SRTM.",
   "id_layer": "layer062",
   "url_geojson": [
-   "https://raw.githubusercontent.com/Sud-Austral/MAPA_RESTRICCIONES_CENTRO_AMERICA/refs/heads/main/mapaData/NIC_Pendientes.json"
+   "https://raw.githubusercontent.com/MapaRestriccion/MAPA_RESTRICCIONES_CENTRO_AMERICA/refs/heads/main/mapaData/NIC_Pendientes.json"
   ]
  },
  {
@@ -3017,7 +3017,7 @@ const restrictionsData = [
   "observaciones_dataset": "Útil para validación histórica y monitoreo.",
   "id_layer": "layer063",
   "url_geojson": [
-   "https://raw.githubusercontent.com/Sud-Austral/MAPA_RESTRICCIONES_CENTRO_AMERICA/refs/heads/main/mapaData/NIC_Plantaciones_forestales.json"
+   "https://raw.githubusercontent.com/MapaRestriccion/MAPA_RESTRICCIONES_CENTRO_AMERICA/refs/heads/main/mapaData/NIC_Plantaciones_forestales.json"
   ]
  },
  {
@@ -3064,7 +3064,7 @@ const restrictionsData = [
   "observaciones_dataset": "Fuente nacional oficial poco accesible, WDPA como respaldo.",
   "id_layer": "layer064",
   "url_geojson": [
-   "https://raw.githubusercontent.com/Sud-Austral/MAPA_RESTRICCIONES_CENTRO_AMERICA/refs/heads/main/mapaData/NIC_AreasProt.json"
+   "https://raw.githubusercontent.com/MapaRestriccion/MAPA_RESTRICCIONES_CENTRO_AMERICA/refs/heads/main/mapaData/NIC_AreasProt.json"
   ]
  },
  {
@@ -3111,7 +3111,7 @@ const restrictionsData = [
   "observaciones_dataset": null,
   "id_layer": "layer065",
   "url_geojson": [
-   "https://raw.githubusercontent.com/Sud-Austral/MAPA_RESTRICCIONES_CENTRO_AMERICA/refs/heads/main/mapaData/NIC_Zonas_hidricas30m.json"
+   "https://raw.githubusercontent.com/MapaRestriccion/MAPA_RESTRICCIONES_CENTRO_AMERICA/refs/heads/main/mapaData/NIC_Zonas_hidricas30m.json"
   ]
  },
  {
@@ -3158,7 +3158,7 @@ const restrictionsData = [
   "observaciones_dataset": "Fuente nacional oficial poco accesible, WDPA como respaldo.",
   "id_layer": "layer066",
   "url_geojson": [
-   "https://raw.githubusercontent.com/Sud-Austral/MAPA_RESTRICCIONES_CENTRO_AMERICA/refs/heads/main/mapaData/NIC_AreasProt10km.json"
+   "https://raw.githubusercontent.com/MapaRestriccion/MAPA_RESTRICCIONES_CENTRO_AMERICA/refs/heads/main/mapaData/NIC_AreasProt10km.json"
   ]
  },
  {
@@ -3205,7 +3205,7 @@ const restrictionsData = [
   "observaciones_dataset": "Puede servir de proxy para delimitación de zonas de recarga.",
   "id_layer": "layer067",
   "url_geojson": [
-   "https://raw.githubusercontent.com/Sud-Austral/MAPA_RESTRICCIONES_CENTRO_AMERICA/refs/heads/main/mapaData/NIC_Zonas_hidricas.json"
+   "https://raw.githubusercontent.com/MapaRestriccion/MAPA_RESTRICCIONES_CENTRO_AMERICA/refs/heads/main/mapaData/NIC_Zonas_hidricas.json"
   ]
  },
  {
@@ -3252,7 +3252,7 @@ const restrictionsData = [
   "observaciones_dataset": "Si no disponible, usar capa de capas de Proyecto Mesoamérica",
   "id_layer": "layer068",
   "url_geojson": [
-   "https://raw.githubusercontent.com/Sud-Austral/MAPA_RESTRICCIONES_CENTRO_AMERICA/refs/heads/main/mapaData/NIC_Franja15km.json"
+   "https://raw.githubusercontent.com/MapaRestriccion/MAPA_RESTRICCIONES_CENTRO_AMERICA/refs/heads/main/mapaData/NIC_Franja15km.json"
   ]
  },
  {
@@ -3299,7 +3299,7 @@ const restrictionsData = [
   "observaciones_dataset": "Fuente nacional oficial poco accesible, WDPA como respaldo.",
   "id_layer": "layer069",
   "url_geojson": [
-   "https://raw.githubusercontent.com/Sud-Austral/MAPA_RESTRICCIONES_CENTRO_AMERICA/refs/heads/main/mapaData/NIC_Bosawas.json"
+   "https://raw.githubusercontent.com/MapaRestriccion/MAPA_RESTRICCIONES_CENTRO_AMERICA/refs/heads/main/mapaData/NIC_Bosawas.json"
   ]
  },
  {
@@ -3346,7 +3346,7 @@ const restrictionsData = [
   "observaciones_dataset": "Fuente nacional oficial poco accesible, WDPA como respaldo.",
   "id_layer": "layer070",
   "url_geojson": [
-   "https://raw.githubusercontent.com/Sud-Austral/MAPA_RESTRICCIONES_CENTRO_AMERICA/refs/heads/main/mapaData/NIC_Conservacion.json"
+   "https://raw.githubusercontent.com/MapaRestriccion/MAPA_RESTRICCIONES_CENTRO_AMERICA/refs/heads/main/mapaData/NIC_Conservacion.json"
   ]
  },
  {
@@ -3393,7 +3393,7 @@ const restrictionsData = [
   "observaciones_dataset": "Útil para buffers de ribera (10 m – ancho de cauce)",
   "id_layer": "layer071",
   "url_geojson": [
-   "https://raw.githubusercontent.com/Sud-Austral/MAPA_RESTRICCIONES_CENTRO_AMERICA/refs/heads/main/mapaData/PAN_Zonas_hidricas200m.json"
+   "https://raw.githubusercontent.com/MapaRestriccion/MAPA_RESTRICCIONES_CENTRO_AMERICA/refs/heads/main/mapaData/PAN_Zonas_hidricas200m.json"
   ]
  },
  {
@@ -3440,7 +3440,7 @@ const restrictionsData = [
   "observaciones_dataset": "Útil para buffers de ribera (10 m – ancho de cauce)",
   "id_layer": "layer072",
   "url_geojson": [
-   "https://raw.githubusercontent.com/Sud-Austral/MAPA_RESTRICCIONES_CENTRO_AMERICA/refs/heads/main/mapaData/PAN_Zonas_hidricas10m.json"
+   "https://raw.githubusercontent.com/MapaRestriccion/MAPA_RESTRICCIONES_CENTRO_AMERICA/refs/heads/main/mapaData/PAN_Zonas_hidricas10m.json"
   ]
  },
  {
@@ -3487,7 +3487,7 @@ const restrictionsData = [
   "observaciones_dataset": "Útil para buffers de ribera (10 m – ancho de cauce)",
   "id_layer": "layer073",
   "url_geojson": [
-   "https://raw.githubusercontent.com/Sud-Austral/MAPA_RESTRICCIONES_CENTRO_AMERICA/refs/heads/main/mapaData/PAN_Zonas_hidricas100m.json"
+   "https://raw.githubusercontent.com/MapaRestriccion/MAPA_RESTRICCIONES_CENTRO_AMERICA/refs/heads/main/mapaData/PAN_Zonas_hidricas100m.json"
   ]
  },
  {
@@ -3534,7 +3534,7 @@ const restrictionsData = [
   "observaciones_dataset": "Útil para buffers de ribera (10 m – ancho de cauce)",
   "id_layer": "layer074",
   "url_geojson": [
-   "https://raw.githubusercontent.com/Sud-Austral/MAPA_RESTRICCIONES_CENTRO_AMERICA/refs/heads/main/mapaData/PAN_RecargaHidro.json"
+   "https://raw.githubusercontent.com/MapaRestriccion/MAPA_RESTRICCIONES_CENTRO_AMERICA/refs/heads/main/mapaData/PAN_RecargaHidro.json"
   ]
  },
  {
@@ -3581,7 +3581,7 @@ const restrictionsData = [
   "observaciones_dataset": "Útil para buffers de ribera (10 m – ancho de cauce)",
   "id_layer": "layer075",
   "url_geojson": [
-   "https://raw.githubusercontent.com/Sud-Austral/MAPA_RESTRICCIONES_CENTRO_AMERICA/refs/heads/main/mapaData/PAN_Zonas_hidricas.json"
+   "https://raw.githubusercontent.com/MapaRestriccion/MAPA_RESTRICCIONES_CENTRO_AMERICA/refs/heads/main/mapaData/PAN_Zonas_hidricas.json"
   ]
  },
  {
@@ -3628,7 +3628,7 @@ const restrictionsData = [
   "observaciones_dataset": "Última versión, escala detallada",
   "id_layer": "layer076",
   "url_geojson": [
-   "https://raw.githubusercontent.com/Sud-Austral/MAPA_RESTRICCIONES_CENTRO_AMERICA/refs/heads/main/mapaData/PAN_VocacionEcologica.json"
+   "https://raw.githubusercontent.com/MapaRestriccion/MAPA_RESTRICCIONES_CENTRO_AMERICA/refs/heads/main/mapaData/PAN_VocacionEcologica.json"
   ]
  },
  {
@@ -3675,7 +3675,7 @@ const restrictionsData = [
   "observaciones_dataset": "Base oficial; puede validarse con WDPA",
   "id_layer": "layer077",
   "url_geojson": [
-   "https://raw.githubusercontent.com/Sud-Austral/MAPA_RESTRICCIONES_CENTRO_AMERICA/refs/heads/main/mapaData/PAN_AreasProt.json"
+   "https://raw.githubusercontent.com/MapaRestriccion/MAPA_RESTRICCIONES_CENTRO_AMERICA/refs/heads/main/mapaData/PAN_AreasProt.json"
   ]
  },
  {
@@ -3722,7 +3722,7 @@ const restrictionsData = [
   "observaciones_dataset": "Incluye jerarquía de cuencas y subcuencas",
   "id_layer": "layer078",
   "url_geojson": [
-   "https://raw.githubusercontent.com/Sud-Austral/MAPA_RESTRICCIONES_CENTRO_AMERICA/refs/heads/main/mapaData/PAN_Cuencas_zon.json"
+   "https://raw.githubusercontent.com/MapaRestriccion/MAPA_RESTRICCIONES_CENTRO_AMERICA/refs/heads/main/mapaData/PAN_Cuencas_zon.json"
   ]
  },
  {
@@ -3769,7 +3769,7 @@ const restrictionsData = [
   "observaciones_dataset": "Buffers deben construirse en análisis",
   "id_layer": "layer079",
   "url_geojson": [
-   "https://raw.githubusercontent.com/Sud-Austral/MAPA_RESTRICCIONES_CENTRO_AMERICA/refs/heads/main/mapaData/PAN_Zonas_hidricas22m.json"
+   "https://raw.githubusercontent.com/MapaRestriccion/MAPA_RESTRICCIONES_CENTRO_AMERICA/refs/heads/main/mapaData/PAN_Zonas_hidricas22m.json"
   ]
  },
  {
@@ -3816,7 +3816,7 @@ const restrictionsData = [
   "observaciones_dataset": "Buffers deben construirse en análisis",
   "id_layer": "layer080",
   "url_geojson": [
-   "https://raw.githubusercontent.com/Sud-Austral/MAPA_RESTRICCIONES_CENTRO_AMERICA/refs/heads/main/mapaData/PAN_Manglar200m.json"
+   "https://raw.githubusercontent.com/MapaRestriccion/MAPA_RESTRICCIONES_CENTRO_AMERICA/refs/heads/main/mapaData/PAN_Manglar200m.json"
   ]
  },
  {
@@ -3863,7 +3863,7 @@ const restrictionsData = [
   "observaciones_dataset": "Útil para buffers de ribera (10 m – ancho de cauce)",
   "id_layer": "layer081",
   "url_geojson": [
-   "https://raw.githubusercontent.com/Sud-Austral/MAPA_RESTRICCIONES_CENTRO_AMERICA/refs/heads/main/mapaData/PAN_Zonas_hidricas3m.json"
+   "https://raw.githubusercontent.com/MapaRestriccion/MAPA_RESTRICCIONES_CENTRO_AMERICA/refs/heads/main/mapaData/PAN_Zonas_hidricas3m.json"
   ]
  },
  {
@@ -3910,7 +3910,7 @@ const restrictionsData = [
   "observaciones_dataset": "Complementa restricción Ley 44/2002",
   "id_layer": "layer082",
   "url_geojson": [
-   "https://raw.githubusercontent.com/Sud-Austral/MAPA_RESTRICCIONES_CENTRO_AMERICA/refs/heads/main/mapaData/PAN_CuencaCanal.json"
+   "https://raw.githubusercontent.com/MapaRestriccion/MAPA_RESTRICCIONES_CENTRO_AMERICA/refs/heads/main/mapaData/PAN_CuencaCanal.json"
   ]
  },
  {
@@ -3957,7 +3957,7 @@ const restrictionsData = [
   "observaciones_dataset": "Incluye hidrografía principal; no todos los tributarios menores.",
   "id_layer": "layer083",
   "url_geojson": [
-   "https://raw.githubusercontent.com/Sud-Austral/MAPA_RESTRICCIONES_CENTRO_AMERICA/refs/heads/main/mapaData/RD_Zonas_hidricas30m.json"
+   "https://raw.githubusercontent.com/MapaRestriccion/MAPA_RESTRICCIONES_CENTRO_AMERICA/refs/heads/main/mapaData/RD_Zonas_hidricas30m.json"
   ]
  },
  {
@@ -4004,7 +4004,7 @@ const restrictionsData = [
   "observaciones_dataset": "Descarga en KMZ; requiere conversión a SHP.",
   "id_layer": "layer084",
   "url_geojson": [
-   "https://raw.githubusercontent.com/Sud-Austral/MAPA_RESTRICCIONES_CENTRO_AMERICA/refs/heads/main/mapaData/DOM_AreasProt.json"
+   "https://raw.githubusercontent.com/MapaRestriccion/MAPA_RESTRICCIONES_CENTRO_AMERICA/refs/heads/main/mapaData/DOM_AreasProt.json"
   ]
  },
  {
@@ -4051,7 +4051,7 @@ const restrictionsData = [
   "observaciones_dataset": "No es fuente nacional, pero estándar global.",
   "id_layer": "layer085",
   "url_geojson": [
-   "https://raw.githubusercontent.com/Sud-Austral/MAPA_RESTRICCIONES_CENTRO_AMERICA/refs/heads/main/mapaData/RD_Pendientes.json"
+   "https://raw.githubusercontent.com/MapaRestriccion/MAPA_RESTRICCIONES_CENTRO_AMERICA/refs/heads/main/mapaData/RD_Pendientes.json"
   ]
  },
  {
@@ -4098,7 +4098,7 @@ const restrictionsData = [
   "observaciones_dataset": "Incluye hidrografía principal; no todos los tributarios menores.",
   "id_layer": "layer086",
   "url_geojson": [
-   "https://raw.githubusercontent.com/Sud-Austral/MAPA_RESTRICCIONES_CENTRO_AMERICA/refs/heads/main/mapaData/RD_Zonas_hidricas30m.json"
+   "https://raw.githubusercontent.com/MapaRestriccion/MAPA_RESTRICCIONES_CENTRO_AMERICA/refs/heads/main/mapaData/RD_Zonas_hidricas30m.json"
   ]
  },
  {
@@ -4145,7 +4145,7 @@ const restrictionsData = [
   "observaciones_dataset": "Incluye hidrografía principal; no todos los tributarios menores.",
   "id_layer": "layer087",
   "url_geojson": [
-   "https://raw.githubusercontent.com/Sud-Austral/MAPA_RESTRICCIONES_CENTRO_AMERICA/refs/heads/main/mapaData/RD_Zonas_hidricas.json"
+   "https://raw.githubusercontent.com/MapaRestriccion/MAPA_RESTRICCIONES_CENTRO_AMERICA/refs/heads/main/mapaData/RD_Zonas_hidricas.json"
   ]
  },
  {
@@ -4192,7 +4192,7 @@ const restrictionsData = [
   "observaciones_dataset": "Generalizada; revisar actualización.",
   "id_layer": "layer088",
   "url_geojson": [
-   "https://raw.githubusercontent.com/Sud-Austral/MAPA_RESTRICCIONES_CENTRO_AMERICA/refs/heads/main/mapaData/RD_Zonas_costeras60m.json"
+   "https://raw.githubusercontent.com/MapaRestriccion/MAPA_RESTRICCIONES_CENTRO_AMERICA/refs/heads/main/mapaData/RD_Zonas_costeras60m.json"
   ]
  },
  {
@@ -4239,7 +4239,7 @@ const restrictionsData = [
   "observaciones_dataset": "Generalizada; revisar actualización.",
   "id_layer": "layer089",
   "url_geojson": [
-   "https://raw.githubusercontent.com/Sud-Austral/MAPA_RESTRICCIONES_CENTRO_AMERICA/refs/heads/main/mapaData/RD_Zonas_costeras60m.json"
+   "https://raw.githubusercontent.com/MapaRestriccion/MAPA_RESTRICCIONES_CENTRO_AMERICA/refs/heads/main/mapaData/RD_Zonas_costeras60m.json"
   ]
  },
  {
@@ -4286,7 +4286,7 @@ const restrictionsData = [
   "observaciones_dataset": "Incluye hidrografía principal; no todos los tributarios menores.",
   "id_layer": "layer090",
   "url_geojson": [
-   "https://raw.githubusercontent.com/Sud-Austral/MAPA_RESTRICCIONES_CENTRO_AMERICA/refs/heads/main/mapaData/RD_Zonas_lagos_buffer.json"
+   "https://raw.githubusercontent.com/MapaRestriccion/MAPA_RESTRICCIONES_CENTRO_AMERICA/refs/heads/main/mapaData/RD_Zonas_lagos_buffer.json"
   ]
  },
  {
@@ -4333,7 +4333,7 @@ const restrictionsData = [
   "observaciones_dataset": "No es fuente nacional, pero estándar global.",
   "id_layer": "layer091",
   "url_geojson": [
-   "https://raw.githubusercontent.com/Sud-Austral/MAPA_RESTRICCIONES_CENTRO_AMERICA/refs/heads/main/mapaData/RD_Zonas_hidricasBuffer.json"
+   "https://raw.githubusercontent.com/MapaRestriccion/MAPA_RESTRICCIONES_CENTRO_AMERICA/refs/heads/main/mapaData/RD_Zonas_hidricasBuffer.json"
   ]
  }
 ];
