@@ -1340,13 +1340,7 @@
                 const legend = L.control({ position: 'bottomright' });
                 legend.onAdd = function (map) {
                     const div = L.DomUtil.create('div', 'legend');
-                    div.innerHTML = '<h4>Leyenda</h4>' +
-                        '<i style="background:#3498db"></i> Ambiental/Forestal<br>' +
-                        '<i style="background:#e74c3c"></i> Hídrica<br>' +
-                        '<i style="background:#27ae60"></i> Fauna<br>' +
-                        '<i style="background:#8e44ad"></i> Urbana<br>' +
-                        '<i style="background:#1abc9c"></i> Cultural<br>' +
-                        '<i style="background:#95a5a6"></i> Otros<br>';
+                    div.innerHTML = '<p>Mapa visualizar restricciones</p>';
                     return div;
                 };
                 legend.addTo(map);
@@ -1355,19 +1349,167 @@
             // =============================================
             // GESTIÓN DE CAPAS GEOJSON
             // =============================================
-
             async loadGeoJsonLayer(id, name, url) {
-                const color = CONFIG.COLORS.LAYERS[id] || this.getRandomColor();
-                
+                const color = "#3F51B5";
+
                 try {
-                    // Mostrar indicador de carga
-                    document.getElementById('loading-indicator').style.display = 'block';
-                    document.getElementById('loading-progress').textContent = `Cargando capa: ${name}`;
-                    
+                    // 🔹 Crear o mostrar overlay elegante
+                    let overlay = document.getElementById('loading-overlay');
+                    if (!overlay) {
+                        overlay = document.createElement('div');
+                        overlay.id = 'loading-overlay';
+                        Object.assign(overlay.style, {
+                            position: 'fixed',
+                            top: 0,
+                            left: 0,
+                            width: '100vw',
+                            height: '100vh',
+                            background: 'rgba(15, 23, 42, 0.75)',
+                            display: 'flex',
+                            justifyContent: 'center',
+                            alignItems: 'center',
+                            zIndex: '999999',
+                            backdropFilter: 'blur(8px)',
+                            opacity: '0',
+                            transition: 'opacity 0.3s ease'
+                        });
+
+                        // Container del contenido
+                        const container = document.createElement('div');
+                        Object.assign(container.style, {
+                            background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+                            padding: '32px 48px',
+                            borderRadius: '20px',
+                            boxShadow: '0 20px 60px rgba(0, 0, 0, 0.3), 0 0 0 1px rgba(255, 255, 255, 0.1)',
+                            display: 'flex',
+                            flexDirection: 'column',
+                            alignItems: 'center',
+                            gap: '20px',
+                            minWidth: '320px',
+                            transform: 'scale(0.9)',
+                            transition: 'transform 0.3s ease'
+                        });
+
+                        // Spinner mejorado con doble anillo
+                        const spinnerWrapper = document.createElement('div');
+                        spinnerWrapper.style.position = 'relative';
+                        spinnerWrapper.style.width = '60px';
+                        spinnerWrapper.style.height = '60px';
+
+                        const spinner1 = document.createElement('div');
+                        Object.assign(spinner1.style, {
+                            position: 'absolute',
+                            width: '60px',
+                            height: '60px',
+                            border: '3px solid rgba(255, 255, 255, 0.2)',
+                            borderTop: '3px solid #fff',
+                            borderRadius: '50%',
+                            animation: 'spin 1s cubic-bezier(0.68, -0.55, 0.265, 1.55) infinite'
+                        });
+
+                        const spinner2 = document.createElement('div');
+                        Object.assign(spinner2.style, {
+                            position: 'absolute',
+                            width: '46px',
+                            height: '46px',
+                            top: '7px',
+                            left: '7px',
+                            border: '3px solid rgba(255, 255, 255, 0.1)',
+                            borderBottom: '3px solid rgba(255, 255, 255, 0.8)',
+                            borderRadius: '50%',
+                            animation: 'spin 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.55) infinite reverse'
+                        });
+
+                        spinnerWrapper.appendChild(spinner1);
+                        spinnerWrapper.appendChild(spinner2);
+
+                        // Texto principal
+                        const text = document.createElement('div');
+                        text.id = 'loading-progress';
+                        Object.assign(text.style, {
+                            color: '#fff',
+                            fontSize: '18px',
+                            fontWeight: '600',
+                            fontFamily: 'system-ui, -apple-system, sans-serif',
+                            textAlign: 'center',
+                            letterSpacing: '0.3px'
+                        });
+                        text.textContent = name;
+
+                        // Subtexto
+                        const subtext = document.createElement('div');
+                        Object.assign(subtext.style, {
+                            color: 'rgba(255, 255, 255, 0.8)',
+                            fontSize: '14px',
+                            fontWeight: '400',
+                            fontFamily: 'system-ui, -apple-system, sans-serif',
+                            textAlign: 'center'
+                        });
+                        subtext.textContent = 'Cargando capa...';
+
+                        // Barra de progreso animada
+                        const progressBar = document.createElement('div');
+                        Object.assign(progressBar.style, {
+                            width: '100%',
+                            height: '3px',
+                            background: 'rgba(255, 255, 255, 0.2)',
+                            borderRadius: '10px',
+                            overflow: 'hidden',
+                            marginTop: '8px'
+                        });
+
+                        const progressFill = document.createElement('div');
+                        Object.assign(progressFill.style, {
+                            height: '100%',
+                            width: '0%',
+                            background: 'linear-gradient(90deg, rgba(255,255,255,0.5), #fff)',
+                            borderRadius: '10px',
+                            animation: 'progress 1.5s ease-in-out infinite'
+                        });
+
+                        progressBar.appendChild(progressFill);
+                        container.appendChild(spinnerWrapper);
+                        container.appendChild(text);
+                        container.appendChild(subtext);
+                        container.appendChild(progressBar);
+                        overlay.appendChild(container);
+                        document.body.appendChild(overlay);
+
+                        // 🔹 Agregar animaciones CSS
+                        if (!document.getElementById('spinner-style')) {
+                            const style = document.createElement('style');
+                            style.id = 'spinner-style';
+                            style.textContent = `
+                                @keyframes spin {
+                                    from { transform: rotate(0deg); }
+                                    to { transform: rotate(360deg); }
+                                }
+                                @keyframes progress {
+                                    0% { width: 0%; margin-left: 0; }
+                                    50% { width: 70%; margin-left: 15%; }
+                                    100% { width: 0%; margin-left: 100%; }
+                                }
+                            `;
+                            document.head.appendChild(style);
+                        }
+
+                        // Animación de entrada
+                        requestAnimationFrame(() => {
+                            overlay.style.opacity = '1';
+                            container.style.transform = 'scale(1)';
+                        });
+                    } else {
+                        overlay.style.display = 'flex';
+                        overlay.style.opacity = '1';
+                        document.getElementById('loading-progress').textContent = name;
+                    }
+
+                    // 🔹 Descargar GeoJSON
                     const response = await fetch(url);
                     if (!response.ok) throw new Error(`Error al cargar el GeoJSON: ${response.statusText}`);
-                    
+
                     const data = await response.json();
+
                     const layer = L.geoJSON(data, {
                         style: {
                             color: color,
@@ -1379,7 +1521,7 @@
                         }
                     });
 
-                    // Almacenar la capa
+                    // 🔹 Guardar referencia
                     geojsonLayers[id] = {
                         layer: layer,
                         url: url,
@@ -1388,25 +1530,33 @@
                         name: name
                     };
 
-                    // Agregar la capa al mapa
+                    // 🔹 Mostrar capa
                     layer.addTo(map);
-                    
-                    // Ajustar el mapa a los límites de la capa
+
                     try {
                         map.fitBounds(layer.getBounds(), { padding: [20, 20] });
                     } catch (e) {
                         console.error("Error al ajustar los límites de la capa:", e);
                     }
-                    
-                    // Ocultar indicador de carga
-                    document.getElementById('loading-indicator').style.display = 'none';
-                    
+
+                    // 🔹 Ocultar overlay con animación
+                    overlay.style.opacity = '0';
+                    setTimeout(() => {
+                        overlay.style.display = 'none';
+                    }, 300);
+
                     this.showNotification(`Capa "${name}" cargada correctamente`);
-                    
                     return layer;
+
                 } catch (error) {
                     console.error('Error cargando capa:', error);
-                    document.getElementById('loading-indicator').style.display = 'none';
+                    const overlay = document.getElementById('loading-overlay');
+                    if (overlay) {
+                        overlay.style.opacity = '0';
+                        setTimeout(() => {
+                            overlay.style.display = 'none';
+                        }, 300);
+                    }
                     this.showNotification(`Error al cargar la capa "${name}"`, true);
                     throw error;
                 }
@@ -1856,25 +2006,31 @@
                 setTimeout(async () => {
                     // Buscar la restricción correspondiente
                     const restriction = restrictionsData.find(row => row.ip_restriccion === restrictionId);
-                    
+
                     if (restriction && restriction.id_layer && restriction.url_geojson) {
-                        // Verificar si la capa ya está cargada
-                        if (!geojsonLayers[restriction.id_layer]) {
-                            try {
+                        try {
+                            // 🔹 LIMPIAR el mapa antes de agregar la nueva capa
+                            for (const key in geojsonLayers) {
+                                const layerInfo = geojsonLayers[key];
+                                if (layerInfo.visible) {
+                                    map.removeLayer(layerInfo.layer);
+                                    layerInfo.visible = false;
+                                }
+                            }
+
+                            // Verificar si la capa ya está cargada
+                            if (!geojsonLayers[restriction.id_layer]) {
                                 // Cargar la capa
                                 await this.loadGeoJsonLayer(
                                     restriction.id_layer,
                                     restriction.entregable || restriction.nombre_del_dataset,
                                     restriction.url_geojson
                                 );
-                            } catch (error) {
-                                console.error('Error cargando capa:', error);
-                                this.centerMapOnCountry(country);
                             }
-                        } else {
-                            // Si la capa ya está cargada, mostrarla y ajustar el mapa
+
+                            // Mostrar y ajustar el mapa a la nueva capa
                             const layerInfo = geojsonLayers[restriction.id_layer];
-                            if (!layerInfo.visible) {
+                            if (!map.hasLayer(layerInfo.layer)) {
                                 layerInfo.layer.addTo(map);
                                 layerInfo.visible = true;
                             }
@@ -1885,12 +2041,16 @@
                                 console.error("Error al ajustar los límites de la capa:", e);
                                 this.centerMapOnCountry(country);
                             }
+
+                        } catch (error) {
+                            console.error('Error cargando capa:', error);
+                            this.centerMapOnCountry(country);
                         }
                     } else {
                         // Si no hay capa, centrar en el país
                         this.centerMapOnCountry(country);
                     }
-                    
+
                     // Mostrar la información de la restricción
                     if (restrictionId) {
                         const restriction = restrictionsData.find(row => row.ip_restriccion === restrictionId);
