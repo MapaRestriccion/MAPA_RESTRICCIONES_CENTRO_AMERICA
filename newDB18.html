@@ -2051,7 +2051,8 @@
                                 // Cargar la capa con el array de URLs
                                 await this.loadGeoJsonLayer(
                                     restriction.id_layer,
-                                    restriction.entregable || restriction.nombre_del_dataset,
+                                    //restriction.entregable || restriction.nombre_del_dataset,
+                                    restriction.entregable,
                                     restriction.url_geojson // Ahora es un array
                                 );
                             }
@@ -2121,6 +2122,12 @@
                             <hr>
                             ${this.generateTechnicalDetails(item)}
                         </div>
+                        <div class="col-md-12">
+                            <h5><i class="fas fa-balance-scale"></i> Texto Norma</h5>
+                            <hr>
+                            ${item.texto_norma ? `<p>${item.texto_norma}</p>` : ''}
+
+                        </div>
                     </div>
                     <div class="row mt-4">
                         <div class="col-12">
@@ -2180,7 +2187,6 @@
                     <p><strong><i class="fas fa-calendar-alt"></i> Fecha Norma:</strong> ${item.fecha_norma} (${item.decada_norma})</p>
                     <p><strong><i class="fas fa-building"></i> Institución Responsable:</strong> ${item.institucion_responsable}</p>
                     <p><strong><i class="fas fa-map-marker-alt"></i> Nivel/Escala:</strong> ${item.nivel_escala}</p>
-                    ${item.texto_norma ? `<p><strong><i class="fas fa-file-contract"></i> Texto Norma:</strong> ${item.texto_norma}</p>` : ''}
                     ${item.observaciones_relevantes ? `<p><strong><i class="fas fa-sticky-note"></i> Observaciones Relevantes:</strong> ${item.observaciones_relevantes}</p>` : ''}
                 `;
             }
