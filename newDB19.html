@@ -1218,40 +1218,40 @@
                 <div class="tab-content" id="myTabContent">
                     <!-- Pestaña de la Tabla -->
                     <div class="tab-pane fade show active" id="table-tab-pane" role="tabpanel" aria-labelledby="table-tab" tabindex="0">
-                        <div class="row" style="display: none;">
+                        <div class="row">
                             <div class="col-lg-3 col-md-6 mb-4">
                                 <div class="card stats-card" id="totalRestrictionsCard">
                                     <div class="card-body">
                                         <h5 class="card-title">Total Restricciones</h5>
                                         <p class="stats-number" id="totalRestrictions">0</p>
-                                        <p class="card-text">En todos los países</p>
+                                        <p class="card-text"> distintas</p>
                                     </div>
                                 </div>
                             </div>
                             <div class="col-lg-3 col-md-6 mb-4">
                                 <div class="card stats-card" id="highEudrCard">
                                     <div class="card-body">
-                                        <h5 class="card-title">Restricciones EUDR</h5>
+                                        <h5 class="card-title">Normas Aplicables</h5>
                                         <p class="stats-number" id="highEudr">0</p>
-                                        <p class="card-text">Pertinentes para cumplimiento</p>
+                                        <p class="card-text"> distintas</p>
                                     </div>
                                 </div>
                             </div>
                             <div class="col-lg-3 col-md-6 mb-4">
                                 <div class="card stats-card" id="protectedAreasCard">
                                     <div class="card-body">
-                                        <h5 class="card-title">Restricciones Ambientales</h5>
+                                        <h5 class="card-title">Dataset</h5>
                                         <p class="stats-number" id="protectedAreas">0</p>
-                                        <p class="card-text">Normativas ambientales</p>
+                                        <p class="card-text"> distintas</p>
                                     </div>
                                 </div>
                             </div>
                             <div class="col-lg-3 col-md-6 mb-4">
                                 <div class="card stats-card" id="waterBuffersCard">
                                     <div class="card-body">
-                                        <h5 class="card-title">Restricciones Hídricas</h5>
+                                        <h5 class="card-title">Fuentes</h5>
                                         <p class="stats-number" id="waterBuffers">0</p>
-                                        <p class="card-text">Protección de recursos hídricos</p>
+                                        <p class="card-text"> distintas</p>
                                     </div>
                                 </div>
                             </div>
@@ -2028,21 +2028,15 @@
 
             updateStats() {
                 const total = filteredData.length;
-                const eudr = filteredData.filter(item => item.eudr_cat).length;
-                const environmental = filteredData.filter(item =>
-                    item.tipo_restriccion.includes('ambiental') ||
-                    item.tipo_restriccion.includes('forestal') ||
-                    item.tipo_restriccion.includes('Conservación')
-                ).length;
-                const water = filteredData.filter(item =>
-                    item.tipo_restriccion.includes('hidrica') ||
-                    item.tipo_restriccion.includes('Hídrica')
-                ).length;
+                //const eudr = filteredData.filter(item => item.eudr_cat).length;
+                const normativa_aplicable_stat =  [...new Set(filteredData.map(item => item.normativa_aplicable))].length;
+                const id_dato_stat = [...new Set(filteredData.map(item => item.id_dato))].length;
+                const fuente_stat = [...new Set(filteredData.map(item => item.fuente))].length;
 
                 $('#totalRestrictions').text(total);
-                $('#highEudr').text(eudr);
-                $('#protectedAreas').text(environmental);
-                $('#waterBuffers').text(water);
+                $('#highEudr').text(normativa_aplicable_stat);
+                $('#protectedAreas').text(id_dato_stat);
+                $('#waterBuffers').text(fuente_stat);
             }
 
             updateResultsCount() {
