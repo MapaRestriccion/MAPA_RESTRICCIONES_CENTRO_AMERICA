@@ -1,64 +1,4 @@
-const restrictionsData = [{
-  "iso": "ESP",
-  "pais": "Especial",
-  "normativa_tipo": "Ley",
-  "normativa_aplicable": "National Protected Areas System Act",
-  "fecha_norma": "2020-12-31",
-  "decada_norma": "2020s",
-  "articulo_norma": "Sec. 39(1)",
-  "institucion_responsable": "Forest Department / Fisheries Department / NICH (según categoría)",
-  "texto_norma": "39.–(1) No person shall, within any national park, nature reserve, wildlife sanctuary or natural monument, except with the written authorization of the Chief Forest Officer— (a) permanently or temporarily reside in or build any structure of whatever nature whether as a shelter or otherwise; (b) damage, destroy or remove from its place therein any species of flora; (c) hunt any species of wildlife; (d) quarry, dig or construct roads or trails; (e) modify or replace any sign and facilities provided for public use and enjoyment; (f) introduce organic or chemical pollutants into any water; (g) clear land for cultivation; (h) graze domestic livestock; (i) carry firearms, spears, traps or other means for hunting or fishing; (j) introduce exotic species of flora or fauna; (k) catch fish by any means whatsoever.",
-  "descripcion_restriccion": "Prohíbe asentarse, construir, cazar, talar, remover flora, abrir caminos, etc., dentro de áreas protegidas sin permiso escrito; categorías y límites establecidos por Gaceta.",
-  "tipo_descrip": "deforestacion",
-  "nivel_escala": "ANP",
-  "tipo_restriccion": "Uso del suelo / Conservación",
-  "cuantificable": "Si",
-  "parametros_geo": "Límite oficial de cada AP según SI/Gaceta",
-  "representacion": "poligono",
-  "enlace_norma": "https://faolex.fao.org/docs/pdf/blz163048.pdf",
-  "observaciones_relevantes": "Vigente. Se propone reemplazar por NPAS 2024 (aún en borrador). (FAOLEX)",
-  "pertinencia_eudr": "Asegura exclusión de producción en APs y soporte a debida diligencia (ubicación/tenencia).",
-  "eudr_cat": "prohibe",
-  "ip_restriccion": "AAA-AAA9999",
-  "tipo_analisis": "Exclusión de parcelas agrícolas en Áreas Protegidas",
-  "id_dato": "BLZ-DAT-001",
-  "cartografia_base": "Protected Areas of Belize",
-  "geoproceso_a_realizar": "Usar la capa oficial de Áreas Protegidas de Belice (Protected Areas of Belize). Intersectar las parcelas o proyectos con los polígonos del sistema de áreas protegidas para identificar predios dentro de parques, reservas y santuarios. Excluir o condicionar los usos de suelo en función de las categorías de manejo definidas en el plan de manejo.",
-  "tipo_geoproceso": "Cruzar",
-  "entregable": "BLZ_AreasProt",
-  "link_entregable": "https://drive.google.com/drive/folders/12p5YkkWlcgmPaGE2dt2_3wPunNIWzYMd?usp=drive_link",
-  "nombre_del_dataset": "WDPA - Belize Protected Areas",
-  "fecha_dataset": "2025-09",
-  "decada_dataset": "2020s",
-  "descripcion_dataset": "Polígonos de AP nacionales reconocidos internacionalmente, atributos estándar (categoría IUCN, nombre, fecha de declaración)",
-  "tipo_dataset": "anp",
-  "analisis_geoespacial": "Verificación / completar categorías; comparación nacional/internacional; validar inclusión en el Registro nacional",
-  "proveedor_dataset": "UNEP-WCMC / Protected Planet",
-  "cobertura_espacial": "Nacional",
-  "fuente": "Protected Planet / WDPA",
-  "licencia_condiciones_de_uso": "Terminos_WDPA",
-  "contacto_oficial": "UNEP-WCMC / Instituto nacional que reporte a WDPA",
-  "enlace_dataset": "ProtectedPlanet.net (descarga shapefile o formatos GIS) (Protected Planet)",
-  "observaciones_dataset": "Puede haber discrepancias en nombres o límites con datos nacionales",
-  "id_layer": "layer999",
-  "url_geojson": [
-   "https://raw.githubusercontent.com/Sud-Austral/MAPA_RESTRICCIONES_CENTRO_AMERICA/refs/heads/main/mapaData/parte_1_de_15.json",
-   "https://raw.githubusercontent.com/Sud-Austral/MAPA_RESTRICCIONES_CENTRO_AMERICA/refs/heads/main/mapaData/parte_2_de_15.json",
-   "https://raw.githubusercontent.com/Sud-Austral/MAPA_RESTRICCIONES_CENTRO_AMERICA/refs/heads/main/mapaData/parte_3_de_15.json",
-   "https://raw.githubusercontent.com/Sud-Austral/MAPA_RESTRICCIONES_CENTRO_AMERICA/refs/heads/main/mapaData/parte_4_de_15.json",
-   "https://raw.githubusercontent.com/Sud-Austral/MAPA_RESTRICCIONES_CENTRO_AMERICA/refs/heads/main/mapaData/parte_5_de_15.json",
-   "https://raw.githubusercontent.com/Sud-Austral/MAPA_RESTRICCIONES_CENTRO_AMERICA/refs/heads/main/mapaData/parte_6_de_15.json",
-   "https://raw.githubusercontent.com/Sud-Austral/MAPA_RESTRICCIONES_CENTRO_AMERICA/refs/heads/main/mapaData/parte_7_de_15.json",
-   "https://raw.githubusercontent.com/Sud-Austral/MAPA_RESTRICCIONES_CENTRO_AMERICA/refs/heads/main/mapaData/parte_8_de_15.json",
-   "https://raw.githubusercontent.com/Sud-Austral/MAPA_RESTRICCIONES_CENTRO_AMERICA/refs/heads/main/mapaData/parte_9_de_15.json",
-   "https://raw.githubusercontent.com/Sud-Austral/MAPA_RESTRICCIONES_CENTRO_AMERICA/refs/heads/main/mapaData/parte_10_de_15.json",
-   "https://raw.githubusercontent.com/Sud-Austral/MAPA_RESTRICCIONES_CENTRO_AMERICA/refs/heads/main/mapaData/parte_11_de_15.json",
-   "https://raw.githubusercontent.com/Sud-Austral/MAPA_RESTRICCIONES_CENTRO_AMERICA/refs/heads/main/mapaData/parte_12_de_15.json",
-   "https://raw.githubusercontent.com/Sud-Austral/MAPA_RESTRICCIONES_CENTRO_AMERICA/refs/heads/main/mapaData/parte_13_de_15.json",
-   "https://raw.githubusercontent.com/Sud-Austral/MAPA_RESTRICCIONES_CENTRO_AMERICA/refs/heads/main/mapaData/parte_14_de_15.json",
-   "https://raw.githubusercontent.com/Sud-Austral/MAPA_RESTRICCIONES_CENTRO_AMERICA/refs/heads/main/mapaData/parte_15_de_15.json",
-  ]
- },
+const restrictionsData = [
  {
   "iso": "BLZ",
   "pais": "Belice",
@@ -87,7 +27,7 @@ const restrictionsData = [{
   "geoproceso_a_realizar": "Usar la capa oficial de Áreas Protegidas de Belice (Protected Areas of Belize). Intersectar las parcelas o proyectos con los polígonos del sistema de áreas protegidas para identificar predios dentro de parques, reservas y santuarios. Excluir o condicionar los usos de suelo en función de las categorías de manejo definidas en el plan de manejo.",
   "tipo_geoproceso": "Cruzar",
   "entregable": "BLZ_AreasProt",
-  "link_entregable": "https://drive.google.com/drive/folders/12p5YkkWlcgmPaGE2dt2_3wPunNIWzYMd?usp=drive_link",
+  "link_entregable": "https://drive.google.com/drive/folders/148Ph4G5bJ-xUyBIIYNzsZALC1CDqXjh9?usp=drive_link",
   "nombre_del_dataset": "WDPA - Belize Protected Areas",
   "fecha_dataset": "2025-09",
   "decada_dataset": "2020s",
@@ -99,11 +39,11 @@ const restrictionsData = [{
   "fuente": "Protected Planet / WDPA",
   "licencia_condiciones_de_uso": "Terminos_WDPA",
   "contacto_oficial": "UNEP-WCMC / Instituto nacional que reporte a WDPA",
-  "enlace_dataset": "ProtectedPlanet.net (descarga shapefile o formatos GIS) (Protected Planet)",
+  "enlace_dataset": "https://www.protectedplanet.net/country/BLZ",
   "observaciones_dataset": "Puede haber discrepancias en nombres o límites con datos nacionales",
   "id_layer": "layer000",
   "url_geojson": [
-   "https://raw.githubusercontent.com/Sud-Austral/MAPA_RESTRICCIONES_CENTRO_AMERICA/refs/heads/main/mapaData/MEX_AreasConserVoluntaria.json"
+   "https://raw.githubusercontent.com/Sud-Austral/MAPA_RESTRICCIONES_CENTRO_AMERICA/refs/heads/main/mapaData/BLZ_AreasProt.json"
   ]
  },
  {
@@ -134,7 +74,7 @@ const restrictionsData = [{
   "geoproceso_a_realizar": "Construir el Registro de Áreas Protegidas a partir de la cartografía oficial: clasificar cada polígono por su categoría (parque nacional, monumento natural, santuario de vida silvestre, etc.), asignar fechas de creación y coordinar con la base legal. Validar límites mediante superposición con límites administrativos y datos de topografía.",
   "tipo_geoproceso": null,
   "entregable": "BLZ_AreasProt",
-  "link_entregable": "https://drive.google.com/drive/folders/12p5YkkWlcgmPaGE2dt2_3wPunNIWzYMd?usp=drive_link",
+  "link_entregable": "https://drive.google.com/drive/folders/148Ph4G5bJ-xUyBIIYNzsZALC1CDqXjh9?usp=drive_link",
   "nombre_del_dataset": "WDPA - Belize Protected Areas",
   "fecha_dataset": "2025-09",
   "decada_dataset": "2020s",
@@ -146,11 +86,11 @@ const restrictionsData = [{
   "fuente": "Protected Planet / WDPA",
   "licencia_condiciones_de_uso": "Terminos_WDPA",
   "contacto_oficial": "UNEP-WCMC / Instituto nacional que reporte a WDPA",
-  "enlace_dataset": "ProtectedPlanet.net (descarga shapefile o formatos GIS) (Protected Planet)",
+  "enlace_dataset": "https://www.protectedplanet.net/country/BLZ",
   "observaciones_dataset": "Puede haber discrepancias en nombres o límites con datos nacionales",
   "id_layer": "layer001",
   "url_geojson": [
-   "https://raw.githubusercontent.com/Sud-Austral/MAPA_RESTRICCIONES_CENTRO_AMERICA/refs/heads/main/mapaData/MEX_AreasConserVoluntaria.json"
+   "https://raw.githubusercontent.com/Sud-Austral/MAPA_RESTRICCIONES_CENTRO_AMERICA/refs/heads/main/mapaData/BLZ_AreasProt.json"
   ]
  },
  {
@@ -181,7 +121,7 @@ const restrictionsData = [{
   "geoproceso_a_realizar": "Cruzar la cartografía catastral con los límites de áreas protegidas para detectar títulos o disposiciones de tierras dentro de parques y reservas. Identificar superposiciones y anular disposiciones que invadan el dominio público.",
   "tipo_geoproceso": "Cruzar",
   "entregable": "BLZ_AreasProt",
-  "link_entregable": "https://drive.google.com/drive/folders/12p5YkkWlcgmPaGE2dt2_3wPunNIWzYMd?usp=drive_link",
+  "link_entregable": "https://drive.google.com/drive/folders/148Ph4G5bJ-xUyBIIYNzsZALC1CDqXjh9?usp=drive_link",
   "nombre_del_dataset": "WDPA - Belize Protected Areas",
   "fecha_dataset": "2025-09",
   "decada_dataset": "2020s",
@@ -193,11 +133,11 @@ const restrictionsData = [{
   "fuente": "Protected Planet / WDPA",
   "licencia_condiciones_de_uso": "Terminos_WDPA",
   "contacto_oficial": "UNEP-WCMC / Instituto nacional que reporte a WDPA",
-  "enlace_dataset": "ProtectedPlanet.net (descarga shapefile o formatos GIS) (Protected Planet)",
+  "enlace_dataset": "https://www.protectedplanet.net/country/BLZ",
   "observaciones_dataset": "Puede haber discrepancias en nombres o límites con datos nacionales",
   "id_layer": "layer002",
   "url_geojson": [
-   "https://raw.githubusercontent.com/Sud-Austral/MAPA_RESTRICCIONES_CENTRO_AMERICA/refs/heads/main/mapaData/MEX_AreasConserVoluntaria.json"
+   "https://raw.githubusercontent.com/Sud-Austral/MAPA_RESTRICCIONES_CENTRO_AMERICA/refs/heads/main/mapaData/BLZ_AreasProt.json"
   ]
  },
  {
@@ -228,7 +168,7 @@ const restrictionsData = [{
   "geoproceso_a_realizar": "A partir de la red hidrográfica nacional y de la cartografía de corredores biológicos, generar buffers reglamentarios a lo largo de los ríos y quebradas para crear bosques ribereños protegidos. Calcular la cobertura forestal dentro de cada buffer utilizando mapas de cobertura del suelo y verificar que se mantenga el porcentaje mínimo de bosque exigido.",
   "tipo_geoproceso": "Buffer",
   "entregable": "BLZ_AreasProt",
-  "link_entregable": "https://drive.google.com/drive/folders/12p5YkkWlcgmPaGE2dt2_3wPunNIWzYMd?usp=drive_link",
+  "link_entregable": "https://drive.google.com/drive/folders/148Ph4G5bJ-xUyBIIYNzsZALC1CDqXjh9?usp=drive_link",
   "nombre_del_dataset": "WDPA - Belize Protected Areas",
   "fecha_dataset": "2025-09",
   "decada_dataset": "2020s",
@@ -240,11 +180,11 @@ const restrictionsData = [{
   "fuente": "Protected Planet / WDPA",
   "licencia_condiciones_de_uso": "Terminos_WDPA",
   "contacto_oficial": "UNEP-WCMC / Instituto nacional que reporte a WDPA",
-  "enlace_dataset": "ProtectedPlanet.net (descarga shapefile o formatos GIS) (Protected Planet)",
+  "enlace_dataset": "https://www.protectedplanet.net/country/BLZ",
   "observaciones_dataset": "Puede haber discrepancias en nombres o límites con datos nacionales",
   "id_layer": "layer003",
   "url_geojson": [
-   "https://raw.githubusercontent.com/Sud-Austral/MAPA_RESTRICCIONES_CENTRO_AMERICA/refs/heads/main/mapaData/MEX_AreasConserVoluntaria.json"
+   "https://raw.githubusercontent.com/Sud-Austral/MAPA_RESTRICCIONES_CENTRO_AMERICA/refs/heads/main/mapaData/BLZ_AreasProt.json"
   ]
  },
  {
@@ -275,7 +215,7 @@ const restrictionsData = [{
   "geoproceso_a_realizar": "Usar la cartografía de áreas protegidas para enmascarar las zonas donde están prohibidas la caza, tala, construcción y otras actividades. Para cada solicitud de uso, intersectar su ubicación con el polígono protegido y validar las restricciones definidas en el plan de manejo.",
   "tipo_geoproceso": "Verificar / Validar",
   "entregable": "BLZ_AreasProt",
-  "link_entregable": "https://drive.google.com/drive/folders/12p5YkkWlcgmPaGE2dt2_3wPunNIWzYMd?usp=drive_link",
+  "link_entregable": "https://drive.google.com/drive/folders/148Ph4G5bJ-xUyBIIYNzsZALC1CDqXjh9?usp=drive_link",
   "nombre_del_dataset": "WDPA - Belize Protected Areas",
   "fecha_dataset": "2025-09",
   "decada_dataset": "2020s",
@@ -287,11 +227,11 @@ const restrictionsData = [{
   "fuente": "Protected Planet / WDPA",
   "licencia_condiciones_de_uso": "Terminos_WDPA",
   "contacto_oficial": "UNEP-WCMC / Instituto nacional que reporte a WDPA",
-  "enlace_dataset": "ProtectedPlanet.net (descarga shapefile o formatos GIS) (Protected Planet)",
+  "enlace_dataset": "https://www.protectedplanet.net/country/BLZ",
   "observaciones_dataset": "Puede haber discrepancias en nombres o límites con datos nacionales",
   "id_layer": "layer004",
   "url_geojson": [
-   "https://raw.githubusercontent.com/Sud-Austral/MAPA_RESTRICCIONES_CENTRO_AMERICA/refs/heads/main/mapaData/MEX_AreasConserVoluntaria.json"
+   "https://raw.githubusercontent.com/Sud-Austral/MAPA_RESTRICCIONES_CENTRO_AMERICA/refs/heads/main/mapaData/BLZ_AreasProt.json"
   ]
  },
  {
@@ -322,7 +262,7 @@ const restrictionsData = [{
   "geoproceso_a_realizar": "Asociar cada polígono de área protegida con información de su plan de manejo. Mediante un join espacial, vincular los atributos de vigencia y tipo de plan a la capa de áreas protegidas y generar reportes de cumplimiento y actualización.",
   "tipo_geoproceso": "Calcular",
   "entregable": "BLZ_AreasProt",
-  "link_entregable": "https://drive.google.com/drive/folders/12p5YkkWlcgmPaGE2dt2_3wPunNIWzYMd?usp=drive_link",
+  "link_entregable": "https://drive.google.com/drive/folders/148Ph4G5bJ-xUyBIIYNzsZALC1CDqXjh9?usp=drive_link",
   "nombre_del_dataset": "WDPA - Belize Protected Areas",
   "fecha_dataset": "2025-09",
   "decada_dataset": "2020s",
@@ -334,11 +274,11 @@ const restrictionsData = [{
   "fuente": "Protected Planet / WDPA",
   "licencia_condiciones_de_uso": "Terminos_WDPA",
   "contacto_oficial": "UNEP-WCMC / Instituto nacional que reporte a WDPA",
-  "enlace_dataset": "ProtectedPlanet.net (descarga shapefile o formatos GIS) (Protected Planet)",
+  "enlace_dataset": "https://www.protectedplanet.net/country/BLZ",
   "observaciones_dataset": "Puede haber discrepancias en nombres o límites con datos nacionales",
   "id_layer": "layer005",
   "url_geojson": [
-   "https://raw.githubusercontent.com/Sud-Austral/MAPA_RESTRICCIONES_CENTRO_AMERICA/refs/heads/main/mapaData/MEX_AreasConserVoluntaria.json"
+   "https://raw.githubusercontent.com/Sud-Austral/MAPA_RESTRICCIONES_CENTRO_AMERICA/refs/heads/main/mapaData/BLZ_AreasProt.json"
   ]
  },
  {
@@ -358,7 +298,7 @@ const restrictionsData = [{
   "cuantificable": "Si",
   "parametros_geo": "Polígonos de Reservas Forestales (RF)",
   "representacion": "poligono",
-  "enlace_norma": "faolex.fao.org/docs/pdf/blz2737.pdf (FAOLEX)",
+  "enlace_norma": "https://faolex.fao.org/docs/pdf/blz2737.pdf",
   "observaciones_relevantes": "Ver también: https://forest.gov.bz/wp-content/uploads/2023/09/Forests-Act-cap-213s.pdf",
   "pertinencia_eudr": "Impide conversión/producción no autorizada dentro de RF.",
   "eudr_cat": "evita",
@@ -369,7 +309,7 @@ const restrictionsData = [{
   "geoproceso_a_realizar": "Filtrar los polígonos de áreas protegidas por la categoría “Reserva Forestal”. Intersectar las parcelas o actividades propuestas con estos polígonos y señalizar aquellas que requieran licencia. Generar capas de riesgo legal para control de ocupaciones, agricultura, cacería u obras dentro de reservas forestales.",
   "tipo_geoproceso": "Extraer / Filtrar",
   "entregable": "BLZ_ForestReserve",
-  "link_entregable": "https://drive.google.com/drive/folders/1QXfcB1VoYz7sJJ1H5oOn7SDPr1bURnr1?usp=drive_link",
+  "link_entregable": "https://drive.google.com/drive/folders/14iv5Oou3ES77rDKw0hAW1oekTAZbBOML?usp=drive_link",
   "nombre_del_dataset": "Forest Reserve",
   "fecha_dataset": "2025-09",
   "decada_dataset": "2020s",
@@ -381,11 +321,11 @@ const restrictionsData = [{
   "fuente": "Protected Planet / WDPA",
   "licencia_condiciones_de_uso": "Terminos_WDPA",
   "contacto_oficial": "UNEP-WCMC / Instituto nacional que reporte a WDPA",
-  "enlace_dataset": "ProtectedPlanet.net (descarga shapefile o formatos GIS) (Protected Planet)",
+  "enlace_dataset": "https://www.protectedplanet.net/country/BLZ",
   "observaciones_dataset": "Puede haber discrepancias en nombres o límites con datos nacionales",
   "id_layer": "layer006",
   "url_geojson": [
-   "https://raw.githubusercontent.com/Sud-Austral/MAPA_RESTRICCIONES_CENTRO_AMERICA/refs/heads/main/mapaData/MEX_AreasConserVoluntaria.json"
+   "https://raw.githubusercontent.com/Sud-Austral/MAPA_RESTRICCIONES_CENTRO_AMERICA/refs/heads/main/mapaData/BLZ_ForestReserve.json"
   ]
  },
  {
@@ -405,7 +345,7 @@ const restrictionsData = [{
   "cuantificable": "Si",
   "parametros_geo": "Polígonos de manglar (ecosistema)",
   "representacion": "poligono",
-  "enlace_norma": "wwflac.awsassets.panda.org/.../forests_protection_of_mangroves_regualtion_2018_final_enacted_1.pdf (WWF)",
+  "enlace_norma": "https://wwflac.awsassets.panda.org/downloads/forests_protection_of_mangroves_regualtion_2018_final_enacted_1.pdf",
   "observaciones_relevantes": "Ver: https://digitalcommons.usf.edu/strong_coasts_pubs/6/",
   "pertinencia_eudr": "Evita deforestación de manglar (riesgo EUDR costero).",
   "eudr_cat": "prohibe",
@@ -415,8 +355,8 @@ const restrictionsData = [{
   "cartografia_base": "Permisos de alteración/remoción de manglar emitidos por Forest Dept.; incluye ubicación y vigencia",
   "geoproceso_a_realizar": "Crear una capa de autorizaciones de manglar otorgadas por el Departamento Forestal georreferenciando los permisos. Para cada solicitud o actividad en manglar, validar su ubicación contra esta capa y contra el mapa de ecosistemas de manglar; si no existe permiso, marcar la infracción.",
   "tipo_geoproceso": "Verificar / Validar",
-  "entregable": null,
-  "link_entregable": null,
+  "entregable": "BLZ_ZonasHidricas",
+  "link_entregable": "https://drive.google.com/drive/folders/1vZKHLT7N2QSNfO5saBAKadS3lJ-f31zz?usp=drive_link",
   "nombre_del_dataset": "Mangrove Alteration Permits (2012–2025)",
   "fecha_dataset": 45658,
   "decada_dataset": "2020s",
@@ -432,7 +372,7 @@ const restrictionsData = [{
   "observaciones_dataset": "Útil para auditoría EUDR; capa dinámica de permisos.",
   "id_layer": "layer007",
   "url_geojson": [
-   "https://raw.githubusercontent.com/Sud-Austral/MAPA_RESTRICCIONES_CENTRO_AMERICA/refs/heads/main/mapaData/MEX_AreasConserVoluntaria.json"
+   "https://raw.githubusercontent.com/Sud-Austral/MAPA_RESTRICCIONES_CENTRO_AMERICA/refs/heads/main/mapaData/BLZ_ZonasHidricas.json"
   ]
  },
  {
@@ -452,7 +392,7 @@ const restrictionsData = [{
   "cuantificable": "Si",
   "parametros_geo": "Buffer de 20 m (66 ft) desde línea de agua",
   "representacion": "buffer",
-  "enlace_norma": "faolex.fao.org/docs/pdf/blz50471.pdf (FAOLEX)",
+  "enlace_norma": "https://faolex.fao.org/docs/pdf/blz50471.pdf",
   "observaciones_relevantes": "Ver: https://ccj.org/wp-content/uploads/2025/03/2025_CCJ_4_AJ_BZ.pdf",
   "pertinencia_eudr": "Excluye desarrollos privados en franja ribereña; útil para “screening” EUDR.",
   "eudr_cat": "protege",
@@ -462,8 +402,8 @@ const restrictionsData = [{
   "cartografia_base": "FGDS – Hidrografía & Línea de costa (BNSDI)",
   "geoproceso_a_realizar": "Delimitar la franja pública de 66 pies (≈20 m) a lo largo de la línea de costa y de las riberas de ríos a partir de la cartografía hidrológica (FGDS). Generar buffers de 20 m tierra adentro y intersectarlos con la capa catastral para identificar predios afectados. Etiquetar las zonas de servidumbre pública y restringir ocupaciones o construcciones en la franja.",
   "tipo_geoproceso": "Buffer",
-  "entregable": null,
-  "link_entregable": null,
+  "entregable": "BLZ_ZonasHidricas",
+  "link_entregable": "https://drive.google.com/drive/folders/1vZKHLT7N2QSNfO5saBAKadS3lJ-f31zz?usp=drive_link",
   "nombre_del_dataset": "Fundamental Geospatial Data Sets – Hidrografía & Línea de costa",
   "fecha_dataset": 45292,
   "decada_dataset": "2020s",
@@ -479,7 +419,7 @@ const restrictionsData = [{
   "observaciones_dataset": "No incluye buffer prehecho; debe calcularse en SIG a partir de línea costera/hidrografía.",
   "id_layer": "layer008",
   "url_geojson": [
-   "https://raw.githubusercontent.com/Sud-Austral/MAPA_RESTRICCIONES_CENTRO_AMERICA/refs/heads/main/mapaData/MEX_AreasConserVoluntaria.json"
+   "https://raw.githubusercontent.com/Sud-Austral/MAPA_RESTRICCIONES_CENTRO_AMERICA/refs/heads/main/mapaData/BLZ_ZonasHidricas.json"
   ]
  },
  {
@@ -510,7 +450,7 @@ const restrictionsData = [{
   "geoproceso_a_realizar": "Integrar los polígonos de parques nacionales, reservas biológicas, refugios de vida silvestre, zonas protectoras y reservas forestales estatales a partir del registro oficial de áreas silvestres protegidas. Unir estas capas y superponerlas con la cobertura forestal para identificar bosques naturales dentro de estas categorías. La capa resultante servirá para fiscalizar el cumplimiento de la prohibición de corta y aprovechamiento.",
   "tipo_geoproceso": "Cruzar",
   "entregable": "CRI_AreasProt",
-  "link_entregable": "https://drive.google.com/drive/folders/1vCUgcYuU17LcqozDjCyMNavsXCF5wlY6?usp=drive_link",
+  "link_entregable": "https://drive.google.com/drive/folders/14bxF3gLXj6ozGq1iL7W4_EIfEYtOfmm9?usp=drive_link",
   "nombre_del_dataset": "Áreas Silvestres Protegidas (ASP)",
   "fecha_dataset": "?",
   "decada_dataset": "sin especificar",
@@ -526,7 +466,7 @@ const restrictionsData = [{
   "observaciones_dataset": "Dataset reconocido en catálogo SNIT, pero metadato incompleto (sin fecha clara ni licencia).",
   "id_layer": "layer009",
   "url_geojson": [
-   "https://raw.githubusercontent.com/Sud-Austral/MAPA_RESTRICCIONES_CENTRO_AMERICA/refs/heads/main/mapaData/MEX_AreasConserVoluntaria.json"
+   "https://raw.githubusercontent.com/Sud-Austral/MAPA_RESTRICCIONES_CENTRO_AMERICA/refs/heads/main/mapaData/CRI_AreasProt.json"
   ]
  },
  {
@@ -557,7 +497,7 @@ const restrictionsData = [{
   "geoproceso_a_realizar": "Usar la base de datos de Áreas Silvestres Protegidas (SINAC) para reunir todos los polígonos de parques, reservas, refugios y zonas protectoras. Unirlos en una sola capa y asociar a cada unidad su categoría, plan de manejo y normativa aplicable. Esta cartografía constituirá la base para análisis de compatibilidad y gestión EUDR.",
   "tipo_geoproceso": "Cruzar",
   "entregable": "CRI_AreasProt",
-  "link_entregable": "https://drive.google.com/drive/folders/1vCUgcYuU17LcqozDjCyMNavsXCF5wlY6?usp=drive_link",
+  "link_entregable": "https://drive.google.com/drive/folders/14bxF3gLXj6ozGq1iL7W4_EIfEYtOfmm9?usp=drive_link",
   "nombre_del_dataset": "Áreas Silvestres Protegidas (ASP)",
   "fecha_dataset": "?",
   "decada_dataset": "sin especificar",
@@ -573,7 +513,7 @@ const restrictionsData = [{
   "observaciones_dataset": "Dataset reconocido en catálogo SNIT, pero metadato incompleto (sin fecha clara ni licencia).",
   "id_layer": "layer010",
   "url_geojson": [
-   "https://raw.githubusercontent.com/Sud-Austral/MAPA_RESTRICCIONES_CENTRO_AMERICA/refs/heads/main/mapaData/MEX_AreasConserVoluntaria.json"
+   "https://raw.githubusercontent.com/Sud-Austral/MAPA_RESTRICCIONES_CENTRO_AMERICA/refs/heads/main/mapaData/CRI_AreasProt.json"
   ]
  },
  {
@@ -603,8 +543,8 @@ const restrictionsData = [{
   "cartografia_base": "Cobertura Forestal",
   "geoproceso_a_realizar": "A partir de la cobertura forestal actual y del inventario de bosques privados, identificar predios con bosque natural. Para evaluar solicitudes de cambio de uso, calcular indicadores de continuidad del bosque, proximidad a corredores biológicos y pendientes. Determinar si las actividades propuestas se ajustan a las excepciones del artículo 19 (vivienda rural, obras públicas, etc.) y registrar dictámenes técnicos.",
   "tipo_geoproceso": "Cruzar",
-  "entregable": null,
-  "link_entregable": null,
+  "entregable": "CRI_Restriccion_cambiouso",
+  "link_entregable": "https://drive.google.com/drive/folders/1yggIdyDaqqJdYppqH1p5v7UJsbLv5Os3?usp=drive_link",
   "nombre_del_dataset": "Cobertura Forestal (MC13 / uso del suelo)",
   "fecha_dataset": 2013,
   "decada_dataset": "2010s",
@@ -620,7 +560,7 @@ const restrictionsData = [{
   "observaciones_dataset": "Último metadato en SNIT corresponde a 2013; versiones recientes (2021–2023) no localizadas con metadato.",
   "id_layer": "layer011",
   "url_geojson": [
-   "https://raw.githubusercontent.com/Sud-Austral/MAPA_RESTRICCIONES_CENTRO_AMERICA/refs/heads/main/mapaData/MEX_AreasConserVoluntaria.json"
+   "https://raw.githubusercontent.com/Sud-Austral/MAPA_RESTRICCIONES_CENTRO_AMERICA/refs/heads/main/mapaData/CRI_Restriccion_cambiouso.json"
   ]
  },
  {
@@ -650,8 +590,8 @@ const restrictionsData = [{
   "cartografia_base": "Red Hídrica",
   "geoproceso_a_realizar": "Utilizar la base de datos oficial de nacientes permanentes del Ministerio de Ambiente y del SNIT para identificar puntos de surgencia. Generar un buffer de 100 m de radio alrededor de cada naciente para delimitar el área de protección definida por la Ley Forestal. Recortar los buffers por límites administrativos y por cuencas hidrográficas y superponerlos con coberturas de uso del suelo para monitorear su integridad.",
   "tipo_geoproceso": "Buffer",
-  "entregable": null,
-  "link_entregable": null,
+  "entregable": "CRI_Zonas_hidricas100m",
+  "link_entregable": "https://drive.google.com/drive/folders/1tspIT9-gAsqbOZDX54B2BpEphH38Vjqv?usp=drive_link",
   "nombre_del_dataset": "Red Hídrica / Hidrografía",
   "fecha_dataset": "?",
   "decada_dataset": "sin especificar",
@@ -667,7 +607,7 @@ const restrictionsData = [{
   "observaciones_dataset": "Existe servicio WMS/WFS en SNIT, pero sin detalles completos de precisión ni fecha.",
   "id_layer": "layer012",
   "url_geojson": [
-   "https://raw.githubusercontent.com/Sud-Austral/MAPA_RESTRICCIONES_CENTRO_AMERICA/refs/heads/main/mapaData/MEX_AreasConserVoluntaria.json"
+   "https://raw.githubusercontent.com/Sud-Austral/MAPA_RESTRICCIONES_CENTRO_AMERICA/refs/heads/main/mapaData/CRI_Zonas_hidricas100m.json"
   ]
  },
  {
@@ -697,8 +637,8 @@ const restrictionsData = [{
   "cartografia_base": "Red Hídrica",
   "geoproceso_a_realizar": "Clasificar la red hidrográfica en tramos urbanos y rurales utilizando capas de uso del suelo o densidad de población. En los tramos urbanos, aplicar un buffer de 10 m a cada margen cuando el terreno sea plano y aumentar la distancia a 50 m en tramos con pendiente alta. Integrar el resultado en una sola capa y verificar con modelos digitales del terreno para ajustar la pendiente.",
   "tipo_geoproceso": "Buffer",
-  "entregable": null,
-  "link_entregable": null,
+  "entregable": "CRI_Zonas_hidricas10m",
+  "link_entregable": "https://drive.google.com/drive/folders/1VUVHouynDJyF_XLHalLsM7gLgJxYoman?usp=drive_link",
   "nombre_del_dataset": "Red Hídrica / Hidrografía",
   "fecha_dataset": "?",
   "decada_dataset": "sin especificar",
@@ -714,7 +654,7 @@ const restrictionsData = [{
   "observaciones_dataset": "Existe servicio WMS/WFS en SNIT, pero sin detalles completos de precisión ni fecha.",
   "id_layer": "layer013",
   "url_geojson": [
-   "https://raw.githubusercontent.com/Sud-Austral/MAPA_RESTRICCIONES_CENTRO_AMERICA/refs/heads/main/mapaData/MEX_AreasConserVoluntaria.json"
+   "https://raw.githubusercontent.com/Sud-Austral/MAPA_RESTRICCIONES_CENTRO_AMERICA/refs/heads/main/mapaData/CRI_Zonas_hidricas10m.json"
   ]
  },
  {
@@ -744,8 +684,8 @@ const restrictionsData = [{
   "cartografia_base": "Red Hídrica + D_CR_08 (DEM)",
   "geoproceso_a_realizar": "Sobre la red hidrográfica fuera de zonas urbanas, calcular la pendiente del terreno a partir de un modelo digital de elevación (D_CR_08). Para tramos con pendiente menor al 30 %, generar buffers de 15 m a cada margen; para pendientes mayores o terreno quebrado usar 50 m (véase R_CR_010). Fusionar los buffers para obtener la franja rural de protección y asociarla a los atributos del río (nombre, orden).",
   "tipo_geoproceso": "Buffer",
-  "entregable": null,
-  "link_entregable": null,
+  "entregable": "CRI_Zonas_hidricas15m",
+  "link_entregable": "https://drive.google.com/drive/folders/1JCsy7mWohAgesGKyRj6qf_4mz92icPH6?usp=drive_link",
   "nombre_del_dataset": "Red Hídrica / Hidrografía",
   "fecha_dataset": "?",
   "decada_dataset": "sin especificar",
@@ -761,7 +701,7 @@ const restrictionsData = [{
   "observaciones_dataset": "Existe servicio WMS/WFS en SNIT, pero sin detalles completos de precisión ni fecha.",
   "id_layer": "layer014",
   "url_geojson": [
-   "https://raw.githubusercontent.com/Sud-Austral/MAPA_RESTRICCIONES_CENTRO_AMERICA/refs/heads/main/mapaData/MEX_AreasConserVoluntaria.json"
+   "https://raw.githubusercontent.com/Sud-Austral/MAPA_RESTRICCIONES_CENTRO_AMERICA/refs/heads/main/mapaData/CRI_Zonas_hidricas15m.json"
   ]
  },
  {
@@ -791,8 +731,8 @@ const restrictionsData = [{
   "cartografia_base": "Red Hídrica + D_CR_08 (DEM)",
   "geoproceso_a_realizar": "Calcular la pendiente del terreno a partir del modelo digital de elevación y clasificar los tramos rurales de ríos y quebradas donde la pendiente sea igual o superior al 30 %. Generar un buffer de 50 m a cada margen en estos tramos. Recortar la franja por límites administrativos y cuencas, y superponerla con el catastro para identificar predios afectados.",
   "tipo_geoproceso": "Buffer",
-  "entregable": null,
-  "link_entregable": null,
+  "entregable": "CRI_Zonas_hidricas50m_pend",
+  "link_entregable": "https://drive.google.com/drive/folders/1-ADujgdCCukTst3PxBkH8LPeENTWd-gm?usp=drive_link",
   "nombre_del_dataset": "Red Hídrica / Hidrografía",
   "fecha_dataset": "?",
   "decada_dataset": "sin especificar",
@@ -808,7 +748,7 @@ const restrictionsData = [{
   "observaciones_dataset": "Existe servicio WMS/WFS en SNIT, pero sin detalles completos de precisión ni fecha.",
   "id_layer": "layer015",
   "url_geojson": [
-   "https://raw.githubusercontent.com/Sud-Austral/MAPA_RESTRICCIONES_CENTRO_AMERICA/refs/heads/main/mapaData/MEX_AreasConserVoluntaria.json"
+   "https://raw.githubusercontent.com/Sud-Austral/MAPA_RESTRICCIONES_CENTRO_AMERICA/refs/heads/main/mapaData/CRI_Zonas_hidricas50m_pend.json"
   ]
  },
  {
@@ -838,8 +778,8 @@ const restrictionsData = [{
   "cartografia_base": "Lagos, Embalses y Humedales",
   "geoproceso_a_realizar": "A partir de la cartografía de lagos, embalses y humedales, generar un buffer de 50 m alrededor de la orilla de cada cuerpo de agua perteneciente al Estado. El buffer debe medirse horizontalmente desde la línea de máximo nivel. Unir los buffers de cuerpos contiguos y recortar por límites administrativos. La capa resultante servirá para fiscalizar construcciones o talas en los bordes de lagos y embalses.",
   "tipo_geoproceso": "Buffer",
-  "entregable": null,
-  "link_entregable": null,
+  "entregable": "CRI_Zonas_hidricas50m",
+  "link_entregable": "https://drive.google.com/drive/folders/1RQw5y9e1Kqjbg1NTR29peDiGVmst-QTA?usp=drive_link",
   "nombre_del_dataset": "Lagos, Embalses y Humedales",
   "fecha_dataset": "?",
   "decada_dataset": "sin especificar",
@@ -855,7 +795,7 @@ const restrictionsData = [{
   "observaciones_dataset": "Inventario de humedales existe; metadatos en SNIT incompletos (fecha y licencia faltan).",
   "id_layer": "layer016",
   "url_geojson": [
-   "https://raw.githubusercontent.com/Sud-Austral/MAPA_RESTRICCIONES_CENTRO_AMERICA/refs/heads/main/mapaData/MEX_AreasConserVoluntaria.json"
+   "https://raw.githubusercontent.com/Sud-Austral/MAPA_RESTRICCIONES_CENTRO_AMERICA/refs/heads/main/mapaData/CRI_Zonas_hidricas50m.json"
   ]
  },
  {
@@ -885,8 +825,8 @@ const restrictionsData = [{
   "cartografia_base": "Patrimonio Natural del Estado",
   "geoproceso_a_realizar": "Delimitar las tierras que integran el Patrimonio Natural del Estado a partir de los registros de propiedad pública (parques, reservas, zonas protectoras, reservas forestales y otros bienes del Estado). Integrar esta capa con los límites administrativos y con la capa de Áreas Silvestres Protegidas para identificar vacíos de titulación y reforzar su protección.",
   "tipo_geoproceso": "Cruzar",
-  "entregable": null,
-  "link_entregable": null,
+  "entregable": "CRI_Restriccion_dominio",
+  "link_entregable": "https://drive.google.com/drive/folders/1WQzZvbudC6HZYSBdDOR1Gjh6BEpT60T3?usp=drive_link",
   "nombre_del_dataset": "Patrimonio Natural del Estado",
   "fecha_dataset": "?",
   "decada_dataset": "sin especificar",
@@ -902,7 +842,7 @@ const restrictionsData = [{
   "observaciones_dataset": "No encontré metadato en SNIT que lo documente como dataset disponible públicamente.",
   "id_layer": "layer017",
   "url_geojson": [
-   "https://raw.githubusercontent.com/Sud-Austral/MAPA_RESTRICCIONES_CENTRO_AMERICA/refs/heads/main/mapaData/MEX_AreasConserVoluntaria.json"
+   "https://raw.githubusercontent.com/Sud-Austral/MAPA_RESTRICCIONES_CENTRO_AMERICA/refs/heads/main/mapaData/CRI_Restriccion_dominio.json"
   ]
  },
  {
@@ -922,7 +862,7 @@ const restrictionsData = [{
   "cuantificable": "No",
   "parametros_geo": "Áreas definidas por autoridad",
   "representacion": "sin especificar",
-  "enlace_norma": "faolex.fao.org/docs/pdf/blz194033.pdf (FAOLEX)",
+  "enlace_norma": "https://faolex.fao.org/docs/pdf/blz194033.pdf",
   "observaciones_relevantes": "Requiere delimitación administrativa específica para espacializar plenamente.",
   "pertinencia_eudr": "Soporte a legalidad (fuentes/abasto); menos directa en deforestación.",
   "eudr_cat": "controla",
@@ -932,8 +872,8 @@ const restrictionsData = [{
   "cartografia_base": "N/D",
   "geoproceso_a_realizar": "Integrar la cartografía de captación y recarga hídrica con la de áreas protegidas y reservas forestales. Mediante análisis espacial, identificar zonas que alimentan sistemas de agua potable y proponer su declaración como áreas controladas. Priorizar microcuencas según su aporte hídrico.",
   "tipo_geoproceso": "Verificar / Validar",
-  "entregable": null,
-  "link_entregable": null,
+  "entregable": "BLZ_RecargaHidrica",
+  "link_entregable": "https://drive.google.com/drive/folders/1s4SX07otWY9tDrjPYKQ9danlKsUx05F5?usp=drive_link",
   "nombre_del_dataset": null,
   "fecha_dataset": null,
   "decada_dataset": null,
@@ -949,7 +889,7 @@ const restrictionsData = [{
   "observaciones_dataset": null,
   "id_layer": "layer018",
   "url_geojson": [
-   "https://raw.githubusercontent.com/Sud-Austral/MAPA_RESTRICCIONES_CENTRO_AMERICA/refs/heads/main/mapaData/MEX_AreasConserVoluntaria.json"
+   "https://raw.githubusercontent.com/Sud-Austral/MAPA_RESTRICCIONES_CENTRO_AMERICA/refs/heads/main/mapaData/BLZ_RecargaHidrica.json"
   ]
  },
  {
@@ -969,7 +909,7 @@ const restrictionsData = [{
   "cuantificable": "No",
   "parametros_geo": null,
   "representacion": "sin especificar",
-  "enlace_norma": "doe.gov.bz/download/environmental-protection-act-chapter-328-revised-edition-2020/ (doe.gov.bz)",
+  "enlace_norma": "https://doe.gov.bz/download/environmental-protection-act-chapter-328-revised-edition-2020/",
   "observaciones_relevantes": "No define polígonos; condiciona legalidad de proyectos (incl. en AP/zonas sensibles).",
   "pertinencia_eudr": "Soporte transversal de cumplimiento.",
   "eudr_cat": "controla",
@@ -979,8 +919,8 @@ const restrictionsData = [{
   "cartografia_base": "N/D",
   "geoproceso_a_realizar": "Crear un inventario de proyectos y actividades susceptibles de causar impactos significativos. Para cada proyecto georreferenciado, verificar si se ubica dentro de áreas protegidas, zonas ribereñas o áreas sensibles, y registrar si cuenta con estudio de impacto ambiental y medidas de mitigación.",
   "tipo_geoproceso": "Verificar / Validar",
-  "entregable": null,
-  "link_entregable": null,
+  "entregable": "BLZ_EIA",
+  "link_entregable": "https://drive.google.com/drive/folders/1CbAt8ggHoZcAaYBvj87i8N-iJSNKvURD?usp=drive_link",
   "nombre_del_dataset": null,
   "fecha_dataset": null,
   "decada_dataset": null,
@@ -996,7 +936,7 @@ const restrictionsData = [{
   "observaciones_dataset": null,
   "id_layer": "layer019",
   "url_geojson": [
-   "https://raw.githubusercontent.com/Sud-Austral/MAPA_RESTRICCIONES_CENTRO_AMERICA/refs/heads/main/mapaData/MEX_AreasConserVoluntaria.json"
+   "https://raw.githubusercontent.com/Sud-Austral/MAPA_RESTRICCIONES_CENTRO_AMERICA/refs/heads/main/mapaData/BLZ_EIA.json"
   ]
  },
  {
@@ -1026,8 +966,8 @@ const restrictionsData = [{
   "cartografia_base": "Evaluaciones de Impacto Ambiental",
   "geoproceso_a_realizar": "Crear un registro georreferenciado de proyectos, instalaciones industriales y actividades susceptibles de contaminar o degradar el ambiente. Para cada proyecto, verificar si dispone de evaluación de impacto ambiental aprobada y localizarlo respecto de áreas sensibles como áreas protegidas, fuentes de agua y comunidades. Automatizar alertas para proyectos sin licencia ambiental vigente.",
   "tipo_geoproceso": "Verificar / Validar",
-  "entregable": null,
-  "link_entregable": null,
+  "entregable": "HN_EIA",
+  "link_entregable": "https://drive.google.com/drive/folders/1uvWagA3cugq9qaGKEBp74R5nQsAr-BGC?usp=drive_link",
   "nombre_del_dataset": null,
   "fecha_dataset": null,
   "decada_dataset": null,
@@ -1043,7 +983,7 @@ const restrictionsData = [{
   "observaciones_dataset": null,
   "id_layer": "layer020",
   "url_geojson": [
-   "https://raw.githubusercontent.com/Sud-Austral/MAPA_RESTRICCIONES_CENTRO_AMERICA/refs/heads/main/mapaData/MEX_AreasConserVoluntaria.json"
+   "https://raw.githubusercontent.com/Sud-Austral/MAPA_RESTRICCIONES_CENTRO_AMERICA/refs/heads/main/mapaData/HN_EIA.json"
   ]
  },
  {
@@ -1073,8 +1013,8 @@ const restrictionsData = [{
   "cartografia_base": "Zonas Marítimo-Terrestres",
   "geoproceso_a_realizar": "A partir de la cartografía de la línea de pleamar y los límites oficiales de la Zona Marítimo‑Terrestre, generar buffers de 50 m (zona pública) y de 200 m (zona total) tierra adentro siguiendo la costa. Identificar manglares y esteros dentro de la zona pública e integrar capas de concesiones en la zona restringida. Validar con imágenes satelitales la ocupación de la franja y coordinar con registros de concesiones.",
   "tipo_geoproceso": "Buffer",
-  "entregable": null,
-  "link_entregable": null,
+  "entregable": "CRI_Zonas_costeras200m",
+  "link_entregable": "https://drive.google.com/drive/folders/1sQCf10dh_pCOsdj0oPnnsacxllKR151K?usp=drive_link",
   "nombre_del_dataset": "Zonas Marítimo-Terrestres (ZMT)",
   "fecha_dataset": "?",
   "decada_dataset": "sin especificar",
@@ -1090,7 +1030,7 @@ const restrictionsData = [{
   "observaciones_dataset": "No localicé metadato público que confirme capa digital oficial completa de ZMT.",
   "id_layer": "layer021",
   "url_geojson": [
-   "https://raw.githubusercontent.com/Sud-Austral/MAPA_RESTRICCIONES_CENTRO_AMERICA/refs/heads/main/mapaData/MEX_AreasConserVoluntaria.json"
+   "https://raw.githubusercontent.com/Sud-Austral/MAPA_RESTRICCIONES_CENTRO_AMERICA/refs/heads/main/mapaData/CRI_Zonas_costeras200m.json"
   ]
  },
  {
@@ -1120,8 +1060,8 @@ const restrictionsData = [{
   "cartografia_base": "Capacidad de Uso de la Tierra",
   "geoproceso_a_realizar": "Utilizar el mapa de capacidad de uso de la tierra (clases I–VIII) generado por el Ministerio de Agricultura y el modelo digital de elevación. Identificar suelos de vocación forestal (clases VII y VIII) y suelos con altas pendientes. Superponer esta clasificación con el catastro para señalar predios donde se restringe el uso agrícola y promover prácticas de conservación según la Ley 7779.",
   "tipo_geoproceso": "Calcular",
-  "entregable": null,
-  "link_entregable": null,
+  "entregable": "CRI_Pendientes",
+  "link_entregable": "https://drive.google.com/drive/folders/1wnuiBPivKw_8IvdJKZ85iDqNRK5pI6v0?usp=drive_link",
   "nombre_del_dataset": "Capacidad de Uso de la Tierra",
   "fecha_dataset": "2017–2023",
   "decada_dataset": "2010s",
@@ -1137,7 +1077,7 @@ const restrictionsData = [{
   "observaciones_dataset": "Confirmado en metadatos SNIT; escala 1:50 000; shapefile.",
   "id_layer": "layer022",
   "url_geojson": [
-   "https://raw.githubusercontent.com/Sud-Austral/MAPA_RESTRICCIONES_CENTRO_AMERICA/refs/heads/main/mapaData/MEX_AreasConserVoluntaria.json"
+   "https://raw.githubusercontent.com/Sud-Austral/MAPA_RESTRICCIONES_CENTRO_AMERICA/refs/heads/main/mapaData/CRI_Pendientes.json"
   ]
  },
  {
@@ -1167,8 +1107,8 @@ const restrictionsData = [{
   "cartografia_base": "Red hídrica, lagos y DEM",
   "geoproceso_a_realizar": "Unir las capas de buffers generadas en R_CR_006 a R_CR_010 (10 m, 15 m, 50 m, 100 m) para conformar el mosaico de áreas de protección del artículo 33. Intersectar esta capa con la cobertura forestal y el catastro para identificar parcelas que contengan arbolado en la franja. Marcar aquellas donde la corta o eliminación de árboles está prohibida y registrar solicitudes de excepción.",
   "tipo_geoproceso": "Cruzar",
-  "entregable": null,
-  "link_entregable": null,
+  "entregable": "CRI_Restriccion100m",
+  "link_entregable": "https://drive.google.com/drive/folders/1WPNLFG_gGbl3gyCTKz182IxvCe_5DkXh?usp=drive_link",
   "nombre_del_dataset": "Modelo Digital de Elevación (DEM)",
   "fecha_dataset": "?",
   "decada_dataset": "sin especificar",
@@ -1184,7 +1124,7 @@ const restrictionsData = [{
   "observaciones_dataset": "Referencias en estudios académicos; no encontré metadato oficial actualizado nacional en SNIT.",
   "id_layer": "layer023",
   "url_geojson": [
-   "https://raw.githubusercontent.com/Sud-Austral/MAPA_RESTRICCIONES_CENTRO_AMERICA/refs/heads/main/mapaData/MEX_AreasConserVoluntaria.json"
+   "https://raw.githubusercontent.com/Sud-Austral/MAPA_RESTRICCIONES_CENTRO_AMERICA/refs/heads/main/mapaData/CRI_Restriccion100m.json"
   ]
  },
  {
@@ -1214,8 +1154,8 @@ const restrictionsData = [{
   "cartografia_base": "Mapa Digital de Suelos (CENTA)",
   "geoproceso_a_realizar": "Usar el Mapa Digital de Suelos (CENTA) para identificar suelos de clases VI, VII y VIII que conservan árboles. Cruzar esta información con la cobertura forestal y el catastro para localizar predios donde se prohíbe el cambio de uso. Generar una capa de exclusión agrícola y ganadera.",
   "tipo_geoproceso": "Extraer / Filtrar",
-  "entregable": null,
-  "link_entregable": null,
+  "entregable": "SV_RestriccionSuelo",
+  "link_entregable": "https://drive.google.com/drive/folders/1z-K8Quo_d-Zg91yzus0EQ3tvTM9IBPiE?usp=drive_link",
   "nombre_del_dataset": "Mapa Digital de Suelos",
   "fecha_dataset": "? (2020–2022)",
   "decada_dataset": "sin especificar",
@@ -1231,7 +1171,7 @@ const restrictionsData = [{
   "observaciones_dataset": "Confirmar disponibilidad en shapefile con clasificación legal VI–VIII",
   "id_layer": "layer024",
   "url_geojson": [
-   "https://raw.githubusercontent.com/Sud-Austral/MAPA_RESTRICCIONES_CENTRO_AMERICA/refs/heads/main/mapaData/MEX_AreasConserVoluntaria.json"
+   "https://raw.githubusercontent.com/Sud-Austral/MAPA_RESTRICCIONES_CENTRO_AMERICA/refs/heads/main/mapaData/SV_RestriccionSuelo.json"
   ]
  },
  {
@@ -1261,8 +1201,8 @@ const restrictionsData = [{
   "cartografia_base": "Mapa Digital de Suelos (CENTA)",
   "geoproceso_a_realizar": "Seleccionar los suelos de clase VIII en el Mapa Digital de Suelos (CENTA) y calificarlos como áreas de protección. Intersectar esta capa con el catastro para identificar predios y emitir recomendaciones de uso forestal o conservación.",
   "tipo_geoproceso": "Extraer / Filtrar",
-  "entregable": null,
-  "link_entregable": null,
+  "entregable": "SV_RestriccionVIII",
+  "link_entregable": "https://drive.google.com/drive/folders/10VDDZOZXqJJVJEBpTnLpLrzNY0tGGdz5?usp=drive_link",
   "nombre_del_dataset": "Mapa Digital de Suelos",
   "fecha_dataset": "? (2020–2022)",
   "decada_dataset": "sin especificar",
@@ -1278,7 +1218,7 @@ const restrictionsData = [{
   "observaciones_dataset": "Confirmar disponibilidad en shapefile con clasificación legal VI–VIII",
   "id_layer": "layer025",
   "url_geojson": [
-   "https://raw.githubusercontent.com/Sud-Austral/MAPA_RESTRICCIONES_CENTRO_AMERICA/refs/heads/main/mapaData/MEX_AreasConserVoluntaria.json"
+   "https://raw.githubusercontent.com/Sud-Austral/MAPA_RESTRICCIONES_CENTRO_AMERICA/refs/heads/main/mapaData/SV_RestriccionVIII.json"
   ]
  },
  {
@@ -1308,8 +1248,8 @@ const restrictionsData = [{
   "cartografia_base": "Mapa de zonas de recarga hídrica",
   "geoproceso_a_realizar": "Usar el mapa de zonas de recarga hídrica elaborado por el Ministerio de Medio Ambiente para delimitar áreas de uso restringido. Filtrar los polígonos de recarga e intersectarlos con las concesiones de agua para verificar cumplimiento de la normativa y restringir actividades contaminantes.",
   "tipo_geoproceso": "Extraer / Filtrar",
-  "entregable": null,
-  "link_entregable": null,
+  "entregable": "SV_RestriccionRecarga",
+  "link_entregable": "https://drive.google.com/drive/folders/1ppHR1vhRRv1JabwP8D50EXzBsCd7F6UT?usp=drive_link",
   "nombre_del_dataset": "servicio_suelos_pais (REST)",
   "fecha_dataset": "?",
   "decada_dataset": "sin especificar",
@@ -1325,7 +1265,7 @@ const restrictionsData = [{
   "observaciones_dataset": null,
   "id_layer": "layer026",
   "url_geojson": [
-   "https://raw.githubusercontent.com/Sud-Austral/MAPA_RESTRICCIONES_CENTRO_AMERICA/refs/heads/main/mapaData/MEX_AreasConserVoluntaria.json"
+   "https://raw.githubusercontent.com/Sud-Austral/MAPA_RESTRICCIONES_CENTRO_AMERICA/refs/heads/main/mapaData/SV_RestriccionRecarga.json"
   ]
  },
  {
@@ -1355,8 +1295,8 @@ const restrictionsData = [{
   "cartografia_base": "VIGEA – Visor MARN",
   "geoproceso_a_realizar": "Compilar las resoluciones de la ASA que declaran zonas de protección acuífera. Georreferenciar los polígonos o puntos de cada declaración y unirlos en una capa única. Asociar a cada zona su periodo de vigencia y los usos permitidos.",
   "tipo_geoproceso": "Verificar / Validar",
-  "entregable": null,
-  "link_entregable": null,
+  "entregable": "SV_RestriccionAcuifera",
+  "link_entregable": "https://drive.google.com/drive/folders/1qsEpW0YJzstVVzecfPK-jfDWMOyguyUo?usp=drive_link",
   "nombre_del_dataset": "servicio_suelos_pais (REST)",
   "fecha_dataset": "?",
   "decada_dataset": "sin especificar",
@@ -1372,7 +1312,7 @@ const restrictionsData = [{
   "observaciones_dataset": null,
   "id_layer": "layer027",
   "url_geojson": [
-   "https://raw.githubusercontent.com/Sud-Austral/MAPA_RESTRICCIONES_CENTRO_AMERICA/refs/heads/main/mapaData/MEX_AreasConserVoluntaria.json"
+   "https://raw.githubusercontent.com/Sud-Austral/MAPA_RESTRICCIONES_CENTRO_AMERICA/refs/heads/main/mapaData/SV_RestriccionAcuifera.json"
   ]
  },
  {
@@ -1402,8 +1342,8 @@ const restrictionsData = [{
   "cartografia_base": "Manantiales (OPAMSS)",
   "geoproceso_a_realizar": "A partir de la base de datos de manantiales y nacimientos de la Oficina de Planificación del Área Metropolitana de San Salvador (OPAMSS), generar buffers de 25 m alrededor de cada punto para delimitar las zonas de protección. Recortar la franja por límites municipales y superponerla con el catastro para verificar usos compatibles.",
   "tipo_geoproceso": "Buffer",
-  "entregable": null,
-  "link_entregable": null,
+  "entregable": "SV_Restriccion25m",
+  "link_entregable": "https://drive.google.com/drive/folders/1HOZgB5-bns-yc5yauzYzb-AIRsQTeHao?usp=drive_link",
   "nombre_del_dataset": "Aguas Subterráneas – capa de manantiales",
   "fecha_dataset": "?",
   "decada_dataset": "sin especificar",
@@ -1419,7 +1359,7 @@ const restrictionsData = [{
   "observaciones_dataset": "Cobertura parcial (solo AMSS)",
   "id_layer": "layer028",
   "url_geojson": [
-   "https://raw.githubusercontent.com/Sud-Austral/MAPA_RESTRICCIONES_CENTRO_AMERICA/refs/heads/main/mapaData/MEX_AreasConserVoluntaria.json"
+   "https://raw.githubusercontent.com/Sud-Austral/MAPA_RESTRICCIONES_CENTRO_AMERICA/refs/heads/main/mapaData/SV_Restriccion25m.json"
   ]
  },
  {
@@ -1449,8 +1389,8 @@ const restrictionsData = [{
   "cartografia_base": "Zonas con potencial de deslizamiento con pendientes fuertes",
   "geoproceso_a_realizar": "Analizar el mapa de susceptibilidad a deslizamientos generado a partir de pendientes, litología y cobertura del suelo. Extraer las zonas con alto potencial de deslizamiento y clasificarlas como áreas de uso restringido. Integrar esta capa en los estudios de factibilidad para proyectos de infraestructura.",
   "tipo_geoproceso": "Extraer / Filtrar",
-  "entregable": null,
-  "link_entregable": null,
+  "entregable": "SV_PendientesDesliza",
+  "link_entregable": "https://drive.google.com/drive/folders/1wrFSjQdsxOouIC8jeOM8sV2Jz7GAin9H?usp=drive_link",
   "nombre_del_dataset": "Suceptibilidad a Deslizamiento",
   "fecha_dataset": "?",
   "decada_dataset": "sin especificar",
@@ -1466,7 +1406,7 @@ const restrictionsData = [{
   "observaciones_dataset": null,
   "id_layer": "layer029",
   "url_geojson": [
-   "https://raw.githubusercontent.com/Sud-Austral/MAPA_RESTRICCIONES_CENTRO_AMERICA/refs/heads/main/mapaData/MEX_AreasConserVoluntaria.json"
+   "https://raw.githubusercontent.com/Sud-Austral/MAPA_RESTRICCIONES_CENTRO_AMERICA/refs/heads/main/mapaData/SV_PendientesDesliza.json"
   ]
  },
  {
@@ -1496,8 +1436,8 @@ const restrictionsData = [{
   "cartografia_base": "Hidrografía – RMGIR",
   "geoproceso_a_realizar": "Utilizar la red hidrográfica del Registro Geográfico y catastral (RMGIR) para medir la profundidad del cauce. Aplicar un algoritmo que calcule una franja de protección igual al doble de la profundidad máxima (2×profundidad) y genere un buffer variable a lo largo del cauce. La franja resultante se intersecta con coberturas de uso de suelo para identificar restricciones.",
   "tipo_geoproceso": "Calcular",
-  "entregable": null,
-  "link_entregable": null,
+  "entregable": "SV_Zonas_hidricas",
+  "link_entregable": "https://drive.google.com/drive/folders/1O70yvHPp1sbjZ5kt9cHvpbuvrV0Qf0Qt?usp=drive_link",
   "nombre_del_dataset": "Hidrografía – RMGIR",
   "fecha_dataset": "?",
   "decada_dataset": "sin especificar",
@@ -1513,7 +1453,7 @@ const restrictionsData = [{
   "observaciones_dataset": "No incluye nacimientos puntuales",
   "id_layer": "layer030",
   "url_geojson": [
-   "https://raw.githubusercontent.com/Sud-Austral/MAPA_RESTRICCIONES_CENTRO_AMERICA/refs/heads/main/mapaData/MEX_AreasConserVoluntaria.json"
+   "https://raw.githubusercontent.com/Sud-Austral/MAPA_RESTRICCIONES_CENTRO_AMERICA/refs/heads/main/mapaData/SV_Zonas_hidricas.json"
   ]
  },
  {
@@ -1543,8 +1483,8 @@ const restrictionsData = [{
   "cartografia_base": "Cuencas hidrográficas – RMGIR",
   "geoproceso_a_realizar": "A partir del inventario de fuentes superficiales administrado por la Autoridad Salvadoreña del Agua (ASA), delinear las áreas de protección establecidas en sus resoluciones. Integrar las zonas declaradas con el catastro y la red hidrográfica para asegurar el cumplimiento de restricciones.",
   "tipo_geoproceso": "Extraer / Filtrar",
-  "entregable": null,
-  "link_entregable": null,
+  "entregable": "SV_Prot_Superficial",
+  "link_entregable": "https://drive.google.com/drive/folders/1OhEV5hW1DNf4TX7Y3lbW-jetW3ITNSIW?usp=drive_link",
   "nombre_del_dataset": "Hidrografía – RMGIR",
   "fecha_dataset": "?",
   "decada_dataset": "sin especificar",
@@ -1560,7 +1500,7 @@ const restrictionsData = [{
   "observaciones_dataset": "No incluye nacimientos puntuales",
   "id_layer": "layer031",
   "url_geojson": [
-   "https://raw.githubusercontent.com/Sud-Austral/MAPA_RESTRICCIONES_CENTRO_AMERICA/refs/heads/main/mapaData/MEX_AreasConserVoluntaria.json"
+   "https://raw.githubusercontent.com/Sud-Austral/MAPA_RESTRICCIONES_CENTRO_AMERICA/refs/heads/main/mapaData/SV_Prot_Superficial.json"
   ]
  },
  {
@@ -1590,8 +1530,8 @@ const restrictionsData = [{
   "cartografia_base": "Lagos y lagunas – RMGIR",
   "geoproceso_a_realizar": "A partir del inventario de lagos, lagunas y embalses del RMGIR, generar un buffer de 50 m medidos desde la línea de máxima crecida. Superponer la franja con la cobertura de uso del suelo y el catastro para controlar nuevas construcciones o cultivos en la zona de protección.",
   "tipo_geoproceso": "Buffer",
-  "entregable": null,
-  "link_entregable": null,
+  "entregable": "SV_Zonas_hidricas50m",
+  "link_entregable": "https://drive.google.com/drive/folders/18rWFI7E-YW2foBT-5BfT-olzkKgUSVJq?usp=drive_link",
   "nombre_del_dataset": "Lagos – RMGIR",
   "fecha_dataset": "?",
   "decada_dataset": "sin especificar",
@@ -1607,7 +1547,7 @@ const restrictionsData = [{
   "observaciones_dataset": "No especifica línea de máxima crecida",
   "id_layer": "layer032",
   "url_geojson": [
-   "https://raw.githubusercontent.com/Sud-Austral/MAPA_RESTRICCIONES_CENTRO_AMERICA/refs/heads/main/mapaData/MEX_AreasConserVoluntaria.json"
+   "https://raw.githubusercontent.com/Sud-Austral/MAPA_RESTRICCIONES_CENTRO_AMERICA/refs/heads/main/mapaData/SV_Zonas_hidricas50m.json"
   ]
  },
  {
@@ -1638,7 +1578,7 @@ const restrictionsData = [{
   "geoproceso_a_realizar": "Usar la cartografía de áreas protegidas y sus planes de manejo para delinear las zonas de amortiguamiento. Generar un buffer con el ancho definido en cada plan alrededor de los polígonos de áreas protegidas y asociar usos permitidos y prohibidos a esta franja.",
   "tipo_geoproceso": "Extraer / Filtrar",
   "entregable": "SLV_AreasProt",
-  "link_entregable": "https://drive.google.com/drive/folders/1nzuq3ObhwmEAAASUrS2Ff_7a1lTbUeaN?usp=drive_link",
+  "link_entregable": "https://drive.google.com/drive/folders/1athInxKjB03zX-D8iI8AWk6oI0KZT1Lv?usp=drive_link",
   "nombre_del_dataset": "Áreas Naturales Protegidas – RMGIR",
   "fecha_dataset": "2022-06-??",
   "decada_dataset": "2020s",
@@ -1654,7 +1594,7 @@ const restrictionsData = [{
   "observaciones_dataset": "No incluye polígonos de amortiguamiento",
   "id_layer": "layer033",
   "url_geojson": [
-   "https://raw.githubusercontent.com/Sud-Austral/MAPA_RESTRICCIONES_CENTRO_AMERICA/refs/heads/main/mapaData/MEX_AreasConserVoluntaria.json"
+   "https://raw.githubusercontent.com/Sud-Austral/MAPA_RESTRICCIONES_CENTRO_AMERICA/refs/heads/main/mapaData/SLV_AreasProt.json"
   ]
  },
  {
@@ -1684,8 +1624,8 @@ const restrictionsData = [{
   "cartografia_base": "Capa de límites nacionales",
   "geoproceso_a_realizar": "Generar una franja de 15 km a lo largo de las fronteras de Guatemala utilizando límites internacionales. Intersectar la franja con el catastro para identificar propiedades y establecer restricciones a la propiedad extranjera de tierras en esa franja.",
   "tipo_geoproceso": "Buffer",
-  "entregable": null,
-  "link_entregable": null,
+  "entregable": "GTM_Restriccion15km",
+  "link_entregable": "https://drive.google.com/drive/folders/14aci_OMb5AdnUMx0wi_DR2pRPQQB7tMh?usp=drive_link",
   "nombre_del_dataset": "Capa de límites nacionales (IDEG/IGN)",
   "fecha_dataset": 2020,
   "decada_dataset": "2020s",
@@ -1701,7 +1641,7 @@ const restrictionsData = [{
   "observaciones_dataset": "Limites nacionales",
   "id_layer": "layer034",
   "url_geojson": [
-   "https://raw.githubusercontent.com/Sud-Austral/MAPA_RESTRICCIONES_CENTRO_AMERICA/refs/heads/main/mapaData/MEX_AreasConserVoluntaria.json"
+   "https://raw.githubusercontent.com/Sud-Austral/MAPA_RESTRICCIONES_CENTRO_AMERICA/refs/heads/main/mapaData/GTM_Restriccion15km.json"
   ]
  },
  {
@@ -1731,8 +1671,8 @@ const restrictionsData = [{
   "cartografia_base": "Hidrografía y cuerpos de agua (IDEG)",
   "geoproceso_a_realizar": "Delimitar un buffer de 200 m alrededor de la línea de ribera de los lagos utilizando cartografía hidrográfica. Unir los buffers de lagos y recortar por límites departamentales. Utilizar la capa para restringir usos del suelo y conceder servidumbres.",
   "tipo_geoproceso": "Buffer",
-  "entregable": null,
-  "link_entregable": null,
+  "entregable": "GTM_Reserva200m",
+  "link_entregable": "https://drive.google.com/drive/folders/1qH_72pcKO7PVgTW3t61g7qhO0iNW16EZ?usp=drive_link",
   "nombre_del_dataset": "Hidrografía y cuerpos de agua",
   "fecha_dataset": "?",
   "decada_dataset": "sin especificar",
@@ -1748,7 +1688,7 @@ const restrictionsData = [{
   "observaciones_dataset": "Requiere identificar ríos navegables y nacimientos de agua",
   "id_layer": "layer035",
   "url_geojson": [
-   "https://raw.githubusercontent.com/Sud-Austral/MAPA_RESTRICCIONES_CENTRO_AMERICA/refs/heads/main/mapaData/MEX_AreasConserVoluntaria.json"
+   "https://raw.githubusercontent.com/Sud-Austral/MAPA_RESTRICCIONES_CENTRO_AMERICA/refs/heads/main/mapaData/GTM_Reserva200m.json"
   ]
  },
  {
@@ -1778,8 +1718,8 @@ const restrictionsData = [{
   "cartografia_base": "Hidrografía y cuerpos de agua (IDEG)",
   "geoproceso_a_realizar": "Generar un buffer de 100 m a cada lado de los ríos navegables identificados por la autoridad de navegación. Unir los tramos bufferizados para conformar la franja protegida y cruzarla con el catastro para determinar predios afectados y restringir construcciones.",
   "tipo_geoproceso": "Buffer",
-  "entregable": null,
-  "link_entregable": null,
+  "entregable": "GTM_Reserva100m",
+  "link_entregable": "https://drive.google.com/drive/folders/1KKKvNoY3LR5o65lhTEmHNfdIr1VUOC0y?usp=drive_link",
   "nombre_del_dataset": "Hidrografía y cuerpos de agua",
   "fecha_dataset": "?",
   "decada_dataset": "sin especificar",
@@ -1795,7 +1735,7 @@ const restrictionsData = [{
   "observaciones_dataset": "Requiere identificar ríos navegables y nacimientos de agua",
   "id_layer": "layer036",
   "url_geojson": [
-   "https://raw.githubusercontent.com/Sud-Austral/MAPA_RESTRICCIONES_CENTRO_AMERICA/refs/heads/main/mapaData/MEX_AreasConserVoluntaria.json"
+   "https://raw.githubusercontent.com/Sud-Austral/MAPA_RESTRICCIONES_CENTRO_AMERICA/refs/heads/main/mapaData/GTM_Reserva100m.json"
   ]
  },
  {
@@ -1825,8 +1765,8 @@ const restrictionsData = [{
   "cartografia_base": "Hidrografía y cuerpos de agua (IDEG)",
   "geoproceso_a_realizar": "A partir de la cartografía de nacimientos de agua, generar un buffer de 50 m alrededor de cada fuente para crear la reserva estatal. Superponer esta franja con la cobertura forestal y el catastro para monitorear la vegetación y la ocupación.",
   "tipo_geoproceso": "Buffer",
-  "entregable": null,
-  "link_entregable": null,
+  "entregable": "GTM_Reserva50m",
+  "link_entregable": "https://drive.google.com/drive/folders/18brJ7oyXpkKEoee0reqMEh_gI19N3hgl?usp=drive_link",
   "nombre_del_dataset": "Hidrografía y cuerpos de agua",
   "fecha_dataset": "?",
   "decada_dataset": "sin especificar",
@@ -1842,7 +1782,7 @@ const restrictionsData = [{
   "observaciones_dataset": "Requiere identificar ríos navegables y nacimientos de agua",
   "id_layer": "layer037",
   "url_geojson": [
-   "https://raw.githubusercontent.com/Sud-Austral/MAPA_RESTRICCIONES_CENTRO_AMERICA/refs/heads/main/mapaData/MEX_AreasConserVoluntaria.json"
+   "https://raw.githubusercontent.com/Sud-Austral/MAPA_RESTRICCIONES_CENTRO_AMERICA/refs/heads/main/mapaData/GTM_Reserva50m.json"
   ]
  },
  {
@@ -1872,8 +1812,8 @@ const restrictionsData = [{
   "cartografia_base": "Línea de costa oceánica oficial (IDEG)",
   "geoproceso_a_realizar": "Utilizar la línea de costa oficial para Guatemala y generar un buffer de 3 km tierra adentro. Recortar la banda con límites administrativos y superponerla con el catastro para identificar propiedades dentro de la reserva estatal. Clasificar las actividades permitidas o prohibidas según la normativa costera.",
   "tipo_geoproceso": "Buffer",
-  "entregable": null,
-  "link_entregable": null,
+  "entregable": "GTM_Reserva3000m",
+  "link_entregable": "https://drive.google.com/drive/folders/1yKcHc9K9Py0CvWedrjXcrJ6xHhKgTgmD?usp=drive_link",
   "nombre_del_dataset": "Línea de costa oceánica oficial",
   "fecha_dataset": "?",
   "decada_dataset": "sin especificar",
@@ -1889,7 +1829,7 @@ const restrictionsData = [{
   "observaciones_dataset": "No incluye directamente el buffer → debe generarse en SIG",
   "id_layer": "layer038",
   "url_geojson": [
-   "https://raw.githubusercontent.com/Sud-Austral/MAPA_RESTRICCIONES_CENTRO_AMERICA/refs/heads/main/mapaData/MEX_AreasConserVoluntaria.json"
+   "https://raw.githubusercontent.com/Sud-Austral/MAPA_RESTRICCIONES_CENTRO_AMERICA/refs/heads/main/mapaData/GTM_Reserva3000m.json"
   ]
  },
  {
@@ -1919,8 +1859,8 @@ const restrictionsData = [{
   "cartografia_base": "Volcanes (RMGIR) + DEM",
   "geoproceso_a_realizar": "Obtener modelos digitales de elevación para los volcanes activos e identificar el cráter. Calcular la pendiente en el entorno y delimitar el área desde el cráter hasta la curva de nivel donde la pendiente disminuye al 30 %. Esta superficie representa la zona de manejo especial de volcanes. Recortar la capa por límites de propiedad.",
   "tipo_geoproceso": "Cruzar",
-  "entregable": null,
-  "link_entregable": null,
+  "entregable": "GTM_Volcanes_pend",
+  "link_entregable": "https://drive.google.com/drive/folders/1OyyWf-HwlLqViC870qRAuaJeHi149IJe?usp=drive_link",
   "nombre_del_dataset": "Volcanes de Guatemala",
   "fecha_dataset": "?",
   "decada_dataset": "sin especificar",
@@ -1936,7 +1876,7 @@ const restrictionsData = [{
   "observaciones_dataset": "Se debe intersectar con un DEM para delimitar zonas ≤30% pendiente",
   "id_layer": "layer039",
   "url_geojson": [
-   "https://raw.githubusercontent.com/Sud-Austral/MAPA_RESTRICCIONES_CENTRO_AMERICA/refs/heads/main/mapaData/MEX_AreasConserVoluntaria.json"
+   "https://raw.githubusercontent.com/Sud-Austral/MAPA_RESTRICCIONES_CENTRO_AMERICA/refs/heads/main/mapaData/GTM_Volcanes_pend.json"
   ]
  },
  {
@@ -1966,8 +1906,8 @@ const restrictionsData = [{
   "cartografia_base": "Manglares de ALC (CEPAL/UNEP-WCMC)",
   "geoproceso_a_realizar": "Usar la cartografía de ecosistemas costeros para delinear los manglares y zonas de marea. Delimitar una franja de protección de 50 m alrededor del manglar y cruzarla con el catastro para impedir el cambio de uso y la tala en estas áreas.",
   "tipo_geoproceso": "Extraer / Filtrar",
-  "entregable": null,
-  "link_entregable": null,
+  "entregable": "GTM_Manglar",
+  "link_entregable": "https://drive.google.com/drive/folders/1eGvw1etUJkzLcJIGzj6AKwfXn-2dJn3o?usp=drive_link",
   "nombre_del_dataset": "Manglares de América Latina y el Caribe",
   "fecha_dataset": 2021,
   "decada_dataset": "2020s",
@@ -1983,7 +1923,7 @@ const restrictionsData = [{
   "observaciones_dataset": "Dataset oficial CEPAL; usar como respaldo si no hay capa nacional de INAB/CONAP",
   "id_layer": "layer040",
   "url_geojson": [
-   "https://raw.githubusercontent.com/Sud-Austral/MAPA_RESTRICCIONES_CENTRO_AMERICA/refs/heads/main/mapaData/MEX_AreasConserVoluntaria.json"
+   "https://raw.githubusercontent.com/Sud-Austral/MAPA_RESTRICCIONES_CENTRO_AMERICA/refs/heads/main/mapaData/GTM_Manglar.json"
   ]
  },
  {
@@ -2013,8 +1953,8 @@ const restrictionsData = [{
   "cartografia_base": "Cobertura Forestal y Dinámica (INAB/SIFGUA)",
   "geoproceso_a_realizar": "Identificar las tierras catalogadas como reservas nacionales con vocación forestal. Unir esta capa con la cartografía de proyectos forestales y de áreas protegidas para asegurar que sólo se realicen proyectos forestales o de conservación. Excluir usos agrícolas y urbanísticos.",
   "tipo_geoproceso": "Cruzar",
-  "entregable": null,
-  "link_entregable": null,
+  "entregable": "GTM_VocacionForestal",
+  "link_entregable": "https://drive.google.com/drive/folders/1v4eKQvaLYoGO_9Uq3vI1PrHe618_IHSb?usp=drive_link",
   "nombre_del_dataset": "Cobertura Forestal y Dinámica (1991–2020)",
   "fecha_dataset": 2020,
   "decada_dataset": "2020s",
@@ -2030,7 +1970,7 @@ const restrictionsData = [{
   "observaciones_dataset": "Tiene múltiples cortes temporales (1991–2020); útil para trazabilidad EUDR",
   "id_layer": "layer041",
   "url_geojson": [
-   "https://raw.githubusercontent.com/Sud-Austral/MAPA_RESTRICCIONES_CENTRO_AMERICA/refs/heads/main/mapaData/MEX_AreasConserVoluntaria.json"
+   "https://raw.githubusercontent.com/Sud-Austral/MAPA_RESTRICCIONES_CENTRO_AMERICA/refs/heads/main/mapaData/GTM_VocacionForestal.json"
   ]
  },
  {
@@ -2060,8 +2000,8 @@ const restrictionsData = [{
   "cartografia_base": "Cobertura Forestal y Dinámica (INAB/SIFGUA) + GUA-DAT-02 (Hidrografía/IDEG)",
   "geoproceso_a_realizar": "Delimitar las cuencas altas y zonas de recarga hídrica mediante análisis hidrológico a partir de modelos digitales de elevación y cartografía geológica. Intersectar estas áreas con la cobertura forestal para localizar bosques cuya eliminación está prohibida.",
   "tipo_geoproceso": "Cruzar",
-  "entregable": null,
-  "link_entregable": null,
+  "entregable": "GTM_CuencasRecarga",
+  "link_entregable": "https://drive.google.com/drive/folders/1368VzxIdWrJ2D-qiwO0hfBJXwur6Rznp?usp=drive_link",
   "nombre_del_dataset": "Cobertura Forestal y Dinámica (1991–2020)",
   "fecha_dataset": 2020,
   "decada_dataset": "2020s",
@@ -2077,7 +2017,7 @@ const restrictionsData = [{
   "observaciones_dataset": "Tiene múltiples cortes temporales (1991–2020); útil para trazabilidad EUDR",
   "id_layer": "layer042",
   "url_geojson": [
-   "https://raw.githubusercontent.com/Sud-Austral/MAPA_RESTRICCIONES_CENTRO_AMERICA/refs/heads/main/mapaData/MEX_AreasConserVoluntaria.json"
+   "https://raw.githubusercontent.com/Sud-Austral/MAPA_RESTRICCIONES_CENTRO_AMERICA/refs/heads/main/mapaData/GTM_CuencasRecarga.json"
   ]
  },
  {
@@ -2108,7 +2048,7 @@ const restrictionsData = [{
   "geoproceso_a_realizar": "Integrar los polígonos del Sistema Guatemalteco de Áreas Protegidas (SIGAP) y generar alrededor de cada área protegida su zona de amortiguamiento según el plan de manejo (distancias variables). Unir la capa resultante y asociarle información de categoría, restricciones y permisos.",
   "tipo_geoproceso": "Buffer",
   "entregable": "GTM_AreasProt",
-  "link_entregable": "https://drive.google.com/drive/folders/10NBY44R2T4JKLgFkvYmtQcTYE3Hnk4nr?usp=drive_link",
+  "link_entregable": "https://drive.google.com/drive/folders/1OORWp_hQZSbGwD6OIKs_dgIC-zgb-v8h?usp=drive_link",
   "nombre_del_dataset": "SIGAP — Áreas Protegidas",
   "fecha_dataset": "Actualización continua",
   "decada_dataset": "sin especificar",
@@ -2124,7 +2064,7 @@ const restrictionsData = [{
   "observaciones_dataset": "Capa oficial, sustituye necesidad de WDPA",
   "id_layer": "layer043",
   "url_geojson": [
-   "https://raw.githubusercontent.com/Sud-Austral/MAPA_RESTRICCIONES_CENTRO_AMERICA/refs/heads/main/mapaData/MEX_AreasConserVoluntaria.json"
+   "https://raw.githubusercontent.com/Sud-Austral/MAPA_RESTRICCIONES_CENTRO_AMERICA/refs/heads/main/mapaData/GTM_AreasProt.json"
   ]
  },
  {
@@ -2155,7 +2095,7 @@ const restrictionsData = [{
   "geoproceso_a_realizar": "Integrar los polígonos de Áreas Naturales Protegidas federales y estatales disponibles en la CONANP. Asociar a cada polígono su categoría de manejo y plan de manejo. Mediante operaciones de unión y disolución, crear una capa única y generar campos que indiquen usos permitidos. Intersectar con el catastro para identificar predios dentro de ANP.",
   "tipo_geoproceso": "Extraer / Filtrar",
   "entregable": "MEX_AreasProt",
-  "link_entregable": "https://drive.google.com/drive/folders/1y9qcyb1ELRY764X2rXpgHiIFg8TjT5vM?usp=drive_link",
+  "link_entregable": "https://drive.google.com/drive/folders/1zA0M9avH2A62Bd-yYHGx_CDh62iVVphA?usp=drive_link",
   "nombre_del_dataset": "Áreas Naturales Protegidas federales (ANP)",
   "fecha_dataset": 2025,
   "decada_dataset": "2020s",
@@ -2171,7 +2111,7 @@ const restrictionsData = [{
   "observaciones_dataset": "Shapefiles oficiales con metadatos",
   "id_layer": "layer044",
   "url_geojson": [
-   "https://raw.githubusercontent.com/Sud-Austral/MAPA_RESTRICCIONES_CENTRO_AMERICA/refs/heads/main/mapaData/MEX_AreasConserVoluntaria.json"
+   "https://raw.githubusercontent.com/Sud-Austral/MAPA_RESTRICCIONES_CENTRO_AMERICA/refs/heads/main/mapaData/MEX_AreasProt.json"
   ]
  },
  {
@@ -2202,7 +2142,7 @@ const restrictionsData = [{
   "geoproceso_a_realizar": "A partir del inventario de vegetación original de INEGI, identificar polígonos de vegetación forestal primaria. Calcular la superficie por tipo de vegetación y superponerla con solicitudes de plantaciones forestales. En proyectos que pretendan cambiar el uso del suelo en vegetación primaria, verificar si cuentan con autorización excepcional y registrar resoluciones.",
   "tipo_geoproceso": "Extraer / Filtrar",
   "entregable": "MEX_Plantaciones_forestales",
-  "link_entregable": "https://drive.google.com/drive/folders/1ZVIbzhxyP9m_h8GtWKRrthfZ_XMiXO_R?usp=drive_link",
+  "link_entregable": "https://drive.google.com/drive/folders/1Pu-fZv1WfYvsu5ENUEXwVgMPj3wyDKK_?usp=drive_link",
   "nombre_del_dataset": "Plantaciones Forestales Establecidas (2010-2021)",
   "fecha_dataset": 2021,
   "decada_dataset": "2020s",
@@ -2218,7 +2158,7 @@ const restrictionsData = [{
   "observaciones_dataset": "Corresponden al las plantaciones forestales establecidas en el periodo 2010-2021",
   "id_layer": "layer045",
   "url_geojson": [
-   "https://raw.githubusercontent.com/Sud-Austral/MAPA_RESTRICCIONES_CENTRO_AMERICA/refs/heads/main/mapaData/MEX_AreasConserVoluntaria.json"
+   "https://raw.githubusercontent.com/Sud-Austral/MAPA_RESTRICCIONES_CENTRO_AMERICA/refs/heads/main/mapaData/MEX_Plantaciones_forestales.json"
   ]
  },
  {
@@ -2249,7 +2189,7 @@ const restrictionsData = [{
   "geoproceso_a_realizar": "Utilizar la zonificación forestal de la LGDFS para clasificar las tierras forestales en categoría I (conservación/aprovechamiento restringido). Generar una capa que delimite estas zonas a partir de bases oficiales y superponerla con solicitudes de cambio de uso. Registrar restricciones y áreas donde el aprovechamiento está prohibido o condicionado.",
   "tipo_geoproceso": "Extraer / Filtrar",
   "entregable": "MEX_Restricciones_zonificacion_forestal",
-  "link_entregable": "https://drive.google.com/drive/folders/1vFdMw3djfP5DbhlmXc1p3A4UcBdU7l82?usp=drive_link",
+  "link_entregable": "https://drive.google.com/drive/folders/1iIGzh3EBgH6j4-nA_on4P36hZaEv5lPp?usp=drive_link",
   "nombre_del_dataset": "Zonificación Forestal  – Categoría I (Conservación / Aprovechamiento restringido o prohibido)",
   "fecha_dataset": 2011,
   "decada_dataset": "2010s",
@@ -2265,7 +2205,7 @@ const restrictionsData = [{
   "observaciones_dataset": "En el caso de la categoría de áreas naturales protegidas se recomienda reemplazar por el shapefile más actualizado disponible",
   "id_layer": "layer046",
   "url_geojson": [
-   "https://raw.githubusercontent.com/Sud-Austral/MAPA_RESTRICCIONES_CENTRO_AMERICA/refs/heads/main/mapaData/MEX_AreasConserVoluntaria.json"
+   "https://raw.githubusercontent.com/Sud-Austral/MAPA_RESTRICCIONES_CENTRO_AMERICA/refs/heads/main/mapaData/MEX_Restricciones_zonificacion_forestal.json"
   ]
  },
  {
@@ -2296,7 +2236,7 @@ const restrictionsData = [{
   "geoproceso_a_realizar": "Utilizar la capa de hidrografía de INEGI (escala 1:50 000) para clasificar ríos por su orden (Strahler) y determinar un ancho proxy de cauce. Generar buffers variables (10 m para márgenes en ríos de orden menor, 5 m para vasos menores) alrededor de ríos y vasos y unirlos en un polígono continuo. Ajustar la franja con datos de resolución más alta en zonas urbanas y combinarla con la cobertura de ZOFEMAT para evitar solapamientos.",
   "tipo_geoproceso": "Buffer",
   "entregable": "MEX_Buffer_hidro",
-  "link_entregable": "https://drive.google.com/drive/folders/1rhW-uU-xMs8WO81QquePwpjtn3PKA0Ln?usp=drive_link",
+  "link_entregable": "https://drive.google.com/drive/folders/1sIaXpnmNp63A9T0v9iIOeM1v3vCy9vRC?usp=drive_link",
   "nombre_del_dataset": "Red hidrográfica y cuencas",
   "fecha_dataset": 2020,
   "decada_dataset": "2020s",
@@ -2312,7 +2252,20 @@ const restrictionsData = [{
   "observaciones_dataset": "Las corrientes de agua no tienen el parámetro de ancho del río el cual es requerido para aplicar la norma",
   "id_layer": "layer047",
   "url_geojson": [
-   "https://raw.githubusercontent.com/Sud-Austral/MAPA_RESTRICCIONES_CENTRO_AMERICA/refs/heads/main/mapaData/MEX_AreasConserVoluntaria.json"
+   "https://raw.githubusercontent.com/Sud-Austral/MAPA_RESTRICCIONES_CENTRO_AMERICA/refs/heads/main/mapaData/parte_1_de_14.json",
+   "https://raw.githubusercontent.com/Sud-Austral/MAPA_RESTRICCIONES_CENTRO_AMERICA/refs/heads/main/mapaData/parte_2_de_14.json",
+   "https://raw.githubusercontent.com/Sud-Austral/MAPA_RESTRICCIONES_CENTRO_AMERICA/refs/heads/main/mapaData/parte_3_de_14.json",
+   "https://raw.githubusercontent.com/Sud-Austral/MAPA_RESTRICCIONES_CENTRO_AMERICA/refs/heads/main/mapaData/parte_4_de_14.json",
+   "https://raw.githubusercontent.com/Sud-Austral/MAPA_RESTRICCIONES_CENTRO_AMERICA/refs/heads/main/mapaData/parte_5_de_14.json",
+   "https://raw.githubusercontent.com/Sud-Austral/MAPA_RESTRICCIONES_CENTRO_AMERICA/refs/heads/main/mapaData/parte_6_de_14.json",
+   "https://raw.githubusercontent.com/Sud-Austral/MAPA_RESTRICCIONES_CENTRO_AMERICA/refs/heads/main/mapaData/parte_7_de_14.json",
+   "https://raw.githubusercontent.com/Sud-Austral/MAPA_RESTRICCIONES_CENTRO_AMERICA/refs/heads/main/mapaData/parte_8_de_14.json",
+   "https://raw.githubusercontent.com/Sud-Austral/MAPA_RESTRICCIONES_CENTRO_AMERICA/refs/heads/main/mapaData/parte_9_de_14.json",
+   "https://raw.githubusercontent.com/Sud-Austral/MAPA_RESTRICCIONES_CENTRO_AMERICA/refs/heads/main/mapaData/parte_10_de_14.json",
+   "https://raw.githubusercontent.com/Sud-Austral/MAPA_RESTRICCIONES_CENTRO_AMERICA/refs/heads/main/mapaData/parte_11_de_14.json",
+   "https://raw.githubusercontent.com/Sud-Austral/MAPA_RESTRICCIONES_CENTRO_AMERICA/refs/heads/main/mapaData/parte_12_de_14.json",
+   "https://raw.githubusercontent.com/Sud-Austral/MAPA_RESTRICCIONES_CENTRO_AMERICA/refs/heads/main/mapaData/parte_13_de_14.json",
+   "https://raw.githubusercontent.com/Sud-Austral/MAPA_RESTRICCIONES_CENTRO_AMERICA/refs/heads/main/mapaData/parte_14_de_14.json",
   ]
  },
  {
@@ -2343,7 +2296,7 @@ const restrictionsData = [{
   "geoproceso_a_realizar": "Delimitar la Zona Federal Marítimo‑Terrestre (ZOFEMAT) generando una franja de 20 m tierra adentro desde la línea de pleamar a partir de la cartografía de costas. Unir la franja con polígonos de bienes nacionales y aplicar criterios para excluir esteros y manglares. Integrar concesiones otorgadas por la SEMARNAT y verificar ocupaciones ilícitas.",
   "tipo_geoproceso": "Buffer",
   "entregable": "MEX_Buffer_costa",
-  "link_entregable": "https://drive.google.com/drive/folders/1rhW-uU-xMs8WO81QquePwpjtn3PKA0Ln?usp=drive_link",
+  "link_entregable": "https://drive.google.com/drive/folders/1VryBkVQ1UnOwbavRBMLO5qfhO3NIRHJg?usp=drive_link",
   "nombre_del_dataset": "Zonas costera",
   "fecha_dataset": 2020,
   "decada_dataset": "2020s",
@@ -2359,7 +2312,7 @@ const restrictionsData = [{
   "observaciones_dataset": "No hay una capa específica de zonas costera pero se puede extraer de la capa de cuerpos de agua del INGEI.",
   "id_layer": "layer048",
   "url_geojson": [
-   "https://raw.githubusercontent.com/Sud-Austral/MAPA_RESTRICCIONES_CENTRO_AMERICA/refs/heads/main/mapaData/MEX_AreasConserVoluntaria.json"
+   "https://raw.githubusercontent.com/Sud-Austral/MAPA_RESTRICCIONES_CENTRO_AMERICA/refs/heads/main/mapaData/MEX_Buffer_costa.json"
   ]
  },
  {
@@ -2389,8 +2342,8 @@ const restrictionsData = [{
   "cartografia_base": " Zonas reglamentadas, zonas de veda o decladas como reserva de aguas (CONAGUA)",
   "geoproceso_a_realizar": "Consultar los decretos de reservas de agua superficiales y las vedas o zonas reglamentadas de acuíferos publicados en el Diario Oficial. Georreferenciar sus límites a partir de coordenadas oficiales y generar capas vectoriales. Superponer estas capas con concesiones de agua y catastro para identificar predios en régimen de restricción y clasificar si se trata de veda total o parcial.",
   "tipo_geoproceso": "Verificar / Validar",
-  "entregable": null,
-  "link_entregable": null,
+  "entregable": "MX_RestriccionGeneral",
+  "link_entregable": "https://drive.google.com/drive/folders/1R9_9coTl6HP2OzqFdva2fTsv-WYVLnT2?usp=drive_link",
   "nombre_del_dataset": " Zonas reglamentadas/vedas (acuíferos) y reservas de agua (superficial)",
   "fecha_dataset": "N/D",
   "decada_dataset": "N/D",
@@ -2406,7 +2359,7 @@ const restrictionsData = [{
   "observaciones_dataset": "No es capa espacial",
   "id_layer": "layer049",
   "url_geojson": [
-   "https://raw.githubusercontent.com/Sud-Austral/MAPA_RESTRICCIONES_CENTRO_AMERICA/refs/heads/main/mapaData/MEX_AreasConserVoluntaria.json"
+   "https://raw.githubusercontent.com/Sud-Austral/MAPA_RESTRICCIONES_CENTRO_AMERICA/refs/heads/main/mapaData/MX_RestriccionGeneral.json"
   ]
  },
  {
@@ -2436,8 +2389,8 @@ const restrictionsData = [{
   "cartografia_base": "Manifestaciones de Impacto Ambiental (MIA) ",
   "geoproceso_a_realizar": "Generar un inventario de proyectos y obras que requieran autorización de impacto ambiental (LGEEPA Art. 28). Georreferenciar los proyectos y cruzarlos con capas de ANP, humedales, manglares y suelos forestales para determinar si deben presentar manifestación de impacto ambiental. Registrar la vigencia y cumplimiento de las medidas de mitigación.",
   "tipo_geoproceso": "Verificar / Validar",
-  "entregable": null,
-  "link_entregable": null,
+  "entregable": "MX_EIA",
+  "link_entregable": "https://drive.google.com/drive/folders/1FL8ilSG1IopMmKZreL8NPUWcrsCY0Ozg?usp=drive_link",
   "nombre_del_dataset": "Manifestación de Impacto Ambiental (MIA) ",
   "fecha_dataset": "N/D",
   "decada_dataset": "N/D",
@@ -2453,7 +2406,7 @@ const restrictionsData = [{
   "observaciones_dataset": "No es capa espacial",
   "id_layer": "layer050",
   "url_geojson": [
-   "https://raw.githubusercontent.com/Sud-Austral/MAPA_RESTRICCIONES_CENTRO_AMERICA/refs/heads/main/mapaData/MEX_AreasConserVoluntaria.json"
+   "https://raw.githubusercontent.com/Sud-Austral/MAPA_RESTRICCIONES_CENTRO_AMERICA/refs/heads/main/mapaData/MX_EIA.json"
   ]
  },
  {
@@ -2483,8 +2436,8 @@ const restrictionsData = [{
   "cartografia_base": "Registro Agrario Nacional (datos abiertos)",
   "geoproceso_a_realizar": "Integrar la cartografía de núcleos agrarios (ejidos) con los actos inscritos en el Registro Agrario Nacional (RAN). Mediante un join espacial y de atributos, identificar predios donde se ha otorgado consentimiento para transmisión de derechos o parcelación. Señalar actos ejidales que no consten en actas inscritas y prevenir nulidades.",
   "tipo_geoproceso": "Verificar / Validar",
-  "entregable": null,
-  "link_entregable": null,
+  "entregable": "MX_ZonasHidricas",
+  "link_entregable": "https://drive.google.com/drive/folders/1niMLaaUhHaUau_16MbB9BgpXvzFJeCdC?usp=drive_link",
   "nombre_del_dataset": "Registro Agrario Nacional (datos abiertos)",
   "fecha_dataset": "N/D",
   "decada_dataset": "N/D",
@@ -2500,7 +2453,7 @@ const restrictionsData = [{
   "observaciones_dataset": "Puede requerir georreferenciación adicional",
   "id_layer": "layer051",
   "url_geojson": [
-   "https://raw.githubusercontent.com/Sud-Austral/MAPA_RESTRICCIONES_CENTRO_AMERICA/refs/heads/main/mapaData/MEX_AreasConserVoluntaria.json"
+   "https://raw.githubusercontent.com/Sud-Austral/MAPA_RESTRICCIONES_CENTRO_AMERICA/refs/heads/main/mapaData/MX_ZonasHidricas.json"
   ]
  },
  {
@@ -2531,7 +2484,7 @@ const restrictionsData = [{
   "geoproceso_a_realizar": "Integrar los polígonos de áreas protegidas declaradas por el Congreso con las microcuencas abastecedoras declaradas por el ICF. Crear capas para zonas núcleo y zonas de amortiguamiento según los planes de manejo. Intersectar con el catastro para identificar predios y asignar restricciones de uso (prohibición total en la zona núcleo y usos condicionados en la zona de amortiguamiento).",
   "tipo_geoproceso": "Cruzar",
   "entregable": "HND_AreasProt",
-  "link_entregable": "https://drive.google.com/drive/folders/1ME6g7MiuOFiOGLj2jxsREVoVYzI6XT3z?usp=drive_link",
+  "link_entregable": "https://drive.google.com/drive/folders/1WPGil1aQRqN4IryfosYn54J3h6rIW8gM?usp=drive_link",
   "nombre_del_dataset": "Áreas Protegidas (SINAPH)",
   "fecha_dataset": 45291,
   "decada_dataset": "2020s",
@@ -2547,7 +2500,7 @@ const restrictionsData = [{
   "observaciones_dataset": "Validar zonificación/plan de manejo por AP",
   "id_layer": "layer052",
   "url_geojson": [
-   "https://raw.githubusercontent.com/Sud-Austral/MAPA_RESTRICCIONES_CENTRO_AMERICA/refs/heads/main/mapaData/MEX_AreasConserVoluntaria.json"
+   "https://raw.githubusercontent.com/Sud-Austral/MAPA_RESTRICCIONES_CENTRO_AMERICA/refs/heads/main/mapaData/HND_AreasProt.json"
   ]
  },
  {
@@ -2578,7 +2531,7 @@ const restrictionsData = [{
   "geoproceso_a_realizar": "Delimitar las microcuencas abastecedoras de agua potable a partir de modelos digitales de elevación e información hidrológica. Declarar estas microcuencas como zonas de protección mediante polígonos. Integrar la capa con inventario de uso del suelo y promover la reconversión a uso forestal mediante identificación de áreas agrícolas dentro de la microcuenca.",
   "tipo_geoproceso": "Cruzar",
   "entregable": "HND_Microc_declarada",
-  "link_entregable": "https://drive.google.com/drive/folders/1mezjzUPPmA257aotuhGMbBzKTx6_E3Yx?usp=drive_link",
+  "link_entregable": "https://drive.google.com/drive/folders/1OVjanlZRpKJMae99znj8EPdl6xnrbSpF?usp=drive_link",
   "nombre_del_dataset": "Microcuencas abastecedoras declaradas",
   "fecha_dataset": 44196,
   "decada_dataset": "2020s",
@@ -2594,7 +2547,7 @@ const restrictionsData = [{
   "observaciones_dataset": "Verificar actualización con ICF",
   "id_layer": "layer053",
   "url_geojson": [
-   "https://raw.githubusercontent.com/Sud-Austral/MAPA_RESTRICCIONES_CENTRO_AMERICA/refs/heads/main/mapaData/MEX_AreasConserVoluntaria.json"
+   "https://raw.githubusercontent.com/Sud-Austral/MAPA_RESTRICCIONES_CENTRO_AMERICA/refs/heads/main/mapaData/HND_Microc_declarada.json"
   ]
  },
  {
@@ -2624,8 +2577,8 @@ const restrictionsData = [{
   "cartografia_base": "Delimitaciones hidrográficas + Red hidrográfica",
   "geoproceso_a_realizar": "Crear buffers de 5 m a lo largo de ríos y corrientes y de 25 m en las playas a partir de la cartografía de costas e hidrografía. Integrar capas de zonas núcleo, amortiguamiento, franjas ribereñas, zonas de recarga hídrica y zonas de inundación definidos por la autoridad de aguas. Asociar a cada zona su régimen de uso y condicionar proyectos a estudios técnicos.",
   "tipo_geoproceso": "Buffer",
-  "entregable": null,
-  "link_entregable": null,
+  "entregable": "HN_UsoPublico",
+  "link_entregable": "https://drive.google.com/drive/folders/1z1QfevaLj7SP9IgILcKAnxMBLyefodR6?usp=drive_link",
   "nombre_del_dataset": "Delimitaciones hidrográficas (cuencas/sub/micro)",
   "fecha_dataset": 44742,
   "decada_dataset": "2020s",
@@ -2641,7 +2594,7 @@ const restrictionsData = [{
   "observaciones_dataset": "Requiere combinar con red hídrica/nacientes",
   "id_layer": "layer054",
   "url_geojson": [
-   "https://raw.githubusercontent.com/Sud-Austral/MAPA_RESTRICCIONES_CENTRO_AMERICA/refs/heads/main/mapaData/MEX_AreasConserVoluntaria.json"
+   "https://raw.githubusercontent.com/Sud-Austral/MAPA_RESTRICCIONES_CENTRO_AMERICA/refs/heads/main/mapaData/HN_UsoPublico.json"
   ]
  },
  {
@@ -2671,8 +2624,8 @@ const restrictionsData = [{
   "cartografia_base": "Red hidrográfica + DEM",
   "geoproceso_a_realizar": "Generar buffers de radio 250 m alrededor de nacientes identificadas en la cartografía hidrológica. Sobre la red hidrográfica, calcular pendientes y aplicar buffers de 150 m a cada margen en tramos con pendiente ≥30 % y de 50 m en tramos con pendiente menor. Para costas y lagos, crear un buffer de 100 m desde la línea de pleamar o nivel máximo. Unir todas las franjas para formar la capa de fajas hídricas y recortar por límites administrativos.",
   "tipo_geoproceso": "Calcular",
-  "entregable": null,
-  "link_entregable": null,
+  "entregable": "HN_ProtecciónHidricas",
+  "link_entregable": "https://drive.google.com/drive/folders/1loT_CNOY6oJ2iIbS4HcV__N7SMymiqCP?usp=drive_link",
   "nombre_del_dataset": "Red hidrográfica nacional (ríos/lagos/lagunas)",
   "fecha_dataset": 44742,
   "decada_dataset": "2020s",
@@ -2688,7 +2641,7 @@ const restrictionsData = [{
   "observaciones_dataset": "Confirmar capa de nacientes/puntos",
   "id_layer": "layer055",
   "url_geojson": [
-   "https://raw.githubusercontent.com/Sud-Austral/MAPA_RESTRICCIONES_CENTRO_AMERICA/refs/heads/main/mapaData/MEX_AreasConserVoluntaria.json"
+   "https://raw.githubusercontent.com/Sud-Austral/MAPA_RESTRICCIONES_CENTRO_AMERICA/refs/heads/main/mapaData/HN_ProtecciónHidricas.json"
   ]
  },
  {
@@ -2718,8 +2671,8 @@ const restrictionsData = [{
   "cartografia_base": "Red hidrográfica (nacientes)",
   "geoproceso_a_realizar": "Localizar las nacientes y ojos de agua en la cartografía hidrológica y generar buffers de 30 m de radio para delimitar el dominio público. Recortar estas zonas por límites administrativos y superponerlas con el catastro para señalar predios sujetos a restricción y asegurar su protección.",
   "tipo_geoproceso": "Buffer",
-  "entregable": null,
-  "link_entregable": null,
+  "entregable": "HN_Nacimientos30m",
+  "link_entregable": "https://drive.google.com/drive/folders/1-1Ff1fL2si32u7lFmBhMWpXXKkpc8Da4?usp=drive_link",
   "nombre_del_dataset": "Red hidrográfica nacional (ríos/lagos/lagunas)",
   "fecha_dataset": 44742,
   "decada_dataset": "2020s",
@@ -2735,7 +2688,7 @@ const restrictionsData = [{
   "observaciones_dataset": "Confirmar capa de nacientes/puntos",
   "id_layer": "layer056",
   "url_geojson": [
-   "https://raw.githubusercontent.com/Sud-Austral/MAPA_RESTRICCIONES_CENTRO_AMERICA/refs/heads/main/mapaData/MEX_AreasConserVoluntaria.json"
+   "https://raw.githubusercontent.com/Sud-Austral/MAPA_RESTRICCIONES_CENTRO_AMERICA/refs/heads/main/mapaData/HN_Nacimientos30m.json"
   ]
  },
  {
@@ -2765,8 +2718,8 @@ const restrictionsData = [{
   "cartografia_base": "Cobertura Forestal 2024 + DEM SRTM",
   "geoproceso_a_realizar": "Usar modelos digitales de elevación para calcular pendientes del terreno y superponer esta capa con suelos, humedales y manglares. Seleccionar áreas con pendientes ≥30 %, suelos someros o arenosos, alta pedregosidad, terrenos inundables o manglares para conformar la capa de tierras de vocación forestal. Integrar con el catastro para restringir conversiones agrícolas.",
   "tipo_geoproceso": "Calcular",
-  "entregable": null,
-  "link_entregable": null,
+  "entregable": "HN_VocacionForestal",
+  "link_entregable": "https://drive.google.com/drive/folders/1WBAMF5dm8SlAHNwxsF49-bBNalSwUBEs?usp=drive_link",
   "nombre_del_dataset": "DEM SRTM 30 m (pendiente)",
   "fecha_dataset": 42005,
   "decada_dataset": "2010s",
@@ -2782,7 +2735,7 @@ const restrictionsData = [{
   "observaciones_dataset": "Base para reglas según pendiente",
   "id_layer": "layer057",
   "url_geojson": [
-   "https://raw.githubusercontent.com/Sud-Austral/MAPA_RESTRICCIONES_CENTRO_AMERICA/refs/heads/main/mapaData/MEX_AreasConserVoluntaria.json"
+   "https://raw.githubusercontent.com/Sud-Austral/MAPA_RESTRICCIONES_CENTRO_AMERICA/refs/heads/main/mapaData/HN_VocacionForestal.json"
   ]
  },
  {
@@ -2812,8 +2765,8 @@ const restrictionsData = [{
   "cartografia_base": "Cobertura Forestal 2024 + DEM SRTM + usos de suelo",
   "geoproceso_a_realizar": "Generar un mapa de vocación de suelos combinando datos edafológicos y pendientes. Identificar suelos agrícolas y suelos forestales. Para las laderas con pendientes pronunciadas, superponer la cobertura forestal y promover la reforestación. Integrar la capa con actividades agrícolas y ganaderas para evaluar el cumplimiento de la obligación de mantener la cobertura y la fertilidad del suelo.",
   "tipo_geoproceso": "Calcular",
-  "entregable": null,
-  "link_entregable": null,
+  "entregable": "HN_Pendientes",
+  "link_entregable": "https://drive.google.com/drive/folders/109bVM0rXCCZEPn-u3bEqU_Woe12dFse2?usp=drive_link",
   "nombre_del_dataset": "Usos de suelo / planificación territorial",
   "fecha_dataset": 44926,
   "decada_dataset": "2020s",
@@ -2829,7 +2782,7 @@ const restrictionsData = [{
   "observaciones_dataset": "Nivel de detalle varía por municipio",
   "id_layer": "layer058",
   "url_geojson": [
-   "https://raw.githubusercontent.com/Sud-Austral/MAPA_RESTRICCIONES_CENTRO_AMERICA/refs/heads/main/mapaData/MEX_AreasConserVoluntaria.json"
+   "https://raw.githubusercontent.com/Sud-Austral/MAPA_RESTRICCIONES_CENTRO_AMERICA/refs/heads/main/mapaData/HN_Pendientes.json"
   ]
  },
  {
@@ -2860,7 +2813,7 @@ const restrictionsData = [{
   "geoproceso_a_realizar": "Incorporar la cartografía de territorios indígenas y áreas ancestrales. Para cada proyecto o decisión que afecte estos territorios, realizar un análisis de superposición para identificar comunidades impactadas. Documentar los procedimientos de consulta previa libre e informada, y asegurar que las comunidades participen en la gestión y se beneficien equitativamente de los recursos naturales.",
   "tipo_geoproceso": "Cruzar",
   "entregable": "HND_Titulacion_indigena",
-  "link_entregable": "https://drive.google.com/drive/folders/14a3876rplpNTzSM8SjkrbRy8W5-EZVe2?usp=drive_link",
+  "link_entregable": "https://drive.google.com/drive/folders/1T7r5JHKsJNoLh4nu-WOmNvE4lZmUz4C8?usp=drive_link",
   "nombre_del_dataset": "Territorios indígenas y afrodescendientes (TI_Honduras_utm)",
   "fecha_dataset": 45369,
   "decada_dataset": "2020s",
@@ -2876,7 +2829,7 @@ const restrictionsData = [{
   "observaciones_dataset": "Revisar oficialidad/licencia y concordancia con catastro/IP",
   "id_layer": "layer059",
   "url_geojson": [
-   "https://raw.githubusercontent.com/Sud-Austral/MAPA_RESTRICCIONES_CENTRO_AMERICA/refs/heads/main/mapaData/MEX_AreasConserVoluntaria.json"
+   "https://raw.githubusercontent.com/Sud-Austral/MAPA_RESTRICCIONES_CENTRO_AMERICA/refs/heads/main/mapaData/HND_Titulacion_indigena.json"
   ]
  },
  {
@@ -2906,8 +2859,8 @@ const restrictionsData = [{
   "cartografia_base": "Red hídrica (ríos, lagos, embalses) ",
   "geoproceso_a_realizar": "Usar cartografía de lagos, lagunas, embalses y fuentes de agua para generar una franja de 200 m alrededor de cada cuerpo a partir de la marca máxima de oscilación. Recortar la franja por límites administrativos y superponerla con el catastro y la cobertura forestal para detectar violaciones de tala o uso indebido.",
   "tipo_geoproceso": "Buffer",
-  "entregable": null,
-  "link_entregable": null,
+  "entregable": "NIC_Zonas_hidricas200m",
+  "link_entregable": "https://drive.google.com/drive/folders/1kn67KYw_KvLZQmcJgK6fiv--pMIrFh1w?usp=drive_link",
   "nombre_del_dataset": "Hidrografía – RMGIR Nicaragua_Datos_Básicos_WGS1984",
   "fecha_dataset": "?",
   "decada_dataset": "sin especificar",
@@ -2923,7 +2876,7 @@ const restrictionsData = [{
   "observaciones_dataset": "Contiene varias capas adicionales (DEM, pendientes, uso del suelo).",
   "id_layer": "layer060",
   "url_geojson": [
-   "https://raw.githubusercontent.com/Sud-Austral/MAPA_RESTRICCIONES_CENTRO_AMERICA/refs/heads/main/mapaData/MEX_AreasConserVoluntaria.json"
+   "https://raw.githubusercontent.com/Sud-Austral/MAPA_RESTRICCIONES_CENTRO_AMERICA/refs/heads/main/mapaData/NIC_Zonas_hidricas200m.json"
   ]
  },
  {
@@ -2953,8 +2906,8 @@ const restrictionsData = [{
   "cartografia_base": "Red hídrica (ríos, lagos, embalses)",
   "geoproceso_a_realizar": "Generar buffers de 50 m a cada lado de ríos y cauces permanentes utilizando la red hidrográfica nacional. Unir los tramos bufferizados y superponer la franja con el catastro para identificar predios y verificar cumplimiento de la prohibición de corte y uso de plaguicidas en esa franja.",
   "tipo_geoproceso": "Buffer",
-  "entregable": null,
-  "link_entregable": null,
+  "entregable": "NIC_Zonas_hidricas50m",
+  "link_entregable": "https://drive.google.com/drive/folders/1V1c8IYCRpLKq1PeYKoGrhbRI9bsGfzTG?usp=drive_link",
   "nombre_del_dataset": "Hidrografía – RMGIR Nicaragua_Datos_Básicos_WGS1984",
   "fecha_dataset": "?",
   "decada_dataset": "sin especificar",
@@ -2970,7 +2923,7 @@ const restrictionsData = [{
   "observaciones_dataset": "Contiene varias capas adicionales (DEM, pendientes, uso del suelo).",
   "id_layer": "layer061",
   "url_geojson": [
-   "https://raw.githubusercontent.com/Sud-Austral/MAPA_RESTRICCIONES_CENTRO_AMERICA/refs/heads/main/mapaData/MEX_AreasConserVoluntaria.json"
+   "https://raw.githubusercontent.com/Sud-Austral/MAPA_RESTRICCIONES_CENTRO_AMERICA/refs/heads/main/mapaData/NIC_Zonas_hidricas50m.json"
   ]
  },
  {
@@ -3000,8 +2953,8 @@ const restrictionsData = [{
   "cartografia_base": "DEM 30 m",
   "geoproceso_a_realizar": "A partir de modelos digitales de elevación, calcular la pendiente del terreno. Seleccionar laderas con pendiente superior al 75 % y convertirlas en polígonos. Superponer estos polígonos con la cobertura forestal y el catastro para impedir la deforestación y promover la conservación de la cobertura vegetal en dichas pendientes.",
   "tipo_geoproceso": "Calcular",
-  "entregable": null,
-  "link_entregable": null,
+  "entregable": "NIC_Pendientes",
+  "link_entregable": "https://drive.google.com/drive/folders/1OCEXKCxjn17l8RzjjCsCozkAlp7jq-0t?usp=drive_link",
   "nombre_del_dataset": "Modelo Digital de Elevación (DEM 30 m)",
   "fecha_dataset": "?",
   "decada_dataset": "sin especificar",
@@ -3017,7 +2970,7 @@ const restrictionsData = [{
   "observaciones_dataset": "Se puede complementar con Copernicus DEM o SRTM.",
   "id_layer": "layer062",
   "url_geojson": [
-   "https://raw.githubusercontent.com/Sud-Austral/MAPA_RESTRICCIONES_CENTRO_AMERICA/refs/heads/main/mapaData/MEX_AreasConserVoluntaria.json"
+   "https://raw.githubusercontent.com/Sud-Austral/MAPA_RESTRICCIONES_CENTRO_AMERICA/refs/heads/main/mapaData/NIC_Pendientes.json"
   ]
  },
  {
@@ -3047,8 +3000,8 @@ const restrictionsData = [{
   "cartografia_base": "Cobertura forestal/ecosistemas",
   "geoproceso_a_realizar": "Identificar los polígonos de bosque natural a partir de la cobertura forestal y superponerlos con las plantaciones forestales registradas. Detectar donde se pretende sustituir bosque natural por plantación y bloquear tales proyectos. Crear un registro de autorizaciones y verificar que se respete la regeneración natural.",
   "tipo_geoproceso": "Detectar",
-  "entregable": null,
-  "link_entregable": null,
+  "entregable": "NIC_Plantaciones_forestales",
+  "link_entregable": "https://drive.google.com/drive/folders/1aArn9PSSYczSU565RYxgx56SCldW0z-e?usp=drive_link",
   "nombre_del_dataset": "Cobertura forestal y usos del suelo",
   "fecha_dataset": 2011,
   "decada_dataset": "2010s",
@@ -3064,7 +3017,7 @@ const restrictionsData = [{
   "observaciones_dataset": "Útil para validación histórica y monitoreo.",
   "id_layer": "layer063",
   "url_geojson": [
-   "https://raw.githubusercontent.com/Sud-Austral/MAPA_RESTRICCIONES_CENTRO_AMERICA/refs/heads/main/mapaData/MEX_AreasConserVoluntaria.json"
+   "https://raw.githubusercontent.com/Sud-Austral/MAPA_RESTRICCIONES_CENTRO_AMERICA/refs/heads/main/mapaData/NIC_Plantaciones_forestales.json"
   ]
  },
  {
@@ -3095,7 +3048,7 @@ const restrictionsData = [{
   "geoproceso_a_realizar": "Integrar los polígonos de áreas protegidas con un registro de permisos de exploración y explotación. Para cada solicitud dentro de un área protegida, verificar el tipo de uso permitido según la categoría de manejo y registrar si cuenta con autorización. Generar reportes de actividades suspendidas por incumplimiento.",
   "tipo_geoproceso": "Cruzar",
   "entregable": "NIC_AreasProt",
-  "link_entregable": "https://drive.google.com/drive/folders/1Z8t17mZJaEoIKPGl37zQ_TXBvs7W4On3?usp=drive_link",
+  "link_entregable": "https://drive.google.com/drive/folders/1GjDD7rp3EU9DNUnVstOg0UAlmdEElXoY?usp=drive_link",
   "nombre_del_dataset": "Áreas Protegidas (SINAP)",
   "fecha_dataset": "?",
   "decada_dataset": "sin especificar",
@@ -3111,7 +3064,7 @@ const restrictionsData = [{
   "observaciones_dataset": "Fuente nacional oficial poco accesible, WDPA como respaldo.",
   "id_layer": "layer064",
   "url_geojson": [
-   "https://raw.githubusercontent.com/Sud-Austral/MAPA_RESTRICCIONES_CENTRO_AMERICA/refs/heads/main/mapaData/MEX_AreasConserVoluntaria.json"
+   "https://raw.githubusercontent.com/Sud-Austral/MAPA_RESTRICCIONES_CENTRO_AMERICA/refs/heads/main/mapaData/NIC_AreasProt.json"
   ]
  },
  {
@@ -3141,8 +3094,8 @@ const restrictionsData = [{
   "cartografia_base": "Red hídrica",
   "geoproceso_a_realizar": "Mantener un inventario de concesiones de agua subterránea con su ubicación geográfica. Asociar cada concesión con su acuífero y niveles de explotación. Generar alertas geoespaciales en áreas donde la extracción supere la recarga y proponer vedas temporales. Superponer con zonas de recarga para priorizar intervenciones.",
   "tipo_geoproceso": "Buffer",
-  "entregable": null,
-  "link_entregable": null,
+  "entregable": "NIC_Zonas_hidricas30m",
+  "link_entregable": "https://drive.google.com/drive/folders/1UzGsVVdjHxgjsZu7udW9friilW7sV46R?usp=drive_link",
   "nombre_del_dataset": null,
   "fecha_dataset": null,
   "decada_dataset": null,
@@ -3158,7 +3111,7 @@ const restrictionsData = [{
   "observaciones_dataset": null,
   "id_layer": "layer065",
   "url_geojson": [
-   "https://raw.githubusercontent.com/Sud-Austral/MAPA_RESTRICCIONES_CENTRO_AMERICA/refs/heads/main/mapaData/MEX_AreasConserVoluntaria.json"
+   "https://raw.githubusercontent.com/Sud-Austral/MAPA_RESTRICCIONES_CENTRO_AMERICA/refs/heads/main/mapaData/NIC_Zonas_hidricas30m.json"
   ]
  },
  {
@@ -3188,8 +3141,8 @@ const restrictionsData = [{
   "cartografia_base": "Áreas Protegidas",
   "geoproceso_a_realizar": "Delinear las Reservas de Biosfera Bosawás, Indio Maíz (Sureste) y Wawashang utilizando la cartografía oficial. Generar un buffer de 10 km alrededor de cada reserva para definir la zona de amortiguamiento. Superponer el buffer con la cobertura de uso del suelo y el catastro para identificar asentamientos, agricultura migratoria y actividades comerciales, y proponer medidas de regulación.",
   "tipo_geoproceso": "Buffer",
-  "entregable": null,
-  "link_entregable": null,
+  "entregable": "NIC_AreasProt10km",
+  "link_entregable": "https://drive.google.com/drive/folders/1FcMg3TDv2OGnxR9ZMM7_8ErqlGOidt5r?usp=drive_link",
   "nombre_del_dataset": "Áreas Protegidas (SINAP)",
   "fecha_dataset": "?",
   "decada_dataset": "sin especificar",
@@ -3205,7 +3158,7 @@ const restrictionsData = [{
   "observaciones_dataset": "Fuente nacional oficial poco accesible, WDPA como respaldo.",
   "id_layer": "layer066",
   "url_geojson": [
-   "https://raw.githubusercontent.com/Sud-Austral/MAPA_RESTRICCIONES_CENTRO_AMERICA/refs/heads/main/mapaData/MEX_AreasConserVoluntaria.json"
+   "https://raw.githubusercontent.com/Sud-Austral/MAPA_RESTRICCIONES_CENTRO_AMERICA/refs/heads/main/mapaData/NIC_AreasProt10km.json"
   ]
  },
  {
@@ -3235,8 +3188,8 @@ const restrictionsData = [{
   "cartografia_base": "Cuencas hidrográficas ",
   "geoproceso_a_realizar": "Usar la cartografía costera para generar una franja de 200 m tierra adentro a lo largo de las costas. Generar buffers de 30 m a cada lado de los ríos y quebradas y una zona de 3 km alrededor de nacientes y fuentes públicas donde se prohíben vertederos. Delimitar áreas de recarga hídrica y calcular el porcentaje de cobertura forestal para verificar que cumpla el mínimo de 25 %.",
   "tipo_geoproceso": "Buffer",
-  "entregable": null,
-  "link_entregable": null,
+  "entregable": "NIC_Zonas_hidricas",
+  "link_entregable": "https://drive.google.com/drive/folders/1PvyulLcrLUFBRxx5txJbMJSg_91TwRMr?usp=drive_link",
   "nombre_del_dataset": "Cuencas hidrográficas",
   "fecha_dataset": "?",
   "decada_dataset": "sin especificar",
@@ -3252,7 +3205,7 @@ const restrictionsData = [{
   "observaciones_dataset": "Puede servir de proxy para delimitación de zonas de recarga.",
   "id_layer": "layer067",
   "url_geojson": [
-   "https://raw.githubusercontent.com/Sud-Austral/MAPA_RESTRICCIONES_CENTRO_AMERICA/refs/heads/main/mapaData/MEX_AreasConserVoluntaria.json"
+   "https://raw.githubusercontent.com/Sud-Austral/MAPA_RESTRICCIONES_CENTRO_AMERICA/refs/heads/main/mapaData/NIC_Zonas_hidricas.json"
   ]
  },
  {
@@ -3282,8 +3235,8 @@ const restrictionsData = [{
   "cartografia_base": "Límite internacional",
   "geoproceso_a_realizar": "A partir de los límites internacionales de Nicaragua, generar una franja de 15 km hacia el interior. Intersectar esta franja con la capa de cobertura forestal y el catastro para identificar explotaciones forestales y suspender permisos dentro de la zona vedada. Registrar excepciones autorizadas.",
   "tipo_geoproceso": "Buffer",
-  "entregable": null,
-  "link_entregable": null,
+  "entregable": "NIC_Franja15km",
+  "link_entregable": "https://drive.google.com/drive/folders/1VfxF0n7_LpokAz2m7BHVEIk6tpFKsLOq?usp=drive_link",
   "nombre_del_dataset": "Límite internacional",
   "fecha_dataset": "?",
   "decada_dataset": "sin especificar",
@@ -3299,7 +3252,7 @@ const restrictionsData = [{
   "observaciones_dataset": "Si no disponible, usar capa de capas de Proyecto Mesoamérica",
   "id_layer": "layer068",
   "url_geojson": [
-   "https://raw.githubusercontent.com/Sud-Austral/MAPA_RESTRICCIONES_CENTRO_AMERICA/refs/heads/main/mapaData/MEX_AreasConserVoluntaria.json"
+   "https://raw.githubusercontent.com/Sud-Austral/MAPA_RESTRICCIONES_CENTRO_AMERICA/refs/heads/main/mapaData/NIC_Franja15km.json"
   ]
  },
  {
@@ -3329,8 +3282,8 @@ const restrictionsData = [{
   "cartografia_base": "Reserva Bosawás",
   "geoproceso_a_realizar": "Delimitar la Reserva de Biosfera Bosawás según coordenadas oficiales y generar una zona de amortiguamiento de 10 km a su alrededor. Identificar usos actuales (asentamientos, agricultura, tala) mediante imágenes satelitales y capas de uso de suelo y eliminarlos. Clasificar las subzonas de conservación y manejo sostenible en el interior según el plan de manejo.",
   "tipo_geoproceso": "Cruzar",
-  "entregable": null,
-  "link_entregable": null,
+  "entregable": "NIC_Bosawas",
+  "link_entregable": "https://drive.google.com/drive/folders/13KMad3RSchsxztxw8hqsNMGI7Iyimk--?usp=drive_link",
   "nombre_del_dataset": "Áreas Protegidas (SINAP)",
   "fecha_dataset": "?",
   "decada_dataset": "sin especificar",
@@ -3346,7 +3299,7 @@ const restrictionsData = [{
   "observaciones_dataset": "Fuente nacional oficial poco accesible, WDPA como respaldo.",
   "id_layer": "layer069",
   "url_geojson": [
-   "https://raw.githubusercontent.com/Sud-Austral/MAPA_RESTRICCIONES_CENTRO_AMERICA/refs/heads/main/mapaData/MEX_AreasConserVoluntaria.json"
+   "https://raw.githubusercontent.com/Sud-Austral/MAPA_RESTRICCIONES_CENTRO_AMERICA/refs/heads/main/mapaData/NIC_Bosawas.json"
   ]
  },
  {
@@ -3376,8 +3329,8 @@ const restrictionsData = [{
   "cartografia_base": "Áreas Protegidas (proxy hasta publicación ACADS)",
   "geoproceso_a_realizar": "Crear capas que identifiquen las Zonas de Conservación estricta y las Zonas de Desarrollo Sostenible definidas por la Ley 1248. Para las zonas de conservación, asignar un valor de exclusión total de uso. Para las zonas de desarrollo sostenible, asociar normas de manejo y actividades permitidas. Integrar la capa con el catastro y planes de desarrollo municipal.",
   "tipo_geoproceso": "Cruzar",
-  "entregable": null,
-  "link_entregable": null,
+  "entregable": "NIC_Conservacion",
+  "link_entregable": "https://drive.google.com/drive/folders/122szJbB14mXBcYxHusPuhWRV2SjsvzHO?usp=drive_link",
   "nombre_del_dataset": "Áreas Protegidas (SINAP)",
   "fecha_dataset": "?",
   "decada_dataset": "sin especificar",
@@ -3393,7 +3346,7 @@ const restrictionsData = [{
   "observaciones_dataset": "Fuente nacional oficial poco accesible, WDPA como respaldo.",
   "id_layer": "layer070",
   "url_geojson": [
-   "https://raw.githubusercontent.com/Sud-Austral/MAPA_RESTRICCIONES_CENTRO_AMERICA/refs/heads/main/mapaData/MEX_AreasConserVoluntaria.json"
+   "https://raw.githubusercontent.com/Sud-Austral/MAPA_RESTRICCIONES_CENTRO_AMERICA/refs/heads/main/mapaData/NIC_Conservacion.json"
   ]
  },
  {
@@ -3423,8 +3376,8 @@ const restrictionsData = [{
   "cartografia_base": "? (Puntos de nacientes no disponibles)",
   "geoproceso_a_realizar": "Localizar nacientes de agua en bosques naturales mediante la cartografía hidrográfica y modelado de terreno. Generar buffers de 200 m en cerros y 100 m en terrenos planos alrededor de las nacientes. Intersectar estos buffers con la cobertura forestal y el catastro para delimitar bosques de preservación especial y restringir su explotación.",
   "tipo_geoproceso": "Buffer",
-  "entregable": null,
-  "link_entregable": null,
+  "entregable": "PAN_Zonas_hidricas200m",
+  "link_entregable": "https://drive.google.com/drive/folders/1Im-GZqEcwf12M9rlWCsDICudX79F7nYn?usp=drive_link",
   "nombre_del_dataset": "Hidrografía Nacional (1:50.000)",
   "fecha_dataset": "?",
   "decada_dataset": "sin especificar",
@@ -3440,7 +3393,7 @@ const restrictionsData = [{
   "observaciones_dataset": "Útil para buffers de ribera (10 m – ancho de cauce)",
   "id_layer": "layer071",
   "url_geojson": [
-   "https://raw.githubusercontent.com/Sud-Austral/MAPA_RESTRICCIONES_CENTRO_AMERICA/refs/heads/main/mapaData/MEX_AreasConserVoluntaria.json"
+   "https://raw.githubusercontent.com/Sud-Austral/MAPA_RESTRICCIONES_CENTRO_AMERICA/refs/heads/main/mapaData/PAN_Zonas_hidricas200m.json"
   ]
  },
  {
@@ -3470,8 +3423,8 @@ const restrictionsData = [{
   "cartografia_base": "Hidrografía Nacional (1:50.000)",
   "geoproceso_a_realizar": "Utilizar la red hidrográfica para medir el ancho del cauce de ríos y quebradas. Generar un buffer a cada lado cuyo ancho sea igual o mayor al ancho del cauce, con un mínimo de 10 m. Recortar la franja por límites administrativos y superponerla con el catastro y la cobertura forestal para asegurar el cumplimiento de la prohibición de explotación.",
   "tipo_geoproceso": "Calcular",
-  "entregable": null,
-  "link_entregable": null,
+  "entregable": "PAN_Zonas_hidricas10m",
+  "link_entregable": "https://drive.google.com/drive/folders/19JcIlAI_U_B_sRC5FuARZOKtk_jLZKF8?usp=drive_link",
   "nombre_del_dataset": "Hidrografía Nacional (1:50.000)",
   "fecha_dataset": "?",
   "decada_dataset": "sin especificar",
@@ -3487,7 +3440,7 @@ const restrictionsData = [{
   "observaciones_dataset": "Útil para buffers de ribera (10 m – ancho de cauce)",
   "id_layer": "layer072",
   "url_geojson": [
-   "https://raw.githubusercontent.com/Sud-Austral/MAPA_RESTRICCIONES_CENTRO_AMERICA/refs/heads/main/mapaData/MEX_AreasConserVoluntaria.json"
+   "https://raw.githubusercontent.com/Sud-Austral/MAPA_RESTRICCIONES_CENTRO_AMERICA/refs/heads/main/mapaData/PAN_Zonas_hidricas10m.json"
   ]
  },
  {
@@ -3517,8 +3470,8 @@ const restrictionsData = [{
   "cartografia_base": "Hidrografía Nacional (1:50.000)",
   "geoproceso_a_realizar": "Delimitar una franja de hasta 100 m desde la ribera de lagos y embalses naturales utilizando la cartografía de hidrografía y topografía. Superponer esta franja con la cobertura forestal y el catastro para identificar áreas donde se prohíbe la tala y la explotación forestal.",
   "tipo_geoproceso": "Buffer",
-  "entregable": null,
-  "link_entregable": null,
+  "entregable": "PAN_Zonas_hidricas100m",
+  "link_entregable": "https://drive.google.com/drive/folders/15cmJX_zADZlIP0POhjRnJ7wDpqRRKjzN?usp=drive_link",
   "nombre_del_dataset": "Hidrografía Nacional (1:50.000)",
   "fecha_dataset": "?",
   "decada_dataset": "sin especificar",
@@ -3534,7 +3487,7 @@ const restrictionsData = [{
   "observaciones_dataset": "Útil para buffers de ribera (10 m – ancho de cauce)",
   "id_layer": "layer073",
   "url_geojson": [
-   "https://raw.githubusercontent.com/Sud-Austral/MAPA_RESTRICCIONES_CENTRO_AMERICA/refs/heads/main/mapaData/MEX_AreasConserVoluntaria.json"
+   "https://raw.githubusercontent.com/Sud-Austral/MAPA_RESTRICCIONES_CENTRO_AMERICA/refs/heads/main/mapaData/PAN_Zonas_hidricas100m.json"
   ]
  },
  {
@@ -3564,8 +3517,8 @@ const restrictionsData = [{
   "cartografia_base": "? (Capa de recarga no disponible)",
   "geoproceso_a_realizar": "Identificar las áreas de recarga acuífera que abastecen nacientes para consumo social mediante estudios hidrogeológicos. Generar polígonos de recarga y clasificarlos como bosques de preservación especial. Integrar estos polígonos con el catastro y la cobertura forestal para asegurar que mantengan cobertura vegetal.",
   "tipo_geoproceso": "Extraer / Filtrar",
-  "entregable": null,
-  "link_entregable": null,
+  "entregable": "PAN_RecargaHidro",
+  "link_entregable": "https://drive.google.com/drive/folders/1nsaodXGP7hmsT2yqVlUBXxTfz7vJuyQo?usp=drive_link",
   "nombre_del_dataset": "Hidrografía Nacional (1:50.000)",
   "fecha_dataset": "?",
   "decada_dataset": "sin especificar",
@@ -3581,7 +3534,7 @@ const restrictionsData = [{
   "observaciones_dataset": "Útil para buffers de ribera (10 m – ancho de cauce)",
   "id_layer": "layer074",
   "url_geojson": [
-   "https://raw.githubusercontent.com/Sud-Austral/MAPA_RESTRICCIONES_CENTRO_AMERICA/refs/heads/main/mapaData/MEX_AreasConserVoluntaria.json"
+   "https://raw.githubusercontent.com/Sud-Austral/MAPA_RESTRICCIONES_CENTRO_AMERICA/refs/heads/main/mapaData/PAN_RecargaHidro.json"
   ]
  },
  {
@@ -3611,8 +3564,8 @@ const restrictionsData = [{
   "cartografia_base": "Hidrografía Nacional (1:50.000)",
   "geoproceso_a_realizar": "Para plantaciones y embalses artificiales, generar buffers de 100 m en cerros y 50 m en terrenos planos alrededor de las nacientes y de 10 m alrededor de embalses. Aplicar el mismo criterio de ancho del cauce para ríos y quebradas con mínimo de 10 m. Superponer estas franjas con la cobertura forestal y registros de plantaciones para permitir sólo la corta de árboles señalados y garantizar la reforestación posterior.",
   "tipo_geoproceso": "Buffer",
-  "entregable": null,
-  "link_entregable": null,
+  "entregable": "PAN_Zonas_hidricas",
+  "link_entregable": "https://drive.google.com/drive/folders/1qSmRxQGiY2NHVVXJrQtCob0w-1Nw1mHX?usp=drive_link",
   "nombre_del_dataset": "Hidrografía Nacional (1:50.000)",
   "fecha_dataset": "?",
   "decada_dataset": "sin especificar",
@@ -3628,7 +3581,7 @@ const restrictionsData = [{
   "observaciones_dataset": "Útil para buffers de ribera (10 m – ancho de cauce)",
   "id_layer": "layer075",
   "url_geojson": [
-   "https://raw.githubusercontent.com/Sud-Austral/MAPA_RESTRICCIONES_CENTRO_AMERICA/refs/heads/main/mapaData/MEX_AreasConserVoluntaria.json"
+   "https://raw.githubusercontent.com/Sud-Austral/MAPA_RESTRICCIONES_CENTRO_AMERICA/refs/heads/main/mapaData/PAN_Zonas_hidricas.json"
   ]
  },
  {
@@ -3658,8 +3611,8 @@ const restrictionsData = [{
   "cartografia_base": "Cobertura Boscosa y Uso del Suelo 2021",
   "geoproceso_a_realizar": "Elaborar mapas de aptitud ecológica, social y cultural mediante análisis multicriterio de suelos, pendientes, biodiversidad y uso actual. Cruzar propuestas de proyectos con estos mapas para verificar compatibilidad. Generar un registro de evaluaciones de impacto ambiental georreferenciadas, marcando la ubicación de cada proyecto y el resultado de la evaluación.",
   "tipo_geoproceso": "Comparar",
-  "entregable": null,
-  "link_entregable": null,
+  "entregable": "PAN_VocacionEcologica",
+  "link_entregable": "https://drive.google.com/drive/folders/1pD9khEY5ZPM146yVYMOhkm53VpUX3Sa2?usp=drive_link",
   "nombre_del_dataset": "Cobertura Boscosa y Uso del Suelo 2021 (1:25 000)",
   "fecha_dataset": 46022,
   "decada_dataset": "2020s",
@@ -3675,7 +3628,7 @@ const restrictionsData = [{
   "observaciones_dataset": "Última versión, escala detallada",
   "id_layer": "layer076",
   "url_geojson": [
-   "https://raw.githubusercontent.com/Sud-Austral/MAPA_RESTRICCIONES_CENTRO_AMERICA/refs/heads/main/mapaData/MEX_AreasConserVoluntaria.json"
+   "https://raw.githubusercontent.com/Sud-Austral/MAPA_RESTRICCIONES_CENTRO_AMERICA/refs/heads/main/mapaData/PAN_VocacionEcologica.json"
   ]
  },
  {
@@ -3706,7 +3659,7 @@ const restrictionsData = [{
   "geoproceso_a_realizar": "Integrar los polígonos del Sistema Nacional de Áreas Protegidas (SINAP) con sus categorías de manejo y concesiones otorgadas. Para cada área protegida, vincular las tarifas por servicios ambientales y los planes de concesión. Crear un visor que permita consultar la normativa aplicable y gestionar solicitudes según la categoría de la zona.",
   "tipo_geoproceso": "Cruzar",
   "entregable": "PAN_AreasProt",
-  "link_entregable": "https://drive.google.com/drive/folders/1YiXAFSzMuuNo51Cxef0x0spibUgneqwt?usp=drive_link",
+  "link_entregable": "https://drive.google.com/drive/folders/1A150IHv2ynWxbLB8qXqGMTIIhkE5Nb14?usp=drive_link",
   "nombre_del_dataset": "Áreas Protegidas (SINAP)",
   "fecha_dataset": 45775,
   "decada_dataset": "2020s",
@@ -3722,7 +3675,7 @@ const restrictionsData = [{
   "observaciones_dataset": "Base oficial; puede validarse con WDPA",
   "id_layer": "layer077",
   "url_geojson": [
-   "https://raw.githubusercontent.com/Sud-Austral/MAPA_RESTRICCIONES_CENTRO_AMERICA/refs/heads/main/mapaData/MEX_AreasConserVoluntaria.json"
+   "https://raw.githubusercontent.com/Sud-Austral/MAPA_RESTRICCIONES_CENTRO_AMERICA/refs/heads/main/mapaData/PAN_AreasProt.json"
   ]
  },
  {
@@ -3752,8 +3705,8 @@ const restrictionsData = [{
   "cartografia_base": "Cuencas Hidrográficas Nacionales",
   "geoproceso_a_realizar": "Delimitar las cuencas hidrográficas del país utilizando modelos digitales de elevación. Para cada cuenca, elaborar un plan de zonificación ambiental que identifique áreas de conservación, uso sostenible y desarrollo. Integrar los límites de cuencas con el catastro y las coberturas de uso del suelo para orientar el ordenamiento territorial y la asignación de licencias.",
   "tipo_geoproceso": "Calcular",
-  "entregable": null,
-  "link_entregable": null,
+  "entregable": "PAN_Cuencas_zon",
+  "link_entregable": "https://drive.google.com/drive/folders/1XWR0KPXp9t7nSZhYQB4XNq-LUMivsAaq?usp=drive_link",
   "nombre_del_dataset": "Cuencas Hidrográficas Nacionales",
   "fecha_dataset": 41274,
   "decada_dataset": "2010s",
@@ -3769,7 +3722,7 @@ const restrictionsData = [{
   "observaciones_dataset": "Incluye jerarquía de cuencas y subcuencas",
   "id_layer": "layer078",
   "url_geojson": [
-   "https://raw.githubusercontent.com/Sud-Austral/MAPA_RESTRICCIONES_CENTRO_AMERICA/refs/heads/main/mapaData/MEX_AreasConserVoluntaria.json"
+   "https://raw.githubusercontent.com/Sud-Austral/MAPA_RESTRICCIONES_CENTRO_AMERICA/refs/heads/main/mapaData/PAN_Cuencas_zon.json"
   ]
  },
  {
@@ -3799,8 +3752,8 @@ const restrictionsData = [{
   "cartografia_base": "Línea de costa / pleamar",
   "geoproceso_a_realizar": "A partir de la línea de pleamar, generar buffers de 22 m para la ribera del Pacífico y de 10 m para la ribera del Caribe. Estas franjas constituyen la ribera de playa. Superponerlas con el catastro para identificar ocupaciones y determinar la pertenencia al dominio público.",
   "tipo_geoproceso": "Extraer / Filtrar",
-  "entregable": null,
-  "link_entregable": null,
+  "entregable": "PAN_Zonas_hidricas22m",
+  "link_entregable": "https://drive.google.com/drive/folders/1rQmbn9YPRuKJHhnNAwR4IAUjBsxv0FcE?usp=drive_link",
   "nombre_del_dataset": "Línea de costa / pleamar",
   "fecha_dataset": "?",
   "decada_dataset": "sin especificar",
@@ -3816,7 +3769,7 @@ const restrictionsData = [{
   "observaciones_dataset": "Buffers deben construirse en análisis",
   "id_layer": "layer079",
   "url_geojson": [
-   "https://raw.githubusercontent.com/Sud-Austral/MAPA_RESTRICCIONES_CENTRO_AMERICA/refs/heads/main/mapaData/MEX_AreasConserVoluntaria.json"
+   "https://raw.githubusercontent.com/Sud-Austral/MAPA_RESTRICCIONES_CENTRO_AMERICA/refs/heads/main/mapaData/PAN_Zonas_hidricas22m.json"
   ]
  },
  {
@@ -3846,8 +3799,8 @@ const restrictionsData = [{
   "cartografia_base": "Línea de costa / pleamar",
   "geoproceso_a_realizar": "Generar una banda de 200 m tierra adentro desde la línea de pleamar y dividirla en dos: la ribera de playa (22 m o 10 m) y la zona costera adjudicable (178 m o 190 m). Integrar esta capa con concesiones y títulos para controlar la adjudicación y garantizar la conservación de manglares y dunas.",
   "tipo_geoproceso": "Buffer",
-  "entregable": null,
-  "link_entregable": null,
+  "entregable": "PAN_Manglar200m",
+  "link_entregable": "https://drive.google.com/drive/folders/1GpLK_D5SkS8aizOIYq0ypdmzw_E6EI3m?usp=drive_link",
   "nombre_del_dataset": "Línea de costa / pleamar",
   "fecha_dataset": "?",
   "decada_dataset": "sin especificar",
@@ -3863,7 +3816,7 @@ const restrictionsData = [{
   "observaciones_dataset": "Buffers deben construirse en análisis",
   "id_layer": "layer080",
   "url_geojson": [
-   "https://raw.githubusercontent.com/Sud-Austral/MAPA_RESTRICCIONES_CENTRO_AMERICA/refs/heads/main/mapaData/MEX_AreasConserVoluntaria.json"
+   "https://raw.githubusercontent.com/Sud-Austral/MAPA_RESTRICCIONES_CENTRO_AMERICA/refs/heads/main/mapaData/PAN_Manglar200m.json"
   ]
  },
  {
@@ -3893,8 +3846,8 @@ const restrictionsData = [{
   "cartografia_base": "Hidrografía Nacional (1:50.000)",
   "geoproceso_a_realizar": "Delimitar los cauces naturales de ríos y quebradas mediante la red hidrográfica. Generar una zona de servidumbre pública de 3 m a cada margen definida por las autoridades de aguas. Identificar construcciones existentes y cruzarlas con la servidumbre para ordenar su regularización o retiro. Generar una base de datos de obras permitidas.",
   "tipo_geoproceso": "Buffer",
-  "entregable": null,
-  "link_entregable": null,
+  "entregable": "PAN_Zonas_hidricas3m",
+  "link_entregable": "https://drive.google.com/drive/folders/1OK81j7B9sTBO3YyMpHp_zrPa9FlZGEbM?usp=drive_link",
   "nombre_del_dataset": "Hidrografía Nacional (1:50.000)",
   "fecha_dataset": "?",
   "decada_dataset": "sin especificar",
@@ -3910,7 +3863,7 @@ const restrictionsData = [{
   "observaciones_dataset": "Útil para buffers de ribera (10 m – ancho de cauce)",
   "id_layer": "layer081",
   "url_geojson": [
-   "https://raw.githubusercontent.com/Sud-Austral/MAPA_RESTRICCIONES_CENTRO_AMERICA/refs/heads/main/mapaData/MEX_AreasConserVoluntaria.json"
+   "https://raw.githubusercontent.com/Sud-Austral/MAPA_RESTRICCIONES_CENTRO_AMERICA/refs/heads/main/mapaData/PAN_Zonas_hidricas3m.json"
   ]
  },
  {
@@ -3940,8 +3893,8 @@ const restrictionsData = [{
   "cartografia_base": "Subcuencas área Canal (STRI/ACP)",
   "geoproceso_a_realizar": "Obtener los límites del Área del Canal de Panamá y el Plan Regional de Uso, Conservación y Desarrollo. Generar capas de zonificación (conservación, desarrollo urbano, uso mixto, etc.) definidas en el plan. Evaluar proyectos mediante su ubicación respecto a estas zonas y otorgar permisos de compatibilidad sólo cuando cumplan los criterios.",
   "tipo_geoproceso": "Cruzar",
-  "entregable": null,
-  "link_entregable": null,
+  "entregable": "PAN_CuencaCanal",
+  "link_entregable": "https://drive.google.com/drive/folders/1yCgB_v_qMBY2YrWiXg5ZvDbl5pRqV4fZ?usp=drive_link",
   "nombre_del_dataset": "Subcuencas (Área del Canal)",
   "fecha_dataset": 45392,
   "decada_dataset": "2020s",
@@ -3957,7 +3910,7 @@ const restrictionsData = [{
   "observaciones_dataset": "Complementa restricción Ley 44/2002",
   "id_layer": "layer082",
   "url_geojson": [
-   "https://raw.githubusercontent.com/Sud-Austral/MAPA_RESTRICCIONES_CENTRO_AMERICA/refs/heads/main/mapaData/MEX_AreasConserVoluntaria.json"
+   "https://raw.githubusercontent.com/Sud-Austral/MAPA_RESTRICCIONES_CENTRO_AMERICA/refs/heads/main/mapaData/PAN_CuencaCanal.json"
   ]
  },
  {
@@ -3987,8 +3940,8 @@ const restrictionsData = [{
   "cartografia_base": "Red hidrográfica principal",
   "geoproceso_a_realizar": "Utilizar la red hidrográfica nacional de República Dominicana para generar buffers de 30 m a cada lado de ríos y arroyos y un anillo de 30 m alrededor de lagos, lagunas y embalses. Recortar estos buffers por límites administrativos y superponerlos con el catastro para identificar propiedades dentro de la franja de protección. Clasificar los usos permitidos y restringir nuevas construcciones.",
   "tipo_geoproceso": "Buffer",
-  "entregable": null,
-  "link_entregable": null,
+  "entregable": "RD_Zonas_hidricas30m",
+  "link_entregable": "https://drive.google.com/drive/folders/1PQf7hxyOgzJLhZBIom8m9jSlVjPsRkbs?usp=drive_link",
   "nombre_del_dataset": "Red hidrográfica principal",
   "fecha_dataset": 44562,
   "decada_dataset": "2020s",
@@ -4004,7 +3957,7 @@ const restrictionsData = [{
   "observaciones_dataset": "Incluye hidrografía principal; no todos los tributarios menores.",
   "id_layer": "layer083",
   "url_geojson": [
-   "https://raw.githubusercontent.com/Sud-Austral/MAPA_RESTRICCIONES_CENTRO_AMERICA/refs/heads/main/mapaData/MEX_AreasConserVoluntaria.json"
+   "https://raw.githubusercontent.com/Sud-Austral/MAPA_RESTRICCIONES_CENTRO_AMERICA/refs/heads/main/mapaData/RD_Zonas_hidricas30m.json"
   ]
  },
  {
@@ -4035,7 +3988,7 @@ const restrictionsData = [{
   "geoproceso_a_realizar": "Integrar los polígonos del Sistema Nacional de Áreas Protegidas (SINAP) y clasificarlos en las categorías establecidas por la Ley 202‑04. Para cada categoría, añadir atributos sobre objetivos de manejo y usos permitidos. Unir la capa con los planes de manejo oficiales y crear una matriz de compatibilidad para diferentes actividades.",
   "tipo_geoproceso": "Cruzar",
   "entregable": "DOM_AreasProt",
-  "link_entregable": "https://drive.google.com/drive/folders/1Yv-gY1Lg-1PDejB7HmpP3zOXGRtxPrVt?usp=drive_link",
+  "link_entregable": "https://drive.google.com/drive/folders/1bTtGtCXzAc_N6xQBKQpG1lknRmnaKD9Z?usp=drive_link",
   "nombre_del_dataset": "Áreas Protegidas SINAP",
   "fecha_dataset": 45261,
   "decada_dataset": "2020s",
@@ -4051,7 +4004,7 @@ const restrictionsData = [{
   "observaciones_dataset": "Descarga en KMZ; requiere conversión a SHP.",
   "id_layer": "layer084",
   "url_geojson": [
-   "https://raw.githubusercontent.com/Sud-Austral/MAPA_RESTRICCIONES_CENTRO_AMERICA/refs/heads/main/mapaData/MEX_AreasConserVoluntaria.json"
+   "https://raw.githubusercontent.com/Sud-Austral/MAPA_RESTRICCIONES_CENTRO_AMERICA/refs/heads/main/mapaData/DOM_AreasProt.json"
   ]
  },
  {
@@ -4081,8 +4034,8 @@ const restrictionsData = [{
   "cartografia_base": "Modelo Digital de Elevación (DEM SRTM 30 m)",
   "geoproceso_a_realizar": "Usar modelos digitales de elevación y mapas de pendientes para identificar suelos montañosos con inclinación ≥60 %. Generar polígonos de estas áreas y superponerlos con el catastro y la cobertura forestal para prohibir labores de arado o remoción. Señalar que sólo se permiten plantaciones permanentes y sistemas agroforestales.",
   "tipo_geoproceso": "Calcular",
-  "entregable": null,
-  "link_entregable": null,
+  "entregable": "RD_Pendientes",
+  "link_entregable": "https://drive.google.com/drive/folders/18vKCJ8mrojfep_ZBBwiGwmW11XsB3xyI?usp=drive_link",
   "nombre_del_dataset": "Modelo Digital de Elevación (DEM SRTM 30m)",
   "fecha_dataset": 42005,
   "decada_dataset": "2010s",
@@ -4098,7 +4051,7 @@ const restrictionsData = [{
   "observaciones_dataset": "No es fuente nacional, pero estándar global.",
   "id_layer": "layer085",
   "url_geojson": [
-   "https://raw.githubusercontent.com/Sud-Austral/MAPA_RESTRICCIONES_CENTRO_AMERICA/refs/heads/main/mapaData/MEX_AreasConserVoluntaria.json"
+   "https://raw.githubusercontent.com/Sud-Austral/MAPA_RESTRICCIONES_CENTRO_AMERICA/refs/heads/main/mapaData/RD_Pendientes.json"
   ]
  },
  {
@@ -4128,8 +4081,8 @@ const restrictionsData = [{
   "cartografia_base": "Red hidrográfica principal",
   "geoproceso_a_realizar": "Utilizar la red hidrográfica y modelos digitales del terreno para identificar riberas de ríos y arroyos en terrenos ondulados o montañosos. Crear un buffer de 30 m a cada lado del cauce y asociarlo con el catastro para prohibir la tala y el cambio de uso del suelo en esa franja.",
   "tipo_geoproceso": "Buffer",
-  "entregable": null,
-  "link_entregable": null,
+  "entregable": "RD_Zonas_hidricas30m",
+  "link_entregable": "https://drive.google.com/drive/folders/1PQf7hxyOgzJLhZBIom8m9jSlVjPsRkbs?usp=drive_link",
   "nombre_del_dataset": "Red hidrográfica principal",
   "fecha_dataset": 44562,
   "decada_dataset": "2020s",
@@ -4145,7 +4098,7 @@ const restrictionsData = [{
   "observaciones_dataset": "Incluye hidrografía principal; no todos los tributarios menores.",
   "id_layer": "layer086",
   "url_geojson": [
-   "https://raw.githubusercontent.com/Sud-Austral/MAPA_RESTRICCIONES_CENTRO_AMERICA/refs/heads/main/mapaData/MEX_AreasConserVoluntaria.json"
+   "https://raw.githubusercontent.com/Sud-Austral/MAPA_RESTRICCIONES_CENTRO_AMERICA/refs/heads/main/mapaData/RD_Zonas_hidricas30m.json"
   ]
  },
  {
@@ -4175,8 +4128,8 @@ const restrictionsData = [{
   "cartografia_base": "Red hidrográfica principal",
   "geoproceso_a_realizar": "Delinear las zonas de protección forestal a partir de capas de nacientes, zonas de recarga hídrica, riberas de ríos y arroyos, humedales y bosques costeros. Generar buffers de ancho definido para cada tipo de zona (por ejemplo, 60 m en costa, 30 m en riberas) y combinar estos polígonos. Asociar a cada zona su régimen de conservación y prohibir la conversión del bosque.",
   "tipo_geoproceso": "Buffer",
-  "entregable": null,
-  "link_entregable": null,
+  "entregable": "RD_Zonas_hidricas",
+  "link_entregable": "https://drive.google.com/drive/folders/1bCRt4fVn8juATT0-NdrEeNxZ-u-gecVb?usp=drive_link",
   "nombre_del_dataset": "Red hidrográfica principal",
   "fecha_dataset": 44562,
   "decada_dataset": "2020s",
@@ -4192,7 +4145,7 @@ const restrictionsData = [{
   "observaciones_dataset": "Incluye hidrografía principal; no todos los tributarios menores.",
   "id_layer": "layer087",
   "url_geojson": [
-   "https://raw.githubusercontent.com/Sud-Austral/MAPA_RESTRICCIONES_CENTRO_AMERICA/refs/heads/main/mapaData/MEX_AreasConserVoluntaria.json"
+   "https://raw.githubusercontent.com/Sud-Austral/MAPA_RESTRICCIONES_CENTRO_AMERICA/refs/heads/main/mapaData/RD_Zonas_hidricas.json"
   ]
  },
  {
@@ -4222,8 +4175,8 @@ const restrictionsData = [{
   "cartografia_base": "Línea de costa",
   "geoproceso_a_realizar": "A partir de la línea de pleamar, generar una franja de 60 m tierra adentro que delimite los bosques costeros protegidos. Integrar esta banda con la cartografía de cobertura boscosa y el catastro para identificar ocupaciones y coordinar acciones de restauración y conservación.",
   "tipo_geoproceso": "Buffer",
-  "entregable": null,
-  "link_entregable": null,
+  "entregable": "RD_Zonas_costeras60m",
+  "link_entregable": "https://drive.google.com/drive/folders/1UjfNmLe6j8-v-JbjjtJNC2hkymiptUm_?usp=drive_link",
   "nombre_del_dataset": "Línea de costa",
   "fecha_dataset": 44562,
   "decada_dataset": "2020s",
@@ -4239,7 +4192,7 @@ const restrictionsData = [{
   "observaciones_dataset": "Generalizada; revisar actualización.",
   "id_layer": "layer088",
   "url_geojson": [
-   "https://raw.githubusercontent.com/Sud-Austral/MAPA_RESTRICCIONES_CENTRO_AMERICA/refs/heads/main/mapaData/MEX_AreasConserVoluntaria.json"
+   "https://raw.githubusercontent.com/Sud-Austral/MAPA_RESTRICCIONES_CENTRO_AMERICA/refs/heads/main/mapaData/RD_Zonas_costeras60m.json"
   ]
  },
  {
@@ -4269,8 +4222,8 @@ const restrictionsData = [{
   "cartografia_base": "Línea de costa",
   "geoproceso_a_realizar": "Generar una franja de 60 m tierra adentro desde la línea de pleamar a lo largo de las costas de República Dominicana. Clasificar esta franja como dominio público marítimo‑terrestre y superponerla con concesiones y ocupaciones existentes. Registrar construcciones no autorizadas y priorizar restauración de dunas y manglares.",
   "tipo_geoproceso": "Buffer",
-  "entregable": null,
-  "link_entregable": null,
+  "entregable": "RD_Zonas_costeras60m",
+  "link_entregable": "https://drive.google.com/drive/folders/1UjfNmLe6j8-v-JbjjtJNC2hkymiptUm_?usp=drive_link",
   "nombre_del_dataset": "Línea de costa",
   "fecha_dataset": 44562,
   "decada_dataset": "2020s",
@@ -4286,7 +4239,7 @@ const restrictionsData = [{
   "observaciones_dataset": "Generalizada; revisar actualización.",
   "id_layer": "layer089",
   "url_geojson": [
-   "https://raw.githubusercontent.com/Sud-Austral/MAPA_RESTRICCIONES_CENTRO_AMERICA/refs/heads/main/mapaData/MEX_AreasConserVoluntaria.json"
+   "https://raw.githubusercontent.com/Sud-Austral/MAPA_RESTRICCIONES_CENTRO_AMERICA/refs/heads/main/mapaData/RD_Zonas_costeras60m.json"
   ]
  },
  {
@@ -4316,8 +4269,8 @@ const restrictionsData = [{
   "cartografia_base": "Red hidrográfica principal",
   "geoproceso_a_realizar": "Delimitar las orillas de lagos, lagunas y embalses y generar un buffer de 30 m desde la cota máxima de inundación. Superponer la franja con el catastro y la cobertura de vegetación para evitar la eliminación de la cobertura vegetal y el establecimiento de cultivos.",
   "tipo_geoproceso": "Buffer",
-  "entregable": null,
-  "link_entregable": null,
+  "entregable": "RD_Zonas_lagos_buffer",
+  "link_entregable": "https://drive.google.com/drive/folders/1VRAbnzRvxT8z4z_nHPsq7ousqB4a_I94?usp=drive_link",
   "nombre_del_dataset": "Red hidrográfica principal",
   "fecha_dataset": 44562,
   "decada_dataset": "2020s",
@@ -4333,7 +4286,7 @@ const restrictionsData = [{
   "observaciones_dataset": "Incluye hidrografía principal; no todos los tributarios menores.",
   "id_layer": "layer090",
   "url_geojson": [
-   "https://raw.githubusercontent.com/Sud-Austral/MAPA_RESTRICCIONES_CENTRO_AMERICA/refs/heads/main/mapaData/MEX_AreasConserVoluntaria.json"
+   "https://raw.githubusercontent.com/Sud-Austral/MAPA_RESTRICCIONES_CENTRO_AMERICA/refs/heads/main/mapaData/RD_Zonas_lagos_buffer.json"
   ]
  },
  {
@@ -4363,8 +4316,8 @@ const restrictionsData = [{
   "cartografia_base": "DEM SRTM 30 m (proxy de nacientes)",
   "geoproceso_a_realizar": "Inventariar las nacientes y manantiales y delimitar un área de protección específica para cada una (p. ej., buffer de 50 m), ajustando el radio según estudios técnicos. Incorporar este buffer en el catastro y registrar restricciones de uso para garantizar la sostenibilidad del recurso.",
   "tipo_geoproceso": "Buffer",
-  "entregable": null,
-  "link_entregable": null,
+  "entregable": "RD_Zonas_hidricasBuffer",
+  "link_entregable": "https://drive.google.com/drive/folders/1SPkSyXZ7j0ulvybwwoYrMkGeXPsvMzVZ?usp=drive_link",
   "nombre_del_dataset": "Modelo Digital de Elevación (DEM SRTM 30m)",
   "fecha_dataset": 42005,
   "decada_dataset": "2010s",
@@ -4380,7 +4333,7 @@ const restrictionsData = [{
   "observaciones_dataset": "No es fuente nacional, pero estándar global.",
   "id_layer": "layer091",
   "url_geojson": [
-   "https://raw.githubusercontent.com/Sud-Austral/MAPA_RESTRICCIONES_CENTRO_AMERICA/refs/heads/main/mapaData/MEX_AreasConserVoluntaria.json"
+   "https://raw.githubusercontent.com/Sud-Austral/MAPA_RESTRICCIONES_CENTRO_AMERICA/refs/heads/main/mapaData/RD_Zonas_hidricasBuffer.json"
   ]
  }
-]
+];
