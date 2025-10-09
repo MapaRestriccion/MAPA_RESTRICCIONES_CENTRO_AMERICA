@@ -1260,10 +1260,55 @@
             box-shadow: 0 2px 4px rgba(0,0,0,0.05);
         }
 
+        .no-map-badge {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            background-color: #fef2f2;
+            color: #c0392b;
+            border: 1px solid #f5c6cb;
+            padding: 4px 10px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            border-radius: 20px;
+            text-align: center;
+            width: fit-content;
+            margin: 0 auto;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+            transition: background-color 0.3s ease;
+        }
         .no-map-badge i {
-            color: #c75d5d;
+            color: #e74c3c;
             font-size: 0.9rem;
         }
+        .no-map-badge:hover {
+            background-color: #fdecea;
+        }
+        .stats-card:hover {
+            transform: translateY(-6px) scale(1.02);
+            box-shadow: 0 6px 20px rgba(26, 95, 63, 0.15);
+        }
+        .btn-outline-primary, 
+        .btn-outline-success, 
+        .btn-outline-info {
+            border-width: 1.5px;
+            transition: all 0.25s ease;
+        }
+        .btn-outline-primary:hover, 
+        .btn-outline-success:hover, 
+        .btn-outline-info:hover {
+            transform: translateY(-2px) scale(1.05);
+        }
+        .no-map-badge {
+            background-color: #f6f9f8;
+            color: #7a7a7a;
+            border: 1px solid #d1e7dd;
+        }
+        .no-map-badge i {
+            color: #0a3d2a;
+        }
+
     </style>
     
 </head>
@@ -1495,7 +1540,8 @@
                         <div class="chat-container slide-up">
                             <h3><i class="fas fa-comments"></i> Asistente de Consultas</h3>
                             <p class="text-muted mb-4">Utilice este chat para realizar consultas sobre las restricciones legales y normativas del EUDR.</p>
-                            <iframe src="chatBoton14.html" class="chat-iframe" title="Asistente de Consultas EUDR"></iframe>
+
+                            <iframe src="chatBoton14.html" class="chat-iframe" title="Asistente de Consultas EUDR" loading="lazy"></iframe>
                         </div>
                     </div>
                 </div>
@@ -1599,7 +1645,14 @@
             initializeMap() {
                 if (mapInitialized) return;
                 
-                map = L.map('map').setView(CONFIG.MAP.CENTER, CONFIG.MAP.ZOOM);
+                //map = L.map('map').setView(CONFIG.MAP.CENTER, CONFIG.MAP.ZOOM);
+                 map = L.map('map', { 
+                    preferCanvas: true, 
+                    zoomAnimation: false,
+                    fadeAnimation: false,
+                    markerZoomAnimation: false
+                }).setView(CONFIG.MAP.CENTER, CONFIG.MAP.ZOOM);
+
 
                 // Capa base
                 const osmLayer = L.tileLayer(CONFIG.MAP.TILE_LAYER, {
@@ -1816,6 +1869,7 @@
                             else if (data.type === 'Feature') allFeatures.push(data);
                         } catch (error) {
                             console.error(`Error cargando ${url}:`, error);
+                            this.showNotification(`Error cargando archivo: ${url.split('/').pop()}`, true);
                             failedUrls.push(url);
                         }
                     }
@@ -2026,6 +2080,7 @@
                 this.setupTableEventListeners();
             }
 
+
             getTableColumns() {
                 return [
                     {
@@ -2092,25 +2147,39 @@
             }
 
             getActionButtons(row) {
-                let html_aux = `<p class="no-map-badge">
-                                    <i class="fas fa-times-circle"></i> Sin Mapa Disponible
-                                    </p>`;
-                if (row.cuantificable == "Si"){
-                    html_aux = `<button class="btn btn-sm btn-outline-info view-on-map" data-country="${row.pais}" data-type="${row.tipo_restriccion}" data-id_layer="${row.id_layer}" data-id="${row.ip_restriccion}" title="Ver en mapa">
-                        <i class="fas fa-map-marked-alt"></i>
-                    </button>`
-                }
+                let html_aux = `
+                    <span class="no-map-badge">
+                        <i class="fas fa-times-circle"></i> Sin mapa
+                    </span>`;
                 
+                if (row.cuantificable === "Si") {
+                    html_aux = `
+                        <button class="btn btn-layer btn-outline-info view-on-map"  aria-label="Ver en mapa"
+                                data-country="${row.pais}" 
+                                data-type="${row.tipo_restriccion}" 
+                                data-id_layer="${row.id_layer}" 
+                                data-id="${row.ip_restriccion}" 
+                                title="Ver en mapa">
+                            <i class="fas fa-map-location-dot"></i>
+                        </button>`;
+                }
+
                 return `
-                    <button class="btn btn-sm btn-outline-primary view-detail" data-id="${row.ip_restriccion}" title="Ver detalle">
-                        <i class="fas fa-info-circle"></i>
-                    </button>
-                    <button class="btn btn-sm btn-outline-success export-row" data-id="${row.ip_restriccion}" title="Exportar">
-                        <i class="fas fa-download"></i>
-                    </button>
-                    ${html_aux}
-                `;
+                    <div class="d-flex justify-content-center align-items-center gap-1 flex-wrap">
+                        <button class="btn btn-layer btn-outline-primary view-detail" aria-label="Ver detalle"
+                                data-id="${row.ip_restriccion}" 
+                                title="Ver detalle">
+                            <i class="fas fa-circle-info"></i>
+                        </button>
+                        <button class="btn btn-layer btn-outline-success export-row" aria-label="Exportar restricción"
+                                data-id="${row.ip_restriccion}" 
+                                title="Exportar">
+                            <i class="fas fa-file-arrow-down"></i>
+                        </button>
+                        ${html_aux}
+                    </div>`;
             }
+
 
             setupTableEventListeners() {
                 $('#restrictionsTable tbody')
@@ -2702,6 +2771,10 @@
             doc.save('restricciones_eudr.pdf');
         });
 
+        document.addEventListener("DOMContentLoaded", function () {
+            const tooltipTriggerList = [].slice.call(document.querySelectorAll('[title]'));
+            tooltipTriggerList.map(el => new bootstrap.Tooltip(el));
+        });
     </script>
 </body>
 </html>
