@@ -1100,7 +1100,7 @@ const restrictionsData = [
   "tipo_descrip": "deforestacion",
   "nivel_escala": "Nacional",
   "tipo_restriccion": "Prohibición en áreas de protección",
-  "cuantificable": "No",
+  "cuantificable": "Si",
   "parametros_geo": null,
   "representacion": "sin especificar",
   "enlace_norma": "https://pgrweb.go.cr/scij/Busqueda/Normativa/normas/nrm_texto_completo.aspx?nValor1=1&nValor2=41661",
