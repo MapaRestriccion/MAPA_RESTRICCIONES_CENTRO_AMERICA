@@ -701,7 +701,11 @@ const restrictionsData = [
   "observaciones_dataset": "Existe servicio WMS/WFS en SNIT, pero sin detalles completos de precisión ni fecha.",
   "id_layer": "layer014",
   "url_geojson": [
-   "https://raw.githubusercontent.com/MapaRestriccion/MAPA_RESTRICCIONES_CENTRO_AMERICA/refs/heads/main/mapaData/CRI_Zonas_hidricas15m.json"
+   "https://raw.githubusercontent.com/MapaRestriccion/MAPA_RESTRICCIONES_CENTRO_AMERICA/refs/heads/main/mapaData/CRI_Zonas_hidricas15m_1.geojson",
+   "https://raw.githubusercontent.com/MapaRestriccion/MAPA_RESTRICCIONES_CENTRO_AMERICA/refs/heads/main/mapaData/CRI_Zonas_hidricas15m_2.geojson",
+   "https://raw.githubusercontent.com/MapaRestriccion/MAPA_RESTRICCIONES_CENTRO_AMERICA/refs/heads/main/mapaData/CRI_Zonas_hidricas15m_3.geojson",
+   "https://raw.githubusercontent.com/MapaRestriccion/MAPA_RESTRICCIONES_CENTRO_AMERICA/refs/heads/main/mapaData/CRI_Zonas_hidricas15m_4.geojson",
+   "https://raw.githubusercontent.com/MapaRestriccion/MAPA_RESTRICCIONES_CENTRO_AMERICA/refs/heads/main/mapaData/CRI_Zonas_hidricas15m_5.geojson",
   ]
  },
  {
@@ -748,7 +752,9 @@ const restrictionsData = [
   "observaciones_dataset": "Existe servicio WMS/WFS en SNIT, pero sin detalles completos de precisión ni fecha.",
   "id_layer": "layer015",
   "url_geojson": [
-   "https://raw.githubusercontent.com/MapaRestriccion/MAPA_RESTRICCIONES_CENTRO_AMERICA/refs/heads/main/mapaData/CRI_Zonas_hidricas50m_pend.json"
+   "https://raw.githubusercontent.com/MapaRestriccion/MAPA_RESTRICCIONES_CENTRO_AMERICA/refs/heads/main/mapaData/CRI_Zonas_hidricas50m_pend_1.geojson",
+   "https://raw.githubusercontent.com/MapaRestriccion/MAPA_RESTRICCIONES_CENTRO_AMERICA/refs/heads/main/mapaData/CRI_Zonas_hidricas50m_pend_2.geojson",
+   "https://raw.githubusercontent.com/MapaRestriccion/MAPA_RESTRICCIONES_CENTRO_AMERICA/refs/heads/main/mapaData/CRI_Zonas_hidricas50m_pend_3.geojson"
   ]
  },
  {
@@ -1107,7 +1113,7 @@ const restrictionsData = [
   "cartografia_base": "Red hídrica, lagos y DEM",
   "geoproceso_a_realizar": "Unir las capas de buffers generadas en R_CR_006 a R_CR_010 (10 m, 15 m, 50 m, 100 m) para conformar el mosaico de áreas de protección del artículo 33. Intersectar esta capa con la cobertura forestal y el catastro para identificar parcelas que contengan arbolado en la franja. Marcar aquellas donde la corta o eliminación de árboles está prohibida y registrar solicitudes de excepción.",
   "tipo_geoproceso": "Cruzar",
-  "entregable": "CRI_Restriccion100m",
+  "entregable": "CRI_Restriccion_hidricas",
   "link_entregable": "https://drive.google.com/drive/folders/1WPNLFG_gGbl3gyCTKz182IxvCe_5DkXh?usp=drive_link",
   "nombre_del_dataset": "Modelo Digital de Elevación (DEM)",
   "fecha_dataset": "?",
@@ -1124,7 +1130,14 @@ const restrictionsData = [
   "observaciones_dataset": "Referencias en estudios académicos; no encontré metadato oficial actualizado nacional en SNIT.",
   "id_layer": "layer023",
   "url_geojson": [
-   "https://raw.githubusercontent.com/MapaRestriccion/MAPA_RESTRICCIONES_CENTRO_AMERICA/refs/heads/main/mapaData/CRI_Restriccion100m.json"
+   "https://raw.githubusercontent.com/MapaRestriccion/MAPA_RESTRICCIONES_CENTRO_AMERICA/refs/heads/main/mapaData/CRI_Restriccion_hidricas_1.geojson",
+   "https://raw.githubusercontent.com/MapaRestriccion/MAPA_RESTRICCIONES_CENTRO_AMERICA/refs/heads/main/mapaData/CRI_Restriccion_hidricas_2.geojson",
+   "https://raw.githubusercontent.com/MapaRestriccion/MAPA_RESTRICCIONES_CENTRO_AMERICA/refs/heads/main/mapaData/CRI_Restriccion_hidricas_3.geojson",
+   "https://raw.githubusercontent.com/MapaRestriccion/MAPA_RESTRICCIONES_CENTRO_AMERICA/refs/heads/main/mapaData/CRI_Restriccion_hidricas_4.geojson",
+   "https://raw.githubusercontent.com/MapaRestriccion/MAPA_RESTRICCIONES_CENTRO_AMERICA/refs/heads/main/mapaData/CRI_Restriccion_hidricas_5.geojson",
+   "https://raw.githubusercontent.com/MapaRestriccion/MAPA_RESTRICCIONES_CENTRO_AMERICA/refs/heads/main/mapaData/CRI_Restriccion_hidricas_6.geojson",
+   "https://raw.githubusercontent.com/MapaRestriccion/MAPA_RESTRICCIONES_CENTRO_AMERICA/refs/heads/main/mapaData/CRI_Restriccion_hidricas_7.geojson",
+   "https://raw.githubusercontent.com/MapaRestriccion/MAPA_RESTRICCIONES_CENTRO_AMERICA/refs/heads/main/mapaData/CRI_Restriccion_hidricas_8.geojson",
   ]
  },
  {
