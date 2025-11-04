@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet.draw/1.0.4/leaflet.draw.css" />
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     
     <style>
         /* ========================================
@@ -66,7 +66,7 @@
         }
 
         body {
-            font-family: "Montserrat", "Segoe UI", Roboto, sans-serif;
+            font-family: "Inter", "Segoe UI", Roboto, sans-serif;
             background-color: var(--light-bg);
             color: var(--text-color);
             line-height: 1.6;
@@ -76,7 +76,7 @@
         }
 
         h1, h2, h3, h4, h5, h6 {
-            font-family: "Montserrat", Georgia, serif;
+            font-family: "Playfair Display", Georgia, serif;
             color: var(--primary-color);
             font-weight: 700;
             letter-spacing: -0.02em;
@@ -281,7 +281,7 @@
             text-transform: uppercase;
             letter-spacing: 0.05em;
             display: block;
-            font-family: "Montserrat", sans-serif;
+            font-family: "Inter", sans-serif;
         }
 
         .active-filters {
@@ -336,7 +336,7 @@
             font-size: 0.95rem;
             background-color: var(--input-bg);
             width: 100%;
-            font-family: "Montserrat", sans-serif;
+            font-family: "Inter", sans-serif;
         }
 
         .form-select:focus,
@@ -363,7 +363,7 @@
             border: 1px solid transparent;
             cursor: pointer;
             text-decoration: none;
-            font-family: "Montserrat", sans-serif;
+            font-family: "Inter", sans-serif;
         }
 
         .btn i {
@@ -402,8 +402,8 @@
         }
 
         .btn-export {
-            background-color: var(--primary-color);
-            border-color: var(--primary-color);
+            background-color: var(--accent-color);
+            border-color: var(--accent-color);
             color: white;
         }
 
@@ -411,7 +411,7 @@
             background-color: var(--secondary-color);
             border-color: var(--secondary-color);
             transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(0, 18, 92, 0.3);
+            box-shadow: 0 4px 12px rgba(0, 166, 81, 0.3);
         }
 
         .btn-layer {
@@ -484,13 +484,13 @@
             font-weight: 600;
             margin-bottom: var(--spacing-xs);
             font-size: 1rem;
-            font-family: "Montserrat", sans-serif;
+            font-family: "Inter", sans-serif;
         }
 
         .stats-card .card-text {
             color: #627792;
             font-size: 0.85rem;
-            font-family: "Montserrat", sans-serif;
+            font-family: "Inter", sans-serif;
         }
 
         .stats-number {
@@ -499,7 +499,7 @@
             color: var(--primary-color);
             margin: var(--spacing-xs) 0;
             line-height: 1;
-            font-family: "Montserrat", serif;
+            font-family: "Playfair Display", serif;
         }
 
         .stats-card:nth-child(2) .stats-number {
@@ -541,7 +541,7 @@
             text-transform: uppercase;
             letter-spacing: 0.05em;
             text-align: left;
-            font-family: "Montserrat", sans-serif;
+            font-family: "Inter", sans-serif;
         }
 
         .table td {
@@ -549,7 +549,7 @@
             vertical-align: middle;
             font-size: 0.9rem;
             border-bottom: 1px solid #f1f3f9;
-            font-family: "Montserrat", sans-serif;
+            font-family: "Inter", sans-serif;
         }
 
         .table-hover tbody tr:hover {
@@ -571,7 +571,7 @@
             font-size: 0.75rem;
             letter-spacing: 0.02em;
             display: inline-block;
-            font-family: "Montserrat", sans-serif;
+            font-family: "Inter", sans-serif;
         }
 
         .badge-eudr {
@@ -622,7 +622,7 @@
             font-size: 0.9rem;
             cursor: pointer;
             text-decoration: none;
-            font-family: "Montserrat", sans-serif;
+            font-family: "Inter", sans-serif;
         }
 
         .nav-link:hover {
@@ -1447,7 +1447,7 @@
                         <div class="table-container slide-up">
                             <div class="action-buttons">
                                 <button id="exportExcel" class="btn btn-export"><i class="fas fa-file-excel"></i> Exportar a Excel</button>
-                                <button id="exportPDF" class="btn btn-export"><i class="fas fa-file-pdf"></i> Exportar a PDF</button>
+                                <button id="exportPDF" class="btn btn-outline-secondary"><i class="fas fa-file-pdf"></i> Exportar a PDF</button>
                                 <button id="exportExcelAll" class="btn btn-export"><i class="fas fa-file-excel"></i> Exportar TODO a Excel</button>
                                 
                                 <div class="ms-auto">
