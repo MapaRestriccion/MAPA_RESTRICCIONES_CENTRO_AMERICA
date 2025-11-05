@@ -1134,10 +1134,10 @@ const restrictionsData = [
    "https://raw.githubusercontent.com/MapaRestriccion/MAPA_RESTRICCIONES_CENTRO_AMERICA/refs/heads/main/mapaData/CRI_Restriccion_hidricas_2.geojson",
    "https://raw.githubusercontent.com/MapaRestriccion/MAPA_RESTRICCIONES_CENTRO_AMERICA/refs/heads/main/mapaData/CRI_Restriccion_hidricas_3.geojson",
    "https://raw.githubusercontent.com/MapaRestriccion/MAPA_RESTRICCIONES_CENTRO_AMERICA/refs/heads/main/mapaData/CRI_Restriccion_hidricas_4.geojson",
-   "https://raw.githubusercontent.com/MapaRestriccion/MAPA_RESTRICCIONES_CENTRO_AMERICA/refs/heads/main/mapaData/CRI_Restriccion_hidricas_5.geojson",
-   "https://raw.githubusercontent.com/MapaRestriccion/MAPA_RESTRICCIONES_CENTRO_AMERICA/refs/heads/main/mapaData/CRI_Restriccion_hidricas_6.geojson",
-   "https://raw.githubusercontent.com/MapaRestriccion/MAPA_RESTRICCIONES_CENTRO_AMERICA/refs/heads/main/mapaData/CRI_Restriccion_hidricas_7.geojson",
-   "https://raw.githubusercontent.com/MapaRestriccion/MAPA_RESTRICCIONES_CENTRO_AMERICA/refs/heads/main/mapaData/CRI_Restriccion_hidricas_8.geojson",
+   //"https://raw.githubusercontent.com/MapaRestriccion/MAPA_RESTRICCIONES_CENTRO_AMERICA/refs/heads/main/mapaData/CRI_Restriccion_hidricas_5.geojson",
+   //"https://raw.githubusercontent.com/MapaRestriccion/MAPA_RESTRICCIONES_CENTRO_AMERICA/refs/heads/main/mapaData/CRI_Restriccion_hidricas_6.geojson",
+   //"https://raw.githubusercontent.com/MapaRestriccion/MAPA_RESTRICCIONES_CENTRO_AMERICA/refs/heads/main/mapaData/CRI_Restriccion_hidricas_7.geojson",
+   //"https://raw.githubusercontent.com/MapaRestriccion/MAPA_RESTRICCIONES_CENTRO_AMERICA/refs/heads/main/mapaData/CRI_Restriccion_hidricas_8.geojson",
   ]
  },
  {
